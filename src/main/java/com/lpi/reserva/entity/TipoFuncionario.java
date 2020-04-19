@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "TipoFuncionario", schema = "reserva.public")
-@NoArgsConstructor @AllArgsConstructor
+@Table(name = "tipofuncionario")
+@NoArgsConstructor @AllArgsConstructor @Getter @Setter
 public class TipoFuncionario implements Serializable{
 	
 	/**
@@ -25,14 +25,14 @@ public class TipoFuncionario implements Serializable{
 	private static final long serialVersionUID = 4657118136178797375L;
 
 	@Id
-	@Column(name="idTipoFuncionario", nullable = false)
+	@Column(name="idtipofuncionario", nullable = false)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Getter private Integer idTipoFuncionario;
+	private Integer idTipoFuncionario;
 	
 	@Column(name="descricao", length = 255, nullable = true)
-	@Getter @Setter private String descricao;
+	private String descricao;
 	
 	@Column(name="ativo", nullable = false)
-	@Getter @Setter private Boolean ativo;
+	private Boolean ativo;
 	
 }

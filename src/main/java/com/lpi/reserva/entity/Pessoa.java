@@ -17,9 +17,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Pessoa", schema = "reserva.public")
+@Table(name = "pessoa")
 @Inheritance(strategy = InheritanceType.JOINED)
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor @AllArgsConstructor @Getter @Setter
 public class Pessoa implements Serializable {
 
 	/**
@@ -28,14 +28,14 @@ public class Pessoa implements Serializable {
 	private static final long serialVersionUID = -3793203373817358069L;
 
 	@Id
-	@Column(name="idPessoa", nullable = false)
+	@Column(name="idpessoa", nullable = false)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Getter private Integer idPessoa;
+	private Integer idPessoa;
 	
 	@Column(name = "nome", length = 255, nullable = false)
-	@Getter @Setter private String nome;
+	private String nome;
 	
 	@Column(name = "cpf", length = 11, nullable = false)
-	@Getter @Setter private String cpf;
+	private String cpf;
 	
 }

@@ -9,14 +9,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "TipoComemoracao", schema = "reserva.public")
-@NoArgsConstructor @AllArgsConstructor
+@Table(name = "tipocomemoracao", schema = "public")
+@NoArgsConstructor @AllArgsConstructor @Getter @Setter
 public class TipoComemoracao implements Serializable {
 
 	/**
@@ -25,14 +27,14 @@ public class TipoComemoracao implements Serializable {
 	private static final long serialVersionUID = 5943350777755695569L;
 
 	@Id
-	@Column(name="idTipoComemoracao", nullable = false)
+	@Column(name="idtipocomemoracao", nullable = false)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Getter private Integer idTipoComemoracao;
+	private Integer idTipoComemoracao;
 	
 	@Column(name = "descricao", length = 255, nullable = false)
-	@Getter @Setter private String descricao;
+	private String descricao;
 	
 	@Column(name="ativo", nullable = false)
-	@Getter @Setter private Boolean ativo;
+	private Boolean ativo;
 	
 }
