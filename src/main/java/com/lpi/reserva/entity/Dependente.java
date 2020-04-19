@@ -15,9 +15,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Dependente", schema = "reserva.public")
-@NoArgsConstructor @AllArgsConstructor
-@PrimaryKeyJoinColumn(name="Pessoa_idPessoa")
+@Table(name = "dependente")
+@NoArgsConstructor @AllArgsConstructor @Getter @Setter
+@PrimaryKeyJoinColumn(name="pessoa_idpessoa")
 public class Dependente extends Pessoa implements Serializable {
 
 	/**
@@ -26,10 +26,10 @@ public class Dependente extends Pessoa implements Serializable {
 	private static final long serialVersionUID = -6815384046915194863L;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="Cliente_Pessoa_idPessoa", referencedColumnName="Pessoa_idPessoa")
-	@Getter @Setter private Cliente cliente;
+	@JoinColumn(name="cliente_pessoa_idpessoa", referencedColumnName="pessoa_idpessoa")
+	private Cliente cliente;
 	
 	@Column(name="ativo", nullable = false)
-	@Getter @Setter private Boolean ativo;
+	private Boolean ativo;
 	
 }
