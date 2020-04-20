@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lpi.reserva.dto.TipoComemoracaoDto;
 import com.lpi.reserva.service.impl.TipoComemoracaoServiceImpl;
 
 @RestController
@@ -20,4 +21,13 @@ public class TipoComemoracaoController {
 		return tipoComemoracaoService.excluir(idTipoComemoracao);
 	}
 	
-}
+	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
+	public TipoComemoracaoDto salvar(TipoComemoracaoDto tipoComemoracaoDto) {
+		return tipoComemoracaoService.salvar(tipoComemoracaoDto);
+	}	
+	
+}		
+		
+		
+	
+
