@@ -27,7 +27,6 @@ public class TipoComemoracaoController {
 	public TipoComemoracaoDto salvar(TipoComemoracaoDto tipoComemoracaoDto) {
 		return tipoComemoracaoService.salvar(tipoComemoracaoDto);
 	}	
-	
 
     @RequestMapping(value = "/listarTodos", method = RequestMethod.GET)
 	public List<TipoComemoracaoDto> listarTodos(){

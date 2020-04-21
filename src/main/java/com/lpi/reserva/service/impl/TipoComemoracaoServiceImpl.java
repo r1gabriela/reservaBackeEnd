@@ -83,8 +83,7 @@ public class TipoComemoracaoServiceImpl implements TipoComemoracaoService {
 		tipoComemoracaoDto.setIdTipoComemoracao(tipoComemoracao.getIdTipoComemoracao());
 		tipoComemoracaoDto.setDescricao(tipoComemoracao.getDescricao());
 		tipoComemoracaoDto.setAtivo(tipoComemoracao.getAtivo());
-		return tipoComemoracaoDto;	
-		
+		return tipoComemoracaoDto;		
 	}
 	
 }
