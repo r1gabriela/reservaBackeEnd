@@ -27,12 +27,16 @@ public class TipoComemoracaoController {
 	public TipoComemoracaoDto salvar(TipoComemoracaoDto tipoComemoracaoDto) {
 		return tipoComemoracaoService.salvar(tipoComemoracaoDto);
 	}	
-	
 
     @RequestMapping(value = "/listarTodos", method = RequestMethod.GET)
 	public List<TipoComemoracaoDto> listarTodos(){
 	    return tipoComemoracaoService.listarTodos();
 	}
+    
+    @RequestMapping(value = "/pesquisarPorId", method = RequestMethod.GET)
+    public TipoComemoracaoDto pesquisarPorId(@RequestParam(value = "idTipoComemoracao") int idTipoComemoracao) {
+    	return tipoComemoracaoService.pesquisarPorId(idTipoComemoracao);	
+    }
     
 }		
 		

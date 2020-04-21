@@ -16,5 +16,9 @@ public interface TipoComemoracaoService {
 	public ArrayList<TipoComemoracaoDto> listarTipoComemoracaoDto(Iterable<TipoComemoracao> iterable);
 
 	public ArrayList<TipoComemoracaoDto> listarTodos();
+
+	public TipoComemoracaoDto pesquisarPorId(int idTipoComemoracao);
+
+	public TipoComemoracaoDto preencherTipoComemoracaoDto(TipoComemoracao tipoComemoracao);
 	
 }
