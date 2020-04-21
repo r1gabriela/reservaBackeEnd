@@ -16,9 +16,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Cliente", schema = "reserva.public")
-@NoArgsConstructor @AllArgsConstructor
-@PrimaryKeyJoinColumn(name="Pessoa_idPessoa")
+@Table(name = "cliente")
+@PrimaryKeyJoinColumn(name="pessoa_idpessoa")
+@NoArgsConstructor @AllArgsConstructor @Getter @Setter
 public class Cliente extends Pessoa implements Serializable {
 
 	/**
@@ -27,10 +27,10 @@ public class Cliente extends Pessoa implements Serializable {
 	private static final long serialVersionUID = 7566674233417885499L;
 
 	@Column(name = "telefone", length = 11, nullable = false)
-	@Getter @Setter private String telefone;
+	private String telefone;
 	
 	@Column(name = "email", length = 255, nullable = false)
-	@Getter @Setter private String email;
+	private String email;
 	
 	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
 	private List<Reserva> reservas;

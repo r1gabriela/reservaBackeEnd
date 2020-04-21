@@ -18,8 +18,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Usuario", schema = "reserva.public")
-@NoArgsConstructor @AllArgsConstructor
+@Table(name = "usuario")
+@NoArgsConstructor @AllArgsConstructor @Getter @Setter
 public class Usuario implements Serializable {
 
 	/**
@@ -28,21 +28,21 @@ public class Usuario implements Serializable {
 	private static final long serialVersionUID = -6018189950559272348L;
 
 	@Id
-	@Column(name="idUsuario", nullable = false)
+	@Column(name="idsuario", nullable = false)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Getter private Integer idUsuario;
+	private Integer idUsuario;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="Pessoa_idPessoa", referencedColumnName="idPessoa")
-	@Getter @Setter private Pessoa pessoa;
+	@JoinColumn(name="pessoa_ipessoa", referencedColumnName="idpessoa")
+	private Pessoa pessoa;
 	
 	@Column(name="login", length = 8, nullable = false)
-	@Getter @Setter private String login;
+	private String login;
 	
 	@Column(name="senha", length = 255, nullable = false)
-	@Getter @Setter private String senha;
+	private String senha;
 	
 	@Column(name="ativo", nullable = false)
-	@Getter @Setter private Boolean ativo;
+	private Boolean ativo;
 	
 }

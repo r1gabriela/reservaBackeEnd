@@ -18,8 +18,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "DataComemorativa", schema = "reserva.public")
-@NoArgsConstructor @AllArgsConstructor
+@Table(name = "datacomemorativa")
+@NoArgsConstructor @AllArgsConstructor @Getter @Setter
 public class DataComemorativa implements Serializable {
 
 	/**
@@ -28,23 +28,23 @@ public class DataComemorativa implements Serializable {
 	private static final long serialVersionUID = 3747636728874116194L;
 
 	@Id
-	@Column(name="idDataComemorativa", nullable = false)
+	@Column(name="iddatacomemorativa", nullable = false)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Getter private Integer idDataComemorativa;
+	private Integer idDataComemorativa;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="Pessoa_idPessoa", referencedColumnName="idPessoa")
-	@Getter @Setter private Pessoa pessoa;
+	@JoinColumn(name="pessoa_idpessoa", referencedColumnName="idpessoa")
+	private Pessoa pessoa;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="Cliente_Pessoa_idPessoa", referencedColumnName="Pessoa_idPessoa")
-	@Getter @Setter private Cliente cliente;
+	@JoinColumn(name="cliente_pessoa_idpessoa", referencedColumnName="pessoa_idpessoa")
+	private Cliente cliente;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="TipoComemoracao_idTipoComemoracao", referencedColumnName="idTipoComemoracao")
-	@Getter @Setter private TipoComemoracao tipoComemoracao;
+	@JoinColumn(name="tipocomemoracao_idtipocomemoracao", referencedColumnName="idtipocomemoracao")
+	private TipoComemoracao tipoComemoracao;
 	
 	@Column(name = "data_comemoracao", nullable = false)
-	@Getter @Setter private Date datacomemoracao;
+	private Date datacomemoracao;
 	
 }
