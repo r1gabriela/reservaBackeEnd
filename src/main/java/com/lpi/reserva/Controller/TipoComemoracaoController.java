@@ -34,6 +34,11 @@ public class TipoComemoracaoController {
 	    return tipoComemoracaoService.listarTodos();
 	}
     
+    @RequestMapping(value = "/pesquisarPorId", method = RequestMethod.GET)
+    public TipoComemoracaoDto pesquisarPorId(@RequestParam(value = "idTipoComemoracao") int idTipoComemoracao) {
+    	return tipoComemoracaoService.pesquisarPorId(idTipoComemoracao);	
+    }
+    
 }		
 		
 		

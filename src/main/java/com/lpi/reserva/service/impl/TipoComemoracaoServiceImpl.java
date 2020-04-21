@@ -72,6 +72,21 @@ public class TipoComemoracaoServiceImpl implements TipoComemoracaoService {
 	    return listarTipoComemoracaoDto(tipoComemoracaoRepository.findAll());
 	}
 	
+	@Override
+	public TipoComemoracaoDto pesquisarPorId(int idTipoComemoracao) {	
+		return preencherTipoComemoracaoDto(tipoComemoracaoRepository.findById(idTipoComemoracao).get());
+	}
+	
+	@Override
+	public TipoComemoracaoDto preencherTipoComemoracaoDto(TipoComemoracao tipoComemoracao) {
+		TipoComemoracaoDto tipoComemoracaoDto = new TipoComemoracaoDto();
+		tipoComemoracaoDto.setIdTipoComemoracao(tipoComemoracao.getIdTipoComemoracao());
+		tipoComemoracaoDto.setDescricao(tipoComemoracao.getDescricao());
+		tipoComemoracaoDto.setAtivo(tipoComemoracao.getAtivo());
+		return tipoComemoracaoDto;	
+		
+	}
+	
 }
 	
 
