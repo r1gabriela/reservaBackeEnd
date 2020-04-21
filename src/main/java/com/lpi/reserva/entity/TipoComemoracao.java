@@ -36,5 +36,5 @@ public class TipoComemoracao implements Serializable {
 	
 	@Column(name="ativo", nullable = false)
 	private Boolean ativo;
-	
+
 }

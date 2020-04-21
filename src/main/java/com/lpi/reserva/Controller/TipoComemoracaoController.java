@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lpi.reserva.dto.TipoComemoracaoDto;
-import com.lpi.reserva.entity.TipoComemoracao;
 import com.lpi.reserva.service.impl.TipoComemoracaoServiceImpl;
 
 @RestController
@@ -33,7 +32,7 @@ public class TipoComemoracaoController {
     @RequestMapping(value = "/listarTodos", method = RequestMethod.GET)
 	public List<TipoComemoracaoDto> listarTodos(){
 	    return tipoComemoracaoService.listarTodos();
-	    }
+	}
     
 }		
 		

@@ -17,6 +17,4 @@ public interface TipoComemoracaoService {
 
 	public ArrayList<TipoComemoracaoDto> listarTodos();
 	
-	
-	
 }
