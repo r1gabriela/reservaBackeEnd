@@ -1,5 +1,8 @@
 package com.lpi.reserva.service.impl;
 
+import java.util.ArrayList;
+
+import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,8 +53,29 @@ public class TipoComemoracaoServiceImpl implements TipoComemoracaoService {
 		tipoComemoracao.setDescricao(tipoComemoracaoDto.getDescricao());
 		tipoComemoracao.setAtivo(tipoComemoracaoDto.getAtivo());
 		return tipoComemoracao;
-	}		
+	
+	}
+	
+	@Override
+    public ArrayList<TipoComemoracaoDto> listarTipoComemoracaoDto(Iterable<TipoComemoracao> iterable) {
+        ArrayList<TipoComemoracaoDto> listaDto = new ArrayList<>();
+        for(TipoComemoracao tipoComemoracao: iterable) {
+            TipoComemoracaoDto tipoComemoracaoDto = new TipoComemoracaoDto();
+            tipoComemoracaoDto.setIdTipoComemoracao(tipoComemoracao.getIdTipoComemoracao());
+            tipoComemoracaoDto.setDescricao(tipoComemoracao.getDescricao());
+            tipoComemoracaoDto.setAtivo(tipoComemoracao.getAtivo());
+            listaDto.add(tipoComemoracaoDto);
+        }
+        return listaDto;
+    }
+	
+	@Override
+    public ArrayList<TipoComemoracaoDto> listarTodos() {
+	    return listarTipoComemoracaoDto(tipoComemoracaoRepository.findAll());
+	}
+	
 	
 }
+	
 
 
