@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lpi.reserva.dto.MesaDto;
 import com.lpi.reserva.service.impl.MesaServiceImpl;
 
 @RestController
@@ -18,6 +19,11 @@ public class MesaController {
 	@RequestMapping(value = "/excluir", method = RequestMethod.GET)
 	public boolean excluir(@RequestParam(value = "idMesa") int idMesa) {
 		return mesaService.excluir(idMesa);
+	}
+	
+	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
+	public MesaDto salvar(MesaDto mesaDto) {
+		return mesaService.salvar(mesaDto);
 	}
 	
 }
