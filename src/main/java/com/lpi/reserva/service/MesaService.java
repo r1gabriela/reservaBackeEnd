@@ -9,6 +9,8 @@ public interface MesaService {
 
 	public MesaDto salvar(MesaDto mesaDto);
 	
-	public Mesa preencherMesa(MesaDto mesaDto);
+	public Mesa preencherMesa(MesaDto mesaDto);	
+
+	public MesaDto pesquisarPorId(int idMesa);
 
 }

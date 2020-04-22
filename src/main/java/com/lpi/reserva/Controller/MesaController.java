@@ -26,4 +26,9 @@ public class MesaController {
 		return mesaService.salvar(mesaDto);
 	}
 	
+	@RequestMapping(value = "/pesquisarPorId", method = RequestMethod.GET)
+    public MesaDto pesquisarPorId(@RequestParam(value = "idMesa") int idMesa) {
+    	return mesaService.pesquisarPorId(idMesa);	
+    }
+	
 }

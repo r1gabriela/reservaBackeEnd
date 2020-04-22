@@ -52,4 +52,18 @@ public class MesaServiceImpl implements MesaService {
 		return mesa;
 	}
 
+	private MesaDto preencherMesaDto(Mesa mesa) {
+		MesaDto mesaDto = new MesaDto();
+		mesaDto.setIdMesa(mesa.getIdMesa());
+		mesaDto.setCapacidade(mesa.getCapacidade());
+		mesaDto.setLocalizacao(mesa.getLocalizacao());
+		mesaDto.setAtivo(mesa.getAtivo());
+		return mesaDto;
+	}
+	
+	@Override
+	public MesaDto pesquisarPorId(int idMesa) {	
+		return preencherMesaDto(mesaRepository.findById(idMesa).get());
+	}
+	
 }
