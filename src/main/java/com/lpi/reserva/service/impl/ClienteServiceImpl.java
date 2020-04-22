@@ -49,5 +49,21 @@ public class ClienteServiceImpl implements ClienteService {
 		cliente.setTelefone(clienteDto.getTelefone());
 		return cliente;
 	}
+
+	@Override
+	public ClienteDto pesquisarPorId(int idPessoa) {
+		return preencherClienteDto(clienteRepository.findById(idPessoa).get());
+	}
+	
+	@Override
+	public ClienteDto preencherClienteDto(Cliente cliente) {
+		ClienteDto clienteDto = new ClienteDto();
+		clienteDto.setIdPessoa(cliente.getIdPessoa());
+		clienteDto.setNome(cliente.getNome());
+		clienteDto.setCpf(cliente.getCpf());
+		clienteDto.setEmail(cliente.getEmail());
+		clienteDto.setTelefone(cliente.getTelefone());
+		return clienteDto;
+	}
 	
 }
