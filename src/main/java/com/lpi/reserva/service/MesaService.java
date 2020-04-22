@@ -11,6 +11,8 @@ public interface MesaService {
 	
 	public Mesa preencherMesa(MesaDto mesaDto);	
 
+	public MesaDto preencherMesaDto(Mesa mesa);
+	
 	public MesaDto pesquisarPorId(int idMesa);
 
 }

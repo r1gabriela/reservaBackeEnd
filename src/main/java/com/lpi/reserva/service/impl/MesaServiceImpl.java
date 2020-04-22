@@ -52,7 +52,8 @@ public class MesaServiceImpl implements MesaService {
 		return mesa;
 	}
 
-	private MesaDto preencherMesaDto(Mesa mesa) {
+	@Override
+	public MesaDto preencherMesaDto(Mesa mesa) {
 		MesaDto mesaDto = new MesaDto();
 		mesaDto.setIdMesa(mesa.getIdMesa());
 		mesaDto.setCapacidade(mesa.getCapacidade());
