@@ -1,7 +1,6 @@
 package com.lpi.reserva.service.impl;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,13 +57,9 @@ public class TipoComemoracaoServiceImpl implements TipoComemoracaoService {
 	@Override
     public ArrayList<TipoComemoracaoDto> listarTipoComemoracaoDto(Iterable<TipoComemoracao> iterable) {
         ArrayList<TipoComemoracaoDto> listaDto = new ArrayList<>();
-        for(TipoComemoracao tipoComemoracao: iterable) {
-            TipoComemoracaoDto tipoComemoracaoDto = new TipoComemoracaoDto();
-            tipoComemoracaoDto.setIdTipoComemoracao(tipoComemoracao.getIdTipoComemoracao());
-            tipoComemoracaoDto.setDescricao(tipoComemoracao.getDescricao());
-            tipoComemoracaoDto.setAtivo(tipoComemoracao.getAtivo());
-            listaDto.add(tipoComemoracaoDto);
-        }
+        for(TipoComemoracao tipoComemoracao: iterable) 
+            listaDto.add(preencherTipoComemoracaoDto(tipoComemoracao));
+    
         return listaDto;
     }
 	
@@ -88,23 +83,8 @@ public class TipoComemoracaoServiceImpl implements TipoComemoracaoService {
 	}
 
 	@Override
-	public ArrayList<TipoComemoracaoDto> listarPorAtivo(Iterable<TipoComemoracao> iterable) {
-		   ArrayList<TipoComemoracaoDto> listaDto = new ArrayList<>();
-	        for(TipoComemoracao tipoComemoracao: iterable) {
-	            TipoComemoracaoDto tipoComemoracaoDto = new TipoComemoracaoDto();
-	            tipoComemoracaoDto.setIdTipoComemoracao(tipoComemoracao.getIdTipoComemoracao());
-	            tipoComemoracaoDto.setDescricao(tipoComemoracao.getDescricao());
-	          tipoComemoracaoDto.setAtivo(tipoComemoracao.getAtivo());
-	            listaDto.add(tipoComemoracaoDto);
-	       }
-	   return listaDto;
+	public ArrayList<TipoComemoracaoDto> listarPorAtivo() {
+		return listarTipoComemoracaoDto(tipoComemoracaoRepository.listarPorAtivo());
 	}
 
-	@Override
-	public ArrayList<TipoComemoracaoDto> listarPorAtivo(boolean ativo) {
-		return listarPorAtivo(tipoComemoracaoRepository.listarPorAtivo(true));
-	}
-
-
-	
 }

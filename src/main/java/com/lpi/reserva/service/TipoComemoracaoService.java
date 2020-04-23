@@ -1,7 +1,6 @@
 package com.lpi.reserva.service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.lpi.reserva.dto.TipoComemoracaoDto;
 import com.lpi.reserva.entity.TipoComemoracao;
@@ -22,8 +21,6 @@ public interface TipoComemoracaoService {
 
 	public TipoComemoracaoDto preencherTipoComemoracaoDto(TipoComemoracao tipoComemoracao);
 
-	public ArrayList<TipoComemoracaoDto> listarPorAtivo(Iterable<TipoComemoracao> iterable);
-
-	public ArrayList<TipoComemoracaoDto> listarPorAtivo(boolean ativo);
+	public ArrayList<TipoComemoracaoDto> listarPorAtivo();
 	
 }
