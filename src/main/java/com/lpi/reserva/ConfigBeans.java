@@ -4,15 +4,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.lpi.reserva.Repository.ClienteRepository;
+import com.lpi.reserva.Repository.DependenteRepository;
 import com.lpi.reserva.Repository.MesaRepository;
+import com.lpi.reserva.Repository.PessoaRepository;
 import com.lpi.reserva.Repository.TipoComemoracaoRepository;
 import com.lpi.reserva.Repository.UsuarioRepository;
 import com.lpi.reserva.service.ClienteService;
+import com.lpi.reserva.service.DependenteService;
 import com.lpi.reserva.service.MesaService;
+import com.lpi.reserva.service.PessoaService;
 import com.lpi.reserva.service.TipoComemoracaoService;
 import com.lpi.reserva.service.UsuarioService;
 import com.lpi.reserva.service.impl.ClienteServiceImpl;
+import com.lpi.reserva.service.impl.DependenteServiceImpl;
 import com.lpi.reserva.service.impl.MesaServiceImpl;
+import com.lpi.reserva.service.impl.PessoaServiceImpl;
 import com.lpi.reserva.service.impl.TipoComemoracaoServiceImpl;
 import com.lpi.reserva.service.impl.UsuarioServiceImpl;
 
@@ -41,6 +47,18 @@ public class ConfigBeans {
 	public UsuarioService initializeUsuarioService(UsuarioRepository usuarioRepository) {
 		final UsuarioService usuarioService = new UsuarioServiceImpl(usuarioRepository);
 		return usuarioService;
+	}
+	
+	@Bean
+	public DependenteService initializeDependenteService(DependenteRepository dependenteRepository) {
+		final DependenteService dependenteService = new DependenteServiceImpl(dependenteRepository);
+		return dependenteService;
+	}
+	
+	@Bean
+	public PessoaService initializePessoaService(PessoaRepository pessoaRepository) {
+		final PessoaService pessoaService = new PessoaServiceImpl(pessoaRepository);
+		return pessoaService;
 	}
 	
 }
