@@ -6,12 +6,15 @@ import org.springframework.context.annotation.Configuration;
 import com.lpi.reserva.Repository.ClienteRepository;
 import com.lpi.reserva.Repository.MesaRepository;
 import com.lpi.reserva.Repository.TipoComemoracaoRepository;
+import com.lpi.reserva.Repository.UsuarioRepository;
 import com.lpi.reserva.service.ClienteService;
 import com.lpi.reserva.service.MesaService;
 import com.lpi.reserva.service.TipoComemoracaoService;
+import com.lpi.reserva.service.UsuarioService;
 import com.lpi.reserva.service.impl.ClienteServiceImpl;
 import com.lpi.reserva.service.impl.MesaServiceImpl;
 import com.lpi.reserva.service.impl.TipoComemoracaoServiceImpl;
+import com.lpi.reserva.service.impl.UsuarioServiceImpl;
 
 @Configuration
 public class ConfigBeans {
@@ -32,6 +35,12 @@ public class ConfigBeans {
 	public ClienteService initializeClienteService(ClienteRepository clienteRepository) {
 		final ClienteService clienteService = new ClienteServiceImpl(clienteRepository);
 		return clienteService;
+	}
+	
+	@Bean
+	public UsuarioService initializeUsuarioService(UsuarioRepository usuarioRepository) {
+		final UsuarioService usuarioService = new UsuarioServiceImpl(usuarioRepository);
+		return usuarioService;
 	}
 	
 }
