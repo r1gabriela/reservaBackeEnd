@@ -24,8 +24,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public UsuarioDto salvar(UsuarioDto usuarioDto) {
 		try	{
 			Usuario usuario = new Usuario();
+			
 			if (usuarioDto.getIdUsuario() == 0)
 				usuario = usuarioRepository.pesquisarUsuarioPorLogin(usuarioDto.getLogin());
+			
 			if (usuario == null || usuario.getIdUsuario() == null)
 				usuarioRepository.save(preencherUsuario(usuarioDto));
 			else 
