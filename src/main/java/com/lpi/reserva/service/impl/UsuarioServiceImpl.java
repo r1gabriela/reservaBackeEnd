@@ -51,6 +51,19 @@ public class UsuarioServiceImpl implements UsuarioService {
 		usuario.setLogin(usuarioDto.getLogin());
 		usuario.setSenha(usuarioDto.getSenha());
 		return usuario;
-	} 
+	}
+
+	@Override
+	public boolean excluir(Integer idUsuario) {
+		try {
+			Usuario usuario = usuarioRepository.findById(idUsuario).get();
+			usuario.setAtivo(false);
+			usuarioRepository.save(usuario);
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}	
+	}
 
 }
