@@ -8,5 +8,7 @@ public interface UsuarioService {
 	public UsuarioDto salvar(UsuarioDto usuarioDto);
 
 	public  Usuario preencherUsuario(UsuarioDto usuarioDto);
+
+	public boolean excluir(Integer idUsuario);
 	
 }

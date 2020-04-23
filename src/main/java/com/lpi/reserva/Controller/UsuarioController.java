@@ -3,6 +3,7 @@ package com.lpi.reserva.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lpi.reserva.dto.UsuarioDto;
@@ -19,5 +20,10 @@ public class UsuarioController {
 	public UsuarioDto salvar(UsuarioDto usuarioDto) {
 		return usuarioService.salvar(usuarioDto);
 	}	
+	
+	@RequestMapping(value = "/excluir", method = RequestMethod.GET)
+	public boolean excluir(@RequestParam(value = "idUsuario") int idUsuario) {
+		return usuarioService.excluir(idUsuario);
+	}
 
 }
