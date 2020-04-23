@@ -38,7 +38,12 @@ public class TipoComemoracaoController {
     	return tipoComemoracaoService.pesquisarPorId(idTipoComemoracao);	
     }
     
-}		
+    @RequestMapping(value = "/listarPorAtivo", method = RequestMethod.GET)
+	public List<TipoComemoracaoDto> listarPorAtivo(@RequestParam(value = "ativo")boolean ativo){
+	    return tipoComemoracaoService.listarPorAtivo(ativo);
+    }
+}	
+    
 		
 		
 	
