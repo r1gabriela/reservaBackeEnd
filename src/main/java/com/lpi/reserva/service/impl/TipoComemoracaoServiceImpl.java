@@ -57,13 +57,9 @@ public class TipoComemoracaoServiceImpl implements TipoComemoracaoService {
 	@Override
     public ArrayList<TipoComemoracaoDto> listarTipoComemoracaoDto(Iterable<TipoComemoracao> iterable) {
         ArrayList<TipoComemoracaoDto> listaDto = new ArrayList<>();
-        for(TipoComemoracao tipoComemoracao: iterable) {
-            TipoComemoracaoDto tipoComemoracaoDto = new TipoComemoracaoDto();
-            tipoComemoracaoDto.setIdTipoComemoracao(tipoComemoracao.getIdTipoComemoracao());
-            tipoComemoracaoDto.setDescricao(tipoComemoracao.getDescricao());
-            tipoComemoracaoDto.setAtivo(tipoComemoracao.getAtivo());
-            listaDto.add(tipoComemoracaoDto);
-        }
+        for(TipoComemoracao tipoComemoracao: iterable) 
+            listaDto.add(preencherTipoComemoracaoDto(tipoComemoracao));
+    
         return listaDto;
     }
 	
@@ -85,8 +81,10 @@ public class TipoComemoracaoServiceImpl implements TipoComemoracaoService {
 		tipoComemoracaoDto.setAtivo(tipoComemoracao.getAtivo());
 		return tipoComemoracaoDto;		
 	}
-	
+
+	@Override
+	public ArrayList<TipoComemoracaoDto> listarPorAtivo() {
+		return listarTipoComemoracaoDto(tipoComemoracaoRepository.listarPorAtivo());
+	}
+
 }
-	
-
-

@@ -1,6 +1,6 @@
 package com.lpi.reserva.Controller;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +29,7 @@ public class TipoComemoracaoController {
 	}	
 
     @RequestMapping(value = "/listarTodos", method = RequestMethod.GET)
-	public List<TipoComemoracaoDto> listarTodos(){
+	public ArrayList<TipoComemoracaoDto> listarTodos(){
 	    return tipoComemoracaoService.listarTodos();
 	}
 
@@ -38,4 +38,9 @@ public class TipoComemoracaoController {
     	return tipoComemoracaoService.pesquisarPorId(idTipoComemoracao);	
     }
     
-}		
+    @RequestMapping(value = "/listarPorAtivo", method = RequestMethod.GET)
+	public ArrayList<TipoComemoracaoDto> listarPorAtivo(){
+	    return tipoComemoracaoService.listarPorAtivo();
+    }
+
+}

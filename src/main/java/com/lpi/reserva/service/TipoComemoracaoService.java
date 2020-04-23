@@ -20,5 +20,7 @@ public interface TipoComemoracaoService {
 	public TipoComemoracaoDto pesquisarPorId(int idTipoComemoracao);
 
 	public TipoComemoracaoDto preencherTipoComemoracaoDto(TipoComemoracao tipoComemoracao);
+
+	public ArrayList<TipoComemoracaoDto> listarPorAtivo();
 	
 }
