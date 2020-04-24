@@ -55,4 +55,19 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 		return funcionario;
 	}
 
+	@Override
+	public FuncionarioDto preencherFuncionarioDto(Funcionario funcionario) {
+		FuncionarioDto funcionarioDto = new FuncionarioDto();
+		funcionarioDto.setIdPessoa(funcionario.getIdPessoa());
+		funcionarioDto.setNome(funcionario.getNome());
+		funcionarioDto.setCpf(funcionario.getCpf());
+		funcionarioDto.setIdTipoFuncionario(funcionario.getTipoFuncionario().getIdTipoFuncionario());
+		return funcionarioDto;
+	}
+	
+	@Override
+	public FuncionarioDto pesquisarPorId(int idPessoa) {
+		return preencherFuncionarioDto(funcionarioRepository.findById(idPessoa).get());
+	}
+
 }
