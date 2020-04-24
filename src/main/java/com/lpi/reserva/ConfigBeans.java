@@ -8,6 +8,7 @@ import com.lpi.reserva.Repository.DependenteRepository;
 import com.lpi.reserva.Repository.FuncionarioRepository;
 import com.lpi.reserva.Repository.MesaRepository;
 import com.lpi.reserva.Repository.PessoaRepository;
+import com.lpi.reserva.Repository.ReservaRepository;
 import com.lpi.reserva.Repository.TipoComemoracaoRepository;
 import com.lpi.reserva.Repository.UsuarioRepository;
 import com.lpi.reserva.service.ClienteService;
@@ -15,6 +16,7 @@ import com.lpi.reserva.service.DependenteService;
 import com.lpi.reserva.service.FuncionarioService;
 import com.lpi.reserva.service.MesaService;
 import com.lpi.reserva.service.PessoaService;
+import com.lpi.reserva.service.ReservaService;
 import com.lpi.reserva.service.TipoComemoracaoService;
 import com.lpi.reserva.service.UsuarioService;
 import com.lpi.reserva.service.impl.ClienteServiceImpl;
@@ -22,6 +24,7 @@ import com.lpi.reserva.service.impl.DependenteServiceImpl;
 import com.lpi.reserva.service.impl.FuncionarioServiceImpl;
 import com.lpi.reserva.service.impl.MesaServiceImpl;
 import com.lpi.reserva.service.impl.PessoaServiceImpl;
+import com.lpi.reserva.service.impl.ReservaServiceImpl;
 import com.lpi.reserva.service.impl.TipoComemoracaoServiceImpl;
 import com.lpi.reserva.service.impl.UsuarioServiceImpl;
 
@@ -68,6 +71,12 @@ public class ConfigBeans {
 	public FuncionarioService initializeFuncionarioService(FuncionarioRepository funcionarioRepository) {
 		final FuncionarioService funcionarioService = new FuncionarioServiceImpl(funcionarioRepository);
 		return funcionarioService;
+	}
+	
+	@Bean
+	public ReservaService initializeReservaService(ReservaRepository reservaRepository) {
+		final ReservaService reservaService = new ReservaServiceImpl(reservaRepository);
+		return reservaService;
 	}
 	
 }
