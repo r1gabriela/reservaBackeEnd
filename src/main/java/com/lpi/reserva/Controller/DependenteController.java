@@ -3,6 +3,7 @@ package com.lpi.reserva.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lpi.reserva.dto.DependenteDto;
@@ -16,8 +17,12 @@ public class DependenteController {
 	private DependenteServiceImpl dependenteService;
 	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public DependenteDto salvar(DependenteDto dependeteDto) {
-		return dependenteService.salvar(dependeteDto);
+	public DependenteDto salvar(DependenteDto dependenteDto) {
+		return dependenteService.salvar(dependenteDto);
 	}
 	
+	@RequestMapping(value = "/excluir", method = RequestMethod.GET)
+	public boolean excluir(@RequestParam(value = "idPessoa") Integer idPessoa) {
+		return dependenteService.excluir(idPessoa);
+	}
 }

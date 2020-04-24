@@ -3,6 +3,7 @@ package com.lpi.reserva.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lpi.reserva.Repository.ClienteRepository;
 import com.lpi.reserva.Repository.DependenteRepository;
 import com.lpi.reserva.dto.DependenteDto;
 import com.lpi.reserva.entity.Cliente;
@@ -36,23 +37,36 @@ public class DependenteServiceImpl implements DependenteService {
 	}
 	
 	@Override
-	public DependenteDto salvar(DependenteDto dependeteDto) {
+	public DependenteDto salvar(DependenteDto dependenteDto) {
 		try {
 			Pessoa pessoa = new Pessoa();
 			
-			pessoa = pessoaService.pesquisarPorCpf(dependeteDto.getCpf());
+			pessoa = pessoaService.pesquisarPorCpf(dependenteDto.getCpf());
 			
-			if (pessoa == null || pessoa.getIdPessoa() == dependeteDto.getIdPessoa()) {
-				dependenteRepository.save(preecherDependente(dependeteDto));
+			if (pessoa == null || pessoa.getIdPessoa() == dependenteDto.getIdPessoa()) {
+				dependenteRepository.save(preecherDependente(dependenteDto));
 			} else {
 				throw new IllegalArgumentException("Cpf já cadastrado.");
 			}
 			
-			return dependeteDto;
+			return dependenteDto;
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
 		}	
+	}
+
+	@Override	
+	public boolean excluir(Integer idPessoa) {
+		try {
+			Dependente dependente = dependenteRepository.findById(idPessoa).get();
+			dependente.setAtivo(false);
+			dependenteRepository.save(dependente);
+			return true;
+		}catch(Exception e){
+		     e.printStackTrace(); 
+		     return false;
+		}
 	}
 
 }

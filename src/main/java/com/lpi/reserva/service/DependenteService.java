@@ -6,4 +6,6 @@ public interface DependenteService {
 
 	public DependenteDto salvar(DependenteDto dependeteDto);
 
+	boolean excluir(Integer idPessoa);
+
 }
