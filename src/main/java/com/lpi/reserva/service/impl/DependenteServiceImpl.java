@@ -3,7 +3,6 @@ package com.lpi.reserva.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lpi.reserva.Repository.ClienteRepository;
 import com.lpi.reserva.Repository.DependenteRepository;
 import com.lpi.reserva.dto.DependenteDto;
 import com.lpi.reserva.entity.Cliente;
