@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lpi.reserva.Repository.UsuarioRepository;
+import com.lpi.reserva.dto.TipoComemoracaoDto;
 import com.lpi.reserva.dto.UsuarioDto;
 import com.lpi.reserva.entity.Pessoa;
+import com.lpi.reserva.entity.TipoComemoracao;
 import com.lpi.reserva.entity.Usuario;
 import com.lpi.reserva.service.UsuarioService;
 
@@ -64,6 +66,22 @@ public class UsuarioServiceImpl implements UsuarioService {
 			e.printStackTrace();
 			return false;
 		}	
+	}
+
+	@Override
+	public UsuarioDto pesquisarPorId(int idUsuario) {	
+		return preencherUsuarioDto(usuarioRepository.findById(idUsuario).get());
+	}
+
+	@Override
+	public UsuarioDto preencherUsuarioDto(Usuario usuario) {
+		UsuarioDto usuarioDto = new UsuarioDto();
+		usuarioDto.setIdUsuario(usuario.getIdUsuario());
+		usuarioDto.setIdPessoa(usuario.getPessoa().getIdPessoa());
+		usuarioDto.setLogin(usuario.getLogin());
+		usuarioDto.setSenha(usuario.getSenha());
+		usuarioDto.setAtivo(usuario.getAtivo());
+		return usuarioDto;		
 	}
 
 }
