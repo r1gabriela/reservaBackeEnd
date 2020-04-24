@@ -66,4 +66,20 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}	
 	}
 
+	@Override
+	public UsuarioDto pesquisarPorId(int idUsuario) {	
+		return preencherUsuarioDto(usuarioRepository.findById(idUsuario).get());
+	}
+
+	@Override
+	public UsuarioDto preencherUsuarioDto(Usuario usuario) {
+		UsuarioDto usuarioDto = new UsuarioDto();
+		usuarioDto.setIdUsuario(usuario.getIdUsuario());
+		usuarioDto.setIdPessoa(usuario.getPessoa().getIdPessoa());
+		usuarioDto.setLogin(usuario.getLogin());
+		usuarioDto.setSenha(usuario.getSenha());
+		usuarioDto.setAtivo(usuario.getAtivo());
+		return usuarioDto;		
+	}
+
 }

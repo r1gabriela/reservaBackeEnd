@@ -10,5 +10,9 @@ public interface UsuarioService {
 	public  Usuario preencherUsuario(UsuarioDto usuarioDto);
 
 	public boolean excluir(Integer idUsuario);
+
+	public UsuarioDto pesquisarPorId(int idUsuario);
+
+	public UsuarioDto preencherUsuarioDto(Usuario usuario);
 	
 }

@@ -25,5 +25,10 @@ public class UsuarioController {
 	public boolean excluir(@RequestParam(value = "idUsuario") int idUsuario) {
 		return usuarioService.excluir(idUsuario);
 	}
+	
+	@RequestMapping(value = "/pesquisarPorId", method = RequestMethod.GET)
+    public UsuarioDto pesquisarPorId(@RequestParam(value = "idUsuario") int idUsuario) {
+    	return usuarioService.pesquisarPorId(idUsuario);	
+    }
 
 }
