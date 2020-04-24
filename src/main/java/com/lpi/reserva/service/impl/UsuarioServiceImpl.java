@@ -5,10 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lpi.reserva.Repository.UsuarioRepository;
-import com.lpi.reserva.dto.TipoComemoracaoDto;
 import com.lpi.reserva.dto.UsuarioDto;
 import com.lpi.reserva.entity.Pessoa;
-import com.lpi.reserva.entity.TipoComemoracao;
 import com.lpi.reserva.entity.Usuario;
 import com.lpi.reserva.service.UsuarioService;
 
