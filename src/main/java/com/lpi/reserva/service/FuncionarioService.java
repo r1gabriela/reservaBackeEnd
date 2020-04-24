@@ -7,6 +7,10 @@ public interface FuncionarioService {
 
 	public FuncionarioDto salvar(FuncionarioDto funcionarioDto);
 	
-	public Funcionario preencherFuncionario(FuncionarioDto funcionarioDto);	
+	public Funcionario preencherFuncionario(FuncionarioDto funcionarioDto);
+
+	public FuncionarioDto pesquisarPorId(int idPessoa);
+
+	public FuncionarioDto preencherFuncionarioDto(Funcionario funcionario);	
 	
 }
