@@ -1,7 +1,5 @@
 package com.lpi.reserva.service.impl;
 
-import java.sql.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,10 +56,26 @@ public class DataComemorativaServiceImpl implements  DataComemorativaService {
 		TipoComemoracao tipoComemoracao = new TipoComemoracao();
 		tipoComemoracao.setIdTipoComemoracao(dataComemorativaDto.getIdTipoComemoracao());
 		dataComemorativa.setTipoComemoracao(tipoComemoracao);
-//		long time = Long.parseLong(dataComemorativaDto.getDataComemoracao());
-//		Date date = new Date(time);
 		dataComemorativa.setDatacomemoracao(dataComemorativaDto.getDataComemoracao());
 		return dataComemorativa;
+	}
+
+
+	@Override
+	public DataComemorativaDto pesquisarPorId(int idDataComemorativa) {
+		return preencherDataComemorativaDto(dataComemorativaRepository.findById(idDataComemorativa).get());
+	}
+
+
+	@Override
+	public DataComemorativaDto preencherDataComemorativaDto(DataComemorativa dataComemorativa) {
+		DataComemorativaDto dataComemorativaDto = new DataComemorativaDto();
+		dataComemorativaDto.setIdDataComemorativa(dataComemorativa.getIdDataComemorativa());
+		dataComemorativaDto.setIdCliente(dataComemorativa.getCliente().getIdPessoa());
+		dataComemorativaDto.setIdPessoa(dataComemorativa.getPessoa().getIdPessoa());
+		dataComemorativaDto.setIdTipoComemoracao(dataComemorativa.getTipoComemoracao().getIdTipoComemoracao());
+		dataComemorativaDto.setDataComemoracao(dataComemorativa.getDatacomemoracao());
+		return dataComemorativaDto;
 	}
 
 }
