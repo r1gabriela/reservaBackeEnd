@@ -65,4 +65,17 @@ public class ReservaServiceImpl implements ReservaService {
 		return preencherReservaDto(reservaRepository.findById(idReserva).get());
 	}
 
+	@Override
+	public boolean excluir(int idReserva) {
+		try {
+			Reserva reserva = reservaRepository.findById(idReserva).get();
+			reserva.setAtivo(false);
+			reservaRepository.save(reserva);
+			return true;
+		}catch(Exception e){
+		     e.printStackTrace(); 
+		     return false;
+		}
+	}
+
 }
