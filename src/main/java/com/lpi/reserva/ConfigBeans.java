@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.lpi.reserva.Repository.ClienteRepository;
+import com.lpi.reserva.Repository.DataComemorativaRepository;
 import com.lpi.reserva.Repository.DependenteRepository;
 import com.lpi.reserva.Repository.FuncionarioRepository;
 import com.lpi.reserva.Repository.MesaRepository;
@@ -12,6 +13,7 @@ import com.lpi.reserva.Repository.ReservaRepository;
 import com.lpi.reserva.Repository.TipoComemoracaoRepository;
 import com.lpi.reserva.Repository.UsuarioRepository;
 import com.lpi.reserva.service.ClienteService;
+import com.lpi.reserva.service.DataComemorativaService;
 import com.lpi.reserva.service.DependenteService;
 import com.lpi.reserva.service.FuncionarioService;
 import com.lpi.reserva.service.MesaService;
@@ -20,6 +22,7 @@ import com.lpi.reserva.service.ReservaService;
 import com.lpi.reserva.service.TipoComemoracaoService;
 import com.lpi.reserva.service.UsuarioService;
 import com.lpi.reserva.service.impl.ClienteServiceImpl;
+import com.lpi.reserva.service.impl.DataComemorativaServiceImpl;
 import com.lpi.reserva.service.impl.DependenteServiceImpl;
 import com.lpi.reserva.service.impl.FuncionarioServiceImpl;
 import com.lpi.reserva.service.impl.MesaServiceImpl;
@@ -77,6 +80,12 @@ public class ConfigBeans {
 	public ReservaService initializeReservaService(ReservaRepository reservaRepository) {
 		final ReservaService reservaService = new ReservaServiceImpl(reservaRepository);
 		return reservaService;
+	}
+	
+	@Bean
+	public DataComemorativaService initializeDataComemorativaService(DataComemorativaRepository dataComemorativaRepository) {
+		final DataComemorativaService dataComemorativaService = new DataComemorativaServiceImpl(dataComemorativaRepository);
+		return dataComemorativaService;
 	}
 	
 }
