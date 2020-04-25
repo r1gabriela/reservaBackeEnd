@@ -13,4 +13,6 @@ public interface ReservaService {
 	
 	public ReservaDto pesquisarPorId(int idReserva);
 	
+	public boolean excluir(int idReserva);
+	
 }
