@@ -49,4 +49,20 @@ public class ReservaServiceImpl implements ReservaService {
 		return reserva;
 	}
 
+	@Override
+	public ReservaDto preencherReservaDto(Reserva reserva) {
+		ReservaDto reservaDto = new ReservaDto();
+		reservaDto.setIdReserva(reserva.getIdReserva());
+		reservaDto.setIdCliente(reserva.getCliente().getIdPessoa());
+		reservaDto.setIdMesa(reserva.getMesa().getIdMesa());
+		reservaDto.setDataHora(reserva.getDataHora().toString());
+		reservaDto.setAtivo(reserva.getAtivo());
+		return reservaDto;
+	}
+
+	@Override
+	public ReservaDto pesquisarPorId(int idReserva) {
+		return preencherReservaDto(reservaRepository.findById(idReserva).get());
+	}
+
 }

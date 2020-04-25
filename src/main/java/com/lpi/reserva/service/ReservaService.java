@@ -9,4 +9,8 @@ public interface ReservaService {
 	
 	public Reserva preencherReserva(ReservaDto reservaDto);
 	
+	public ReservaDto preencherReservaDto(Reserva reserva);
+	
+	public ReservaDto pesquisarPorId(int idReserva);
+	
 }
