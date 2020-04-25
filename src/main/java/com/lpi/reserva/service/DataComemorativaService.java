@@ -13,4 +13,6 @@ public interface DataComemorativaService {
 	
 	public DataComemorativaDto preencherDataComemorativaDto(DataComemorativa dataComemorativa);
 	
+	public boolean excluir(int idDataComemorativa);
+	
 }
