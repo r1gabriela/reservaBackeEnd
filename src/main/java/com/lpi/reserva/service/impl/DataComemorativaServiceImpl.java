@@ -78,4 +78,16 @@ public class DataComemorativaServiceImpl implements  DataComemorativaService {
 		return dataComemorativaDto;
 	}
 
+
+	@Override
+	public boolean excluir(int idDataComemorativa) {
+		try {
+			dataComemorativaRepository.deleteById(idDataComemorativa);;
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }

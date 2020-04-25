@@ -26,4 +26,9 @@ public class DataComemorativaController {
     	return dataComemorativaService.pesquisarPorId(idDataComemorativa);	
     }
 	
+	@RequestMapping(value = "/excluir", method = RequestMethod.GET)
+    public boolean excluir(@RequestParam(value = "idDataComemorativa") int idDataComemorativa) {
+    	return dataComemorativaService.excluir(idDataComemorativa);	
+    }
+	
 }
