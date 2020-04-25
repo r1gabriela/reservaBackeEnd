@@ -9,4 +9,8 @@ public interface DataComemorativaService {
 	
 	public DataComemorativa preencherDataComemorativa(DataComemorativaDto dataComemorativaDto);
 	
+	public DataComemorativaDto pesquisarPorId(int idDataComemorativa);
+	
+	public DataComemorativaDto preencherDataComemorativaDto(DataComemorativa dataComemorativa);
+	
 }
