@@ -13,8 +13,7 @@ public interface TipoComemoracaoRepository extends CrudRepository<TipoComemoraca
 	@Query(value = "SELECT t FROM TipoComemoracao t WHERE t.ativo = true")
 	public Iterable<TipoComemoracao>listarPorAtivo();
 	
-	@Query(value = " SELECT t FROM TipoComemoracao t Where t.descricao = :descricao")
-	public TipoComemoracao pesquisarDescricao(@Param("descricao")String descricao);
-	
+	@Query(value = "SELECT t FROM TipoComemoracao t Where LOWER(t.descricao) = :descricao")
+	public TipoComemoracao pesquisarDescricao(@Param("descricao") String descricao);
 
 }

@@ -2,8 +2,6 @@ package com.lpi.reserva.service.impl;
 
 import java.util.ArrayList;
 
-import javax.persistence.NonUniqueResultException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,17 +36,17 @@ public class TipoComemoracaoServiceImpl implements TipoComemoracaoService {
 	@Override
 	public TipoComemoracaoDto salvar(TipoComemoracaoDto tipoComemoracaoDto) {
 		try	{
-			TipoComemoracao comemoracao = new TipoComemoracao();
+			TipoComemoracao tipocomemoracao = new TipoComemoracao();
 			
-			comemoracao = tipoComemoracaoRepository.pesquisarDescricao(tipoComemoracaoDto.getDescricao());
+			tipocomemoracao = tipoComemoracaoRepository.pesquisarDescricao(tipoComemoracaoDto.getDescricao().toLowerCase());
 			
-			if (comemoracao == null || comemoracao.getDescricao() == tipoComemoracaoDto.getDescricao()){
-			tipoComemoracaoRepository.save(preencherTipoComemoracao(tipoComemoracaoDto));
-			}else {
-				throw new NonUniqueResultException("Tipo de comemoraçao ja cadastrada");
+			if (tipocomemoracao == null || tipocomemoracao.getIdTipoComemoracao() == tipoComemoracaoDto.getIdTipoComemoracao()){
+				tipoComemoracaoRepository.save(preencherTipoComemoracao(tipoComemoracaoDto));		
+			} else {
+				throw new Exception("Tipo de comemoraçao ja cadastrada");
 			}
 			return tipoComemoracaoDto;
-		}catch(Exception e){
+		} catch(Exception e) {
 			e.printStackTrace();
 			return null;
 		}	
