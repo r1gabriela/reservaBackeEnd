@@ -36,9 +36,17 @@ public class TipoComemoracaoServiceImpl implements TipoComemoracaoService {
 	@Override
 	public TipoComemoracaoDto salvar(TipoComemoracaoDto tipoComemoracaoDto) {
 		try	{
-			tipoComemoracaoRepository.save(preencherTipoComemoracao(tipoComemoracaoDto));
+			TipoComemoracao tipocomemoracao = new TipoComemoracao();
+			
+			tipocomemoracao = tipoComemoracaoRepository.pesquisarDescricao(tipoComemoracaoDto.getDescricao().toLowerCase());
+			
+			if (tipocomemoracao == null || tipocomemoracao.getIdTipoComemoracao() == tipoComemoracaoDto.getIdTipoComemoracao()){
+				tipoComemoracaoRepository.save(preencherTipoComemoracao(tipoComemoracaoDto));		
+			} else {
+				throw new Exception("Tipo de comemoraçao ja cadastrada");
+			}
 			return tipoComemoracaoDto;
-		}catch(Exception e){
+		} catch(Exception e) {
 			e.printStackTrace();
 			return null;
 		}	
