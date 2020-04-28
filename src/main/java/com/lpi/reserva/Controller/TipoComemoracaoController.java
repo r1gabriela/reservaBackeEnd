@@ -32,7 +32,7 @@ public class TipoComemoracaoController {
 	public ArrayList<TipoComemoracaoDto> listarTodos(){
 	    return tipoComemoracaoService.listarTodos();
 	}
-    
+
     @RequestMapping(value = "/pesquisarPorId", method = RequestMethod.GET)
     public TipoComemoracaoDto pesquisarPorId(@RequestParam(value = "idTipoComemoracao") int idTipoComemoracao) {
     	return tipoComemoracaoService.pesquisarPorId(idTipoComemoracao);	
@@ -43,4 +43,4 @@ public class TipoComemoracaoController {
 	    return tipoComemoracaoService.listarPorAtivo();
     }
 
-}	
+}
