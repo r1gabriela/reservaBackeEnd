@@ -6,14 +6,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
-public class MesaDto {
-	
-	private Integer idMesa;
-	
-	private Integer capacidade;
-	
-	private String localizacao;
-	
-	private Boolean ativo;
+public class PessoaDto {
 
+	private Integer idPessoa;
+
+	private String nome;
+
+	private String cpf;
+	
 }

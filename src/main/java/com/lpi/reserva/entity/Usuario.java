@@ -28,12 +28,12 @@ public class Usuario implements Serializable {
 	private static final long serialVersionUID = -6018189950559272348L;
 
 	@Id
-	@Column(name="idsuario", nullable = false)
+	@Column(name="idusuario", nullable = false)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer idUsuario;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="pessoa_ipessoa", referencedColumnName="idpessoa")
+	@JoinColumn(name="pessoa_idpessoa", referencedColumnName="idpessoa")
 	private Pessoa pessoa;
 	
 	@Column(name="login", length = 8, nullable = false)

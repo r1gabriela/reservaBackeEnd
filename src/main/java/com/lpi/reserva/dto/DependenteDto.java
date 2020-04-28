@@ -6,14 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
-public class MesaDto {
-	
-	private Integer idMesa;
-	
-	private Integer capacidade;
-	
-	private String localizacao;
-	
-	private Boolean ativo;
+public class DependenteDto extends PessoaDto {
 
+	private Integer idCliente;
+	
+	private boolean ativo;
+	
 }
