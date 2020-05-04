@@ -13,4 +13,7 @@ public interface DataComemorativaRepository extends CrudRepository<DataComemorat
 	@Query(value = "SELECT d FROM DataComemorativa d WHERE d.cliente.idPessoa = :idCliente AND d.pessoa.idPessoa = :idPessoa AND d.tipoComemoracao.idTipoComemoracao = :idTipoComemoracao")
 	public DataComemorativa pesquisarDataComemorativaRepetidada(@Param("idCliente") Integer idCliente, @Param("idPessoa") Integer idPessoa, @Param("idTipoComemoracao") Integer idTipoComemoracao);
 	
+	@Query(value = "SELECT d FROM DataComemorativa d WHERE d.tipoComemoracao.idTipoComemoracao = :idTipoComemoracao")
+	public Iterable<DataComemorativa> pesquisarPorIdTipoComemoracao(@Param("idTipoComemoracao") Integer idTipoComemoracao);
+	
 }
