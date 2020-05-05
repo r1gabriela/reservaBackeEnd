@@ -1,5 +1,7 @@
 package com.lpi.reserva.service.impl;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -88,6 +90,23 @@ public class DataComemorativaServiceImpl implements  DataComemorativaService {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+
+	@Override
+	public ArrayList<DataComemorativaDto> pesquisarPorIdTipoComemoracao(int idTipoComemoracao) {
+		return preencherLista(dataComemorativaRepository.pesquisarPorIdTipoComemoracao(idTipoComemoracao));
+	}
+
+
+	@Override
+	public ArrayList<DataComemorativaDto> preencherLista(Iterable<DataComemorativa> iterable) {
+		ArrayList<DataComemorativaDto> lista = new ArrayList<>();
+		
+		for(DataComemorativa dataComemorativa: iterable)
+			lista.add(preencherDataComemorativaDto(dataComemorativa));
+		
+		return lista;
 	}
 
 }
