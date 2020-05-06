@@ -1,6 +1,7 @@
 package com.lpi.reserva.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +18,7 @@ public class DataComemorativaController {
 	private DataComemorativaServiceImpl dataComemorativaService;
 	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public DataComemorativaDto salvar(DataComemorativaDto dataComemorativaDto) {
+	public DataComemorativaDto salvar(@RequestBody DataComemorativaDto dataComemorativaDto) {
 		return dataComemorativaService.salvar(dataComemorativaDto);
 	}
 	
