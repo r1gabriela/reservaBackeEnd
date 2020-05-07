@@ -17,5 +17,5 @@ public class UsuarioDto {
 	private String senha;
 	
 	private Boolean ativo;
-	
+
 }
