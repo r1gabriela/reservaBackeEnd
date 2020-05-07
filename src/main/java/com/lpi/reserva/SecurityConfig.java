@@ -1,17 +1,14 @@
 package com.lpi.reserva;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
-
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -25,8 +22,7 @@ import com.lpi.reserva.service.impl.UserDetailsServiceImpl;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
-	@Autowired
-	private UserDetailsServiceImpl userDetailsService;
+	final  UserDetailsService userDetailsService = new UserDetailsServiceImpl();
 	
 	//@Override
 	//public void configure(WebSecurity web) throws Exception{
@@ -41,14 +37,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.csrf().disable()
 		.authorizeRequests()
 		.antMatchers("/resources/**", "/webjars/**" , "/materialize/**" , "/style/**").permitAll() //libera recursos js e css
-		.antMatchers("/reserva/salvar").permitAll()
+		.antMatchers("/reserva/salvar").permitAll();
+//		.antMatchers("/mesa/salvar").permitAll();
+	  //.antMatchers("/salvar/dataComemorativa").hasRole("USER")
+      //.antMatchers("/usuario/pesquisarPorId").hasRole("ADMIM")
+		
+	
+		http.cors()
+		.and()
+		.csrf().disable()
+		.authorizeRequests()
+		.antMatchers("/resources/**", "/webjars/**" , "/materialize/**" , "/style/**").permitAll() //libera recursos js e css
 		.antMatchers("/mesa/salvar").permitAll()
 	  //.antMatchers("/salvar/dataComemorativa").hasRole("USER")
       //.antMatchers("/usuario/pesquisarPorId").hasRole("ADMIM")
 		.anyRequest().authenticated() 
 		.and()
 		.formLogin().permitAll();
-	
+		
 	}
 	
 	@Override
@@ -56,6 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		auth.userDetailsService(userDetailsService)
 		.passwordEncoder(new BCryptPasswordEncoder());
 	}
+	
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();

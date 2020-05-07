@@ -2,6 +2,7 @@ package com.lpi.reserva;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.lpi.reserva.Repository.ClienteRepository;
 import com.lpi.reserva.Repository.DataComemorativaRepository;
@@ -29,6 +30,7 @@ import com.lpi.reserva.service.impl.MesaServiceImpl;
 import com.lpi.reserva.service.impl.PessoaServiceImpl;
 import com.lpi.reserva.service.impl.ReservaServiceImpl;
 import com.lpi.reserva.service.impl.TipoComemoracaoServiceImpl;
+import com.lpi.reserva.service.impl.UserDetailsServiceImpl;
 import com.lpi.reserva.service.impl.UsuarioServiceImpl;
 
 @Configuration
@@ -86,6 +88,12 @@ public class ConfigBeans {
 	public DataComemorativaService initializeDataComemorativaService(DataComemorativaRepository dataComemorativaRepository) {
 		final DataComemorativaService dataComemorativaService = new DataComemorativaServiceImpl(dataComemorativaRepository);
 		return dataComemorativaService;
+	}
+	
+	@Bean
+	public UserDetailsService initializeUserDetailsService() {
+		final UserDetailsService userDetailsService = new UserDetailsServiceImpl();
+		return userDetailsService;
 	}
 	
 }

@@ -1,13 +1,15 @@
 package com.lpi.reserva.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -20,6 +22,7 @@ import lombok.Setter;
 @Table(name = "privilegio")
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
 public class Privilegio implements Serializable {
+	
 	/**
 	 * 
 	 */
@@ -36,7 +39,13 @@ public class Privilegio implements Serializable {
 	@Column(name = "url", length = 255, nullable = false)
 	private String url;
 	
-    @ManyToMany(mappedBy = "privilegios")
-    private ArrayList<Role> roles;
+	@ManyToMany
+    @JoinTable(
+        name = "role_privilegio", 
+        joinColumns = @JoinColumn(
+          name = "privilegio_idprivilegio", referencedColumnName = "idprivilegio"), 
+        inverseJoinColumns = @JoinColumn(
+          name = "role_idrole", referencedColumnName = "idrole"))
+	private List<Role> roles;
     
 }
