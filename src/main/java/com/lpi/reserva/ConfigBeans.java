@@ -12,6 +12,7 @@ import com.lpi.reserva.Repository.MesaRepository;
 import com.lpi.reserva.Repository.PessoaRepository;
 import com.lpi.reserva.Repository.PrivilegioRepository;
 import com.lpi.reserva.Repository.ReservaRepository;
+import com.lpi.reserva.Repository.RoleRepository;
 import com.lpi.reserva.Repository.TipoComemoracaoRepository;
 import com.lpi.reserva.Repository.UsuarioRepository;
 import com.lpi.reserva.service.ClienteService;
@@ -22,6 +23,7 @@ import com.lpi.reserva.service.MesaService;
 import com.lpi.reserva.service.PessoaService;
 import com.lpi.reserva.service.PrivilegioService;
 import com.lpi.reserva.service.ReservaService;
+import com.lpi.reserva.service.RoleService;
 import com.lpi.reserva.service.TipoComemoracaoService;
 import com.lpi.reserva.service.UsuarioService;
 import com.lpi.reserva.service.impl.ClienteServiceImpl;
@@ -32,6 +34,7 @@ import com.lpi.reserva.service.impl.MesaServiceImpl;
 import com.lpi.reserva.service.impl.PessoaServiceImpl;
 import com.lpi.reserva.service.impl.PrivilegioServiceImpl;
 import com.lpi.reserva.service.impl.ReservaServiceImpl;
+import com.lpi.reserva.service.impl.RoleServiceImpl;
 import com.lpi.reserva.service.impl.TipoComemoracaoServiceImpl;
 import com.lpi.reserva.service.impl.UserDetailsServiceImpl;
 import com.lpi.reserva.service.impl.UsuarioServiceImpl;
@@ -103,6 +106,12 @@ public class ConfigBeans {
 	public PrivilegioService initializePrivilegioService(PrivilegioRepository privilegioRepository) {
 		final PrivilegioService privilegioService = new PrivilegioServiceImpl(privilegioRepository);
 		return privilegioService;
+	}
+	
+	@Bean
+	public RoleService initializeRoleService(RoleRepository roleRepository) {
+		final RoleService roleService = new RoleServiceImpl(roleRepository);
+		return roleService;
 	}
 	
 }
