@@ -3,6 +3,7 @@ package com.lpi.reserva.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -39,7 +40,7 @@ public class Role implements Serializable{
 	@Column(name = "nome", length = 255, nullable = false)
 	private String nome;
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
         name = "role_privilegio", 
         joinColumns = @JoinColumn(
