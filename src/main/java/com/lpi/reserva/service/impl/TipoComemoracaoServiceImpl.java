@@ -16,6 +16,7 @@ public class TipoComemoracaoServiceImpl implements TipoComemoracaoService {
 	@Autowired
 	private TipoComemoracaoRepository tipoComemoracaoRepository;
 	
+	
 	public TipoComemoracaoServiceImpl(TipoComemoracaoRepository tipoComemoracaoRepository) {
 		this.tipoComemoracaoRepository = tipoComemoracaoRepository;
 	}

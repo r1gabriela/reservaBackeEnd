@@ -2,7 +2,6 @@ package com.lpi.reserva.entity;
 
 import java.io.Serializable;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,7 +43,7 @@ public class Privilegio implements Serializable {
         joinColumns = @JoinColumn(
           name = "privilegio_idprivilegio", referencedColumnName = "idprivilegio"), 
         inverseJoinColumns = @JoinColumn(
-          name = "role_idrole", referencedColumnName = "idrole"))
+          name = "role_idrole", referencedColumnName = "idrole"))	
 	private List<Role> roles;
     
 }
