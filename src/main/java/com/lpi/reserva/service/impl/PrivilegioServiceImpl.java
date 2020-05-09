@@ -34,18 +34,35 @@ public class PrivilegioServiceImpl implements PrivilegioService{
 	
 	@Override
 	public Privilegio preencherPrivilegio(PrivilegioDto privilegioDto) {
-		Privilegio privilegio = new Privilegio();
-		privilegio.setId(privilegioDto.getId());
-		privilegio.setNome(privilegioDto.getNome());
-		privilegio.setUrl(privilegioDto.getUrl());
-		return privilegio;		
+		Privilegio privilegio;
+		try {
+			privilegio = privilegioRepository.pesquisarDuplicado(privilegioDto.getNome().toLowerCase(), privilegioDto.getUrl());
+			
+			if(privilegio == null || privilegio.getId() == privilegioDto.getId()) {
+				privilegio = new Privilegio();
+				privilegio.setId(privilegioDto.getId());
+				privilegio.setNome(privilegioDto.getNome());
+				privilegio.setUrl(privilegioDto.getUrl());	
+			}else{
+				throw new Exception("Privilégio " + privilegio.getNome() + " ou URL " + privilegio.getUrl() + " ja cadastrado");
+			}
+			
+			return privilegio;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}	
 	}
 	
 	@Override
 	public ArrayList<Privilegio> preencherLista(ArrayList<PrivilegioDto> privilegios){
 		ArrayList<Privilegio> listaPrivilegio = new ArrayList<Privilegio>(); 
-		for (PrivilegioDto privilegioDto : privilegios) 
-			listaPrivilegio.add(preencherPrivilegio(privilegioDto));
+		for (PrivilegioDto privilegioDto : privilegios) {
+			Privilegio privilegio = new Privilegio();
+			privilegio = preencherPrivilegio(privilegioDto);
+			if (privilegio != null)
+				listaPrivilegio.add(privilegio);
+		}
 		
 		return listaPrivilegio;
 	}
