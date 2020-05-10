@@ -41,7 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers("/resources/**", "/webjars/**" , "/materialize/**" , "/style/**", "/privilegio/**").permitAll() //libera recursos js e css
 		.antMatchers("/reserva/salvar").permitAll()
 		.antMatchers("/priviegio/salvar").permitAll()
-		.antMatchers("/role/salvar").permitAll();
+		.antMatchers("/role/salvar").permitAll()
+		.antMatchers("/dependente/listarPessoasDeCliente").permitAll();
 //		.antMatchers("/mesa/salvar").permitAll();
 	  //.antMatchers("/salvar/dataComemorativa").hasRole("USER")
       //.antMatchers("/usuario/pesquisarPorId").hasRole("ADMIM")

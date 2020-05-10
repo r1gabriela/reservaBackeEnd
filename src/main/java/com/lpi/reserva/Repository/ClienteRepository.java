@@ -11,4 +11,7 @@ public interface ClienteRepository extends CrudRepository<Cliente, Integer> {
 	@Query(value = "SELECT c FROM Cliente c WHERE c.cpf = :cpf")
 	public Cliente pesquisarClientePorCpf(@Param("cpf") String cpf);
 	
+	@Query(value = "SELECT c FROM Cliente c JOIN c.dependente d WHERE c.idPessoa = :idPessoa")
+	public Cliente pesquisarClientePorId(@Param("idPessoa") Integer idPessoa);
+	
 }

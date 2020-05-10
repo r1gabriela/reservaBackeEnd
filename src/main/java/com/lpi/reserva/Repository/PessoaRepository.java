@@ -13,4 +13,7 @@ public interface PessoaRepository extends CrudRepository<Pessoa, Integer> {
 	@Query(value = "SELECT p FROM Pessoa p WHERE p.cpf = :cpf")
 	public Pessoa pesquisarPorCpf(@Param("cpf") String cpf);
 	
+	@Query(value = "SELECT p FROM Pessoa p WHERE LOWER (p.nome) = :nome")
+	public Pessoa pesquisarPorNome(@Param("nome") String nome);
+		
 }
