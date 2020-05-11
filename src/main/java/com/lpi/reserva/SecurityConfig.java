@@ -42,7 +42,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers("/reserva/salvar").permitAll()
 		.antMatchers("/priviegio/salvar").permitAll()
 		.antMatchers("/role/salvar").permitAll()
-		.antMatchers("/dependente/listarPessoasDeCliente").permitAll();
+		.antMatchers("/dependente/listarPessoasDeCliente").permitAll()
+		.antMatchers("/tipoComemoracao/listarTodos").permitAll()
+		.antMatchers("/tipoComemoracao/salvar").permitAll()
+		.antMatchers("/pessoa/pesquisarPorNome").permitAll();
 //		.antMatchers("/mesa/salvar").permitAll();
 	  //.antMatchers("/salvar/dataComemorativa").hasRole("USER")
       //.antMatchers("/usuario/pesquisarPorId").hasRole("ADMIM")

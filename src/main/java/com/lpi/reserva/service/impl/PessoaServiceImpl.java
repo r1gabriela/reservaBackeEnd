@@ -1,5 +1,8 @@
 package com.lpi.reserva.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.lpi.reserva.Repository.PessoaRepository;
@@ -23,8 +26,8 @@ public class PessoaServiceImpl implements PessoaService {
 	}
 
 	@Override
-	public Pessoa pesquisarPorNome(String nome) {
-		return pessoaRepository.pesquisarPorNome(nome);
+	public ArrayList<PessoaDto> pesquisarPorNome(String nome) {
+		return preencherLista(pessoaRepository.pesquisarPorNome(nome.toLowerCase()));
 	}
 	
 	@Override
@@ -34,6 +37,15 @@ public class PessoaServiceImpl implements PessoaService {
 		pessoaDto.setCpf(pessoa.getCpf());
 		pessoaDto.setNome(pessoa.getNome());
 		return pessoaDto;
+	}
+	
+	@Override
+	public ArrayList<PessoaDto> preencherLista(List<Pessoa> pessoas){
+		ArrayList<PessoaDto> listaPessoaDto = new ArrayList<>(); 
+		for (Pessoa pessoa : pessoas) 
+			listaPessoaDto.add(preencherPessoaDto(pessoa));
+		
+		return listaPessoaDto;
 	}
 	
 }
