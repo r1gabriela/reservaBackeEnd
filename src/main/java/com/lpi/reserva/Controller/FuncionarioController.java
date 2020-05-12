@@ -7,29 +7,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lpi.reserva.dto.MesaDto;
-import com.lpi.reserva.service.impl.MesaServiceImpl;
+import com.lpi.reserva.dto.FuncionarioDto;
+import com.lpi.reserva.service.impl.FuncionarioServiceImpl;
 
 @RestController
-@RequestMapping(path="/mesa")
-public class MesaController {
+@RequestMapping(path="/funcionario")
+public class FuncionarioController {
 
 	@Autowired
-	private MesaServiceImpl mesaService;
+	private FuncionarioServiceImpl funcionarioServiceImpl;
 
-	@RequestMapping(value = "/excluir", method = RequestMethod.GET)
-	public boolean excluir(@RequestParam(value = "idMesa") int idMesa) {
-		return mesaService.excluir(idMesa);
-	}
-	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public MesaDto salvar(@RequestBody MesaDto mesaDto) {
-		return mesaService.salvar(mesaDto);
+	public FuncionarioDto salvar(@RequestBody FuncionarioDto funcionarioDto) {
+		return funcionarioServiceImpl.salvar(funcionarioDto);
 	}
 	
 	@RequestMapping(value = "/pesquisarPorId", method = RequestMethod.GET)
-    public MesaDto pesquisarPorId(@RequestParam(value = "idMesa") int idMesa) {
-    	return mesaService.pesquisarPorId(idMesa);	
+    public FuncionarioDto pesquisarPorId(@RequestParam(value = "idPessoa") int idPessoa) {
+    	return funcionarioServiceImpl.pesquisarPorId(idPessoa);	
     }
 	
 }

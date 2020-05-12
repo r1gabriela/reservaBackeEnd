@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.lpi.reserva.Repository.ClienteRepository;
 import com.lpi.reserva.dto.ClienteDto;
 import com.lpi.reserva.entity.Cliente;
+import com.lpi.reserva.entity.Pessoa;
 import com.lpi.reserva.service.ClienteService;
 
 @Service
@@ -14,6 +15,9 @@ public class ClienteServiceImpl implements ClienteService {
 	@Autowired
 	private ClienteRepository clienteRepository;
 	
+	@Autowired
+	private PessoaServiceImpl pessoaService;
+	
 	public ClienteServiceImpl(ClienteRepository clienteRepository) {
 		this.clienteRepository = clienteRepository;
 	}
@@ -21,12 +25,11 @@ public class ClienteServiceImpl implements ClienteService {
 	@Override
 	public ClienteDto salvar(ClienteDto clienteDto) {
 		try {
-			Cliente cliente = new Cliente();
+			Pessoa pessoa = new Pessoa();
 			
-			if (clienteDto.getIdPessoa() == 0) 
-				cliente = clienteRepository.pesquisarClientePorCpf(clienteDto.getCpf());
+			pessoa = pessoaService.pesquisarPorCpf(clienteDto.getCpf());
 			
-			if (cliente == null || cliente.getIdPessoa() == null) {
+			if (pessoa == null || pessoa.getIdPessoa() == clienteDto.getIdPessoa()) {
 				clienteRepository.save(preencherCliente(clienteDto));
 			} else {
 				throw new IllegalArgumentException("Cpf já cadastrado.");

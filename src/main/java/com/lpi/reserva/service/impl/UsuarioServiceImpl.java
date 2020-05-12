@@ -2,6 +2,7 @@
 package com.lpi.reserva.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import com.lpi.reserva.Repository.UsuarioRepository;
@@ -81,5 +82,5 @@ public class UsuarioServiceImpl implements UsuarioService {
 		usuarioDto.setAtivo(usuario.getAtivo());
 		return usuarioDto;		
 	}
-
+	
 }
