@@ -39,7 +39,7 @@ public class RoleServiceImpl implements RoleService {
 			role = roleRepository.pesquisarPorNome(roleDto.getNome().toLowerCase());
 			
 			if (role == null || role.getIdRole() == roleDto.getIdRole()) {
-				if (roleDto.getIdRole() != 0)
+				if (roleDto.getIdRole() != null)
 					role = roleRepository.findById(roleDto.getIdRole()).get();
 				
 				if (role == null)
