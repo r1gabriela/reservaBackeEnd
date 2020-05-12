@@ -30,5 +30,10 @@ public class UsuarioController {
     public UsuarioDto pesquisarPorId(@RequestParam(value = "idUsuario") int idUsuario) {
     	return usuarioService.pesquisarPorId(idUsuario);	
     }
+	
+	@RequestMapping(value = "/cadastrar", method = RequestMethod.POST)
+	public UsuarioDto cadastrar(@RequestBody UsuarioDto usuarioDto) {
+		return usuarioService.cadastrar(usuarioDto);
+	}
 
 }

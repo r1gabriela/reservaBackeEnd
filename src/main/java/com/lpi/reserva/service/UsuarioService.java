@@ -16,5 +16,7 @@ public interface UsuarioService{
 
 	public UsuarioDto preencherUsuarioDto(Usuario usuario);
 
+	public UsuarioDto cadastrar(UsuarioDto usuarioDto);
+
 	
 }
