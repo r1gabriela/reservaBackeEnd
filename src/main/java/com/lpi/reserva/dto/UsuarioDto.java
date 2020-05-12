@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
-public class UsuarioDto {
+public class UsuarioDto extends ClienteDto{
 	
 	private Integer idUsuario;
 	
@@ -17,5 +17,7 @@ public class UsuarioDto {
 	private String senha;
 	
 	private Boolean ativo;
+	
+	private String role;
 
 }
