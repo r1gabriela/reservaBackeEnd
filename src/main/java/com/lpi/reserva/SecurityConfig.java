@@ -1,5 +1,7 @@
 package com.lpi.reserva;
 
+import java.util.ArrayList;
+
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +17,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import com.lpi.reserva.entity.Privilegio;
+import com.lpi.reserva.entity.Role;
 import com.lpi.reserva.service.impl.UserDetailsServiceImpl;
 
 
@@ -23,15 +27,41 @@ import com.lpi.reserva.service.impl.UserDetailsServiceImpl;
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	final  UserDetailsService userDetailsService = new UserDetailsServiceImpl();
-	
-	//@Override
-	//public void configure(WebSecurity web) throws Exception{
-	//	web.ignoring().antMatchers(HttpMethod.POST,HttpMethod.GET,"/reserva/");
-	//}
+
+	@Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 	
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception { //metodo que configura a autorizacao
+		ArrayList<Privilegio> privilegios = new ArrayList<>();
+		
+		http.cors()
+		.and()
+		.csrf().disable()
+		.authorizeRequests()
+		.antMatchers("/resources/**", "/webjars/**" , "/materialize/**" , "/style/**", "/privilegio/**").permitAll();
+		
+		for (Privilegio privilegio: privilegios) {
+			boolean permite = false;
+			for (Role role: privilegio.getRoles()) {
+				if (role.getNome() == "user") {
+					http
+					.authorizeRequests()
+					.antMatchers(privilegio.getUrl()).permitAll();
+					permite = true;
+					break;
+				}
+			}
+			
+			if (permite == false) 
+				http
+				.authorizeRequests()
+				.antMatchers(privilegio.getUrl()).hasAuthority(privilegio.getNome());	
+		}
+		
 		http.cors()
 		.and()
 		.csrf().disable()
@@ -40,23 +70,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers("/reserva/salvar").permitAll()
 		.antMatchers("/priviegio/salvar").permitAll()
 		.antMatchers("/role/salvar").permitAll();
-//		.antMatchers("/mesa/salvar").permitAll();
-	  //.antMatchers("/salvar/dataComemorativa").hasRole("USER")
-      //.antMatchers("/usuario/pesquisarPorId").hasRole("ADMIM")
-		
-	
-		http.cors()
-		.and()
-		.csrf().disable()
-		.authorizeRequests()
-		.antMatchers("/resources/**", "/webjars/**" , "/materialize/**" , "/style/**").permitAll() //libera recursos js e css
-		.antMatchers("/mesa/salvar").permitAll()
-		.antMatchers("/priviegio/salvar").permitAll()
-	  //.antMatchers("/salvar/dataComemorativa").hasRole("USER")
-      //.antMatchers("/usuario/pesquisarPorId").hasRole("ADMIM")
-		.anyRequest().authenticated() 
-		.and()
-		.formLogin().permitAll();
 		
 	}
 	
@@ -68,18 +81,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration configuration = new CorsConfiguration();
-	configuration.setAllowCredentials(true);
-	configuration.addAllowedOrigin("'");
-	configuration.addAllowedHeader("*");
-	configuration.addAllowedMethod("*");
-	UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-	source.registerCorsConfiguration("/**", configuration);
-
-
-	final FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<CorsFilter>(new CorsFilter(source));
-	bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-	return  source;
+	    CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowCredentials(true);
+		configuration.addAllowedOrigin("'");
+		configuration.addAllowedHeader("*");
+		configuration.addAllowedMethod("*");
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+	
+	
+		final FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<CorsFilter>(new CorsFilter(source));
+		bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+		return  source;
 	}
 	
 }
