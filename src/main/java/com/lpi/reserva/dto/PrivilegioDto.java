@@ -6,18 +6,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
-public class UsuarioDto extends ClienteDto{
+public class PrivilegioDto {
 	
-	private Integer idUsuario;
+	private Integer id;
 	
-	private Integer idPessoa;
+	private String nome;
 	
-	private String login;
+	private String url;
 	
-	private String senha;
-	
-	private Boolean ativo;
-	
-	private String role;
-
 }

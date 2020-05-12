@@ -2,19 +2,39 @@
 package com.lpi.reserva.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.lpi.reserva.Repository.PessoaRepository;
+import com.lpi.reserva.Repository.RoleRepository;
 import com.lpi.reserva.Repository.UsuarioRepository;
 import com.lpi.reserva.dto.UsuarioDto;
 import com.lpi.reserva.entity.Pessoa;
+import com.lpi.reserva.entity.Role;
 import com.lpi.reserva.entity.Usuario;
+import com.lpi.reserva.service.ClienteService;
 import com.lpi.reserva.service.UsuarioService;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
+	
+	@Autowired
+	private PessoaRepository pessoaRepository;
 		
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private ClienteService clienteService;
+	
+	@Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@Autowired
+	private SecurityServiceImpl securityServiceImpl;
+	
+	@Autowired
+	private RoleRepository roleRepository;
 		
 	public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
 		this.usuarioRepository = usuarioRepository;
@@ -25,10 +45,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 		try	{
 			Usuario usuario = new Usuario();
 			
-			if (usuarioDto.getIdUsuario() == 0)
-				usuario = usuarioRepository.pesquisarUsuarioPorLogin(usuarioDto.getLogin());
+			usuario = usuarioRepository.pesquisarUsuarioPorLogin(usuarioDto.getLogin());
 			
-			if (usuario == null || usuario.getIdUsuario() == null)
+			if (usuario == null || usuario.getPessoa().getIdPessoa() == usuarioDto.getIdPessoa())
 				usuarioRepository.save(preencherUsuario(usuarioDto));
 			else 
 				throw new IllegalArgumentException("Login já Cadastrado.");
@@ -41,6 +60,33 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 	
 	@Override
+	public UsuarioDto cadastrar(UsuarioDto usuarioDto) {
+		try {
+			Pessoa pessoa = pessoaRepository.pesquisarPorCpf(usuarioDto.getCpf());
+			
+			if(pessoa == null) {
+				clienteService.salvar(usuarioDto);
+				pessoa = pessoaRepository.pesquisarPorCpf(usuarioDto.getCpf());
+			}
+			
+			usuarioDto.setIdPessoa(pessoa.getIdPessoa());
+			usuarioDto.setRole("cliente");
+			
+			if(salvar(usuarioDto) == null)
+				throw new Exception("Erro ao cadastrar usuário");
+			else 
+				securityServiceImpl.autoLogin(usuarioDto.getLogin(), usuarioDto.getSenha());
+			
+			return usuarioDto;
+				
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+		
+	@Override
 	public Usuario preencherUsuario(UsuarioDto usuarioDto) {
 		Usuario usuario = new Usuario();
 		usuario.setIdUsuario(usuarioDto.getIdUsuario());
@@ -49,7 +95,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 		usuario.setPessoa(pessoa);
 		usuario.setAtivo(usuarioDto.getAtivo());
 		usuario.setLogin(usuarioDto.getLogin());
-		usuario.setSenha(usuarioDto.getSenha());
+		Role role = roleRepository.pesquisarPorNome(usuarioDto.getRole());
+		usuario.setRole(role);
+		usuario.setSenha(bCryptPasswordEncoder.encode(usuarioDto.getSenha()));
 		return usuario;
 	}
 
@@ -81,5 +129,5 @@ public class UsuarioServiceImpl implements UsuarioService {
 		usuarioDto.setAtivo(usuario.getAtivo());
 		return usuarioDto;		
 	}
-
+	
 }
