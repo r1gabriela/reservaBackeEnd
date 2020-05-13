@@ -22,11 +22,10 @@ public class TipoComemoracaoServiceImpl implements TipoComemoracaoService {
 	}
 
 	@Override
-	public boolean excluir(Integer idTipoComemoracao) {
+	public boolean excluir(TipoComemoracaoDto tipoComemoracaoDto) {
 		try {
-			TipoComemoracao tipoComemoracao = tipoComemoracaoRepository.findById(idTipoComemoracao).get();
-			tipoComemoracao.setAtivo(false);
-			tipoComemoracaoRepository.save(tipoComemoracao);
+			tipoComemoracaoDto.setAtivo(false);
+			tipoComemoracaoRepository.save(preencherTipoComemoracao(tipoComemoracaoDto));
 			return true;
 		}catch(Exception e){
 			e.printStackTrace();

@@ -7,7 +7,7 @@ import com.lpi.reserva.entity.TipoComemoracao;
 
 public interface TipoComemoracaoService {
 
-	public boolean excluir(Integer idTipoComemoracao);
+	public boolean excluir(TipoComemoracaoDto tipoComemoracaoDto);
 	
 	public TipoComemoracaoDto salvar(TipoComemoracaoDto tipoComemoracaoDto);
 	
