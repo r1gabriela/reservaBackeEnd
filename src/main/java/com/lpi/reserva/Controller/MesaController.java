@@ -19,9 +19,9 @@ public class MesaController {
 	@Autowired
 	private MesaServiceImpl mesaService;
 
-	@RequestMapping(value = "/excluir", method = RequestMethod.GET)
-	public boolean excluir(@RequestParam(value = "idMesa") int idMesa) {
-		return mesaService.excluir(idMesa);
+	@RequestMapping(value = "/excluir", method = RequestMethod.POST)
+	public boolean excluir(@RequestBody MesaDto mesaDto) {
+		return mesaService.excluir(mesaDto);
 	}
 	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)

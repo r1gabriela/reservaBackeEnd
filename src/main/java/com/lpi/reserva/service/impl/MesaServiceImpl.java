@@ -21,11 +21,10 @@ public class MesaServiceImpl implements MesaService {
 	}
 
 	@Override
-	public boolean excluir(Integer idMesa) {
+	public boolean excluir(MesaDto mesaDto) {
 		try {
-			Mesa mesa = mesaRepository.findById(idMesa).get();
-			mesa.setAtivo(false);
-			mesaRepository.save(mesa);
+			mesaDto.setAtivo(false);
+			mesaRepository.save(preencherMesa(mesaDto));
 			return true;
 		}catch(Exception e){
 			e.printStackTrace();
