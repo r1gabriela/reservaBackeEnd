@@ -7,7 +7,7 @@ import com.lpi.reserva.entity.Mesa;
 
 public interface MesaService {
 
-	public boolean excluir(Integer idMesa);
+	public boolean excluir(MesaDto mesaDto);
 
 	public MesaDto salvar(MesaDto mesaDto);
 	
