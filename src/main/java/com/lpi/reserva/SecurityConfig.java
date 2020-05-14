@@ -64,7 +64,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers("/role/salvar").permitAll()
 		.antMatchers("/tipoComemoracao/listarTodos").permitAll()
 		.antMatchers("/tipoComemoracao/salvar").permitAll()
-		.antMatchers("/tipoComemoracao/excluir").permitAll();
+		.antMatchers("/tipoComemoracao/excluir").permitAll()
+		.antMatchers("/usuario/logar").permitAll()
+		.antMatchers("/usuario/salvar").permitAll();
 	}
 	
 	@Override

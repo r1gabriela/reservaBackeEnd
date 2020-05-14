@@ -128,5 +128,5 @@ public class UsuarioServiceImpl implements UsuarioService {
 		usuarioDto.setAtivo(usuario.getAtivo());
 		return usuarioDto;		
 	}
-	
+		
 }
