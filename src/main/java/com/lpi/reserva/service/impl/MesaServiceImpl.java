@@ -1,5 +1,7 @@
 package com.lpi.reserva.service.impl;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,5 +68,19 @@ public class MesaServiceImpl implements MesaService {
 	public MesaDto pesquisarPorId(int idMesa) {	
 		return preencherMesaDto(mesaRepository.findById(idMesa).get());
 	}
+	
+	@Override
+	public ArrayList<MesaDto> listarTodos() {
+		return listarMesaDto(mesaRepository.findAll());
+	}
+	
+	@Override
+    public ArrayList<MesaDto> listarMesaDto(Iterable<Mesa> iterable) {
+        ArrayList<MesaDto> listaDto = new ArrayList<>();
+        for(Mesa mesa: iterable) 
+            listaDto.add(preencherMesaDto(mesa));
+    
+        return listaDto;
+    }
 	
 }
