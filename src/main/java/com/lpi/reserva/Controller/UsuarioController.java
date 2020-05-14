@@ -40,8 +40,9 @@ public class UsuarioController {
 	}
 	
 	@RequestMapping(value = "/logar", method = RequestMethod.POST)
-	public void logar(@RequestBody UsuarioDto usuarioDto) {
+	public UsuarioDto logar(@RequestBody UsuarioDto usuarioDto) {
 		securityService.autoLogin(usuarioDto.getLogin(), usuarioDto.getSenha());
+		return usuarioDto;
 	}
 
 }
