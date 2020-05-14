@@ -16,16 +16,16 @@ public class TipoComemoracaoServiceImpl implements TipoComemoracaoService {
 	@Autowired
 	private TipoComemoracaoRepository tipoComemoracaoRepository;
 	
+	
 	public TipoComemoracaoServiceImpl(TipoComemoracaoRepository tipoComemoracaoRepository) {
 		this.tipoComemoracaoRepository = tipoComemoracaoRepository;
 	}
 
 	@Override
-	public boolean excluir(Integer idTipoComemoracao) {
+	public boolean excluir(TipoComemoracaoDto tipoComemoracaoDto) {
 		try {
-			TipoComemoracao tipoComemoracao = tipoComemoracaoRepository.findById(idTipoComemoracao).get();
-			tipoComemoracao.setAtivo(false);
-			tipoComemoracaoRepository.save(tipoComemoracao);
+			tipoComemoracaoDto.setAtivo(false);
+			tipoComemoracaoRepository.save(preencherTipoComemoracao(tipoComemoracaoDto));
 			return true;
 		}catch(Exception e){
 			e.printStackTrace();
@@ -36,9 +36,17 @@ public class TipoComemoracaoServiceImpl implements TipoComemoracaoService {
 	@Override
 	public TipoComemoracaoDto salvar(TipoComemoracaoDto tipoComemoracaoDto) {
 		try	{
-			tipoComemoracaoRepository.save(preencherTipoComemoracao(tipoComemoracaoDto));
+			TipoComemoracao tipocomemoracao = new TipoComemoracao();
+			
+			tipocomemoracao = tipoComemoracaoRepository.pesquisarDescricao(tipoComemoracaoDto.getDescricao().toLowerCase());
+			
+			if (tipocomemoracao == null || tipocomemoracao.getIdTipoComemoracao() == tipoComemoracaoDto.getIdTipoComemoracao()){
+				tipoComemoracaoRepository.save(preencherTipoComemoracao(tipoComemoracaoDto));		
+			} else {
+				throw new Exception("Tipo de comemoraçao ja cadastrada");
+			}
 			return tipoComemoracaoDto;
-		}catch(Exception e){
+		} catch(Exception e) {
 			e.printStackTrace();
 			return null;
 		}	
@@ -57,13 +65,9 @@ public class TipoComemoracaoServiceImpl implements TipoComemoracaoService {
 	@Override
     public ArrayList<TipoComemoracaoDto> listarTipoComemoracaoDto(Iterable<TipoComemoracao> iterable) {
         ArrayList<TipoComemoracaoDto> listaDto = new ArrayList<>();
-        for(TipoComemoracao tipoComemoracao: iterable) {
-            TipoComemoracaoDto tipoComemoracaoDto = new TipoComemoracaoDto();
-            tipoComemoracaoDto.setIdTipoComemoracao(tipoComemoracao.getIdTipoComemoracao());
-            tipoComemoracaoDto.setDescricao(tipoComemoracao.getDescricao());
-            tipoComemoracaoDto.setAtivo(tipoComemoracao.getAtivo());
-            listaDto.add(tipoComemoracaoDto);
-        }
+        for(TipoComemoracao tipoComemoracao: iterable) 
+            listaDto.add(preencherTipoComemoracaoDto(tipoComemoracao));
+    
         return listaDto;
     }
 	
@@ -72,7 +76,23 @@ public class TipoComemoracaoServiceImpl implements TipoComemoracaoService {
 	    return listarTipoComemoracaoDto(tipoComemoracaoRepository.findAll());
 	}
 	
-}
+	@Override
+	public TipoComemoracaoDto pesquisarPorId(int idTipoComemoracao) {	
+		return preencherTipoComemoracaoDto(tipoComemoracaoRepository.findById(idTipoComemoracao).get());
+	}
 	
+	@Override
+	public TipoComemoracaoDto preencherTipoComemoracaoDto(TipoComemoracao tipoComemoracao) {
+		TipoComemoracaoDto tipoComemoracaoDto = new TipoComemoracaoDto();
+		tipoComemoracaoDto.setIdTipoComemoracao(tipoComemoracao.getIdTipoComemoracao());
+		tipoComemoracaoDto.setDescricao(tipoComemoracao.getDescricao());
+		tipoComemoracaoDto.setAtivo(tipoComemoracao.getAtivo());
+		return tipoComemoracaoDto;		
+	}
 
+	@Override
+	public ArrayList<TipoComemoracaoDto> listarPorAtivo() {
+		return listarTipoComemoracaoDto(tipoComemoracaoRepository.listarPorAtivo());
+	}
 
+}

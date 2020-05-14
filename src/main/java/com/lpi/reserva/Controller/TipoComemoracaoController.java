@@ -1,8 +1,9 @@
 package com.lpi.reserva.Controller;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,19 +19,29 @@ public class TipoComemoracaoController {
 	@Autowired
 	private TipoComemoracaoServiceImpl tipoComemoracaoService;
 
-	@RequestMapping(value = "/excluir", method = RequestMethod.GET)
-	public boolean excluir(@RequestParam(value = "idTipoComemoracao") int idTipoComemoracao) {
-		return tipoComemoracaoService.excluir(idTipoComemoracao);
+	@RequestMapping(value = "/excluir", method = RequestMethod.POST)
+	public boolean excluir(@RequestBody TipoComemoracaoDto tipoComemoracaoDto) {
+		return tipoComemoracaoService.excluir(tipoComemoracaoDto);
 	}
 	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public TipoComemoracaoDto salvar(TipoComemoracaoDto tipoComemoracaoDto) {
+	public TipoComemoracaoDto salvar(@RequestBody TipoComemoracaoDto tipoComemoracaoDto) {
 		return tipoComemoracaoService.salvar(tipoComemoracaoDto);
 	}	
-	
+
     @RequestMapping(value = "/listarTodos", method = RequestMethod.GET)
-	public List<TipoComemoracaoDto> listarTodos(){
+	public ArrayList<TipoComemoracaoDto> listarTodos(){
 	    return tipoComemoracaoService.listarTodos();
 	}
+
+    @RequestMapping(value = "/pesquisarPorId", method = RequestMethod.GET)
+    public TipoComemoracaoDto pesquisarPorId(@RequestParam(value = "idTipoComemoracao") int idTipoComemoracao) {
+    	return tipoComemoracaoService.pesquisarPorId(idTipoComemoracao);	
+    }
     
-}		
+    @RequestMapping(value = "/listarPorAtivo", method = RequestMethod.GET)
+	public ArrayList<TipoComemoracaoDto> listarPorAtivo(){
+	    return tipoComemoracaoService.listarPorAtivo();
+    }
+
+}
