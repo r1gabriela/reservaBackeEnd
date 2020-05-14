@@ -1,5 +1,7 @@
 package com.lpi.reserva.Controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,5 +33,10 @@ public class MesaController {
     public MesaDto pesquisarPorId(@RequestParam(value = "idMesa") int idMesa) {
     	return mesaService.pesquisarPorId(idMesa);	
     }
+	
+	@RequestMapping(value="/listarTodos", method = RequestMethod.GET)
+	public ArrayList<MesaDto> listarTodos(){
+	    return mesaService.listarTodos();
+	}
 	
 }
