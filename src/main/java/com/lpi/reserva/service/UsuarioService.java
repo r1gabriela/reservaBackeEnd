@@ -1,5 +1,7 @@
 package com.lpi.reserva.service;
 
+import java.util.ArrayList;
+
 import com.lpi.reserva.dto.UsuarioDto;
 import com.lpi.reserva.entity.Usuario;
 
@@ -17,5 +19,9 @@ public interface UsuarioService{
 	public UsuarioDto preencherUsuarioDto(Usuario usuario);
 
 	public UsuarioDto cadastrar(UsuarioDto usuarioDto);
+	
+	public ArrayList<UsuarioDto> listarTodos();
+
+	public ArrayList<UsuarioDto> listaDto(Iterable<Usuario> usuarios);	
 	
 }

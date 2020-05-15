@@ -1,5 +1,7 @@
 package com.lpi.reserva.Controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +45,11 @@ public class UsuarioController {
 	public UsuarioDto logar(@RequestBody UsuarioDto usuarioDto) {
 		securityService.autoLogin(usuarioDto.getLogin(), usuarioDto.getSenha());
 		return usuarioDto;
+	}
+	
+	@RequestMapping(value = "/listarTodos", method = RequestMethod.GET)
+	public ArrayList<UsuarioDto> listarTodos(){
+		return usuarioService.listarTodos();
 	}
 
 }

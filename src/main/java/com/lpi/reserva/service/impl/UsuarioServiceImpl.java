@@ -1,6 +1,8 @@
 
 package com.lpi.reserva.service.impl;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -128,5 +130,20 @@ public class UsuarioServiceImpl implements UsuarioService {
 		usuarioDto.setAtivo(usuario.getAtivo());
 		return usuarioDto;		
 	}
+	
+	@Override
+	public ArrayList<UsuarioDto> listarTodos() {
+		return listaDto(usuarioRepository.findAll());
+	}
+	
+	@Override
+	public ArrayList<UsuarioDto> listaDto(Iterable<Usuario> usuarios){
+		ArrayList<UsuarioDto> listaDto = new ArrayList<>();
+        for(Usuario usuario: usuarios) 
+            listaDto.add(preencherUsuarioDto(usuario));
+    
+        return listaDto;		
+	}
+
 		
 }
