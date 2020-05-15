@@ -1,5 +1,7 @@
 package com.lpi.reserva.service.impl;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,6 +69,21 @@ public class ClienteServiceImpl implements ClienteService {
 		clienteDto.setEmail(cliente.getEmail());
 		clienteDto.setTelefone(cliente.getTelefone());
 		return clienteDto;
+	}
+	
+	@Override
+	public ArrayList<ClienteDto> listarTodos(){
+		return preencherListaDto(clienteRepository.findAll());
+	}
+	
+	@Override
+	public ArrayList<ClienteDto> preencherListaDto(Iterable<Cliente> clientes) {
+		ArrayList<ClienteDto> listaDto = new ArrayList<>();
+		
+		for(Cliente cliente: clientes)
+			listaDto.add(preencherClienteDto(cliente));
+		
+		return listaDto;	
 	}
 	
 }
