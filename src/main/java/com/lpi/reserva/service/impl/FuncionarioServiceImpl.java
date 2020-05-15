@@ -1,5 +1,7 @@
 package com.lpi.reserva.service.impl;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,6 +70,20 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	@Override
 	public FuncionarioDto pesquisarPorId(int idPessoa) {
 		return preencherFuncionarioDto(funcionarioRepository.findById(idPessoa).get());
+	}
+	
+	@Override
+	public ArrayList<FuncionarioDto> listarTodos() {
+		return listaDto(funcionarioRepository.findAll());
+	}
+	
+	@Override
+	public ArrayList<FuncionarioDto> listaDto(Iterable<Funcionario> funcionarios){
+		ArrayList<FuncionarioDto> listaDto = new ArrayList<>();
+        for(Funcionario funcionario: funcionarios) 
+            listaDto.add(preencherFuncionarioDto(funcionario));
+    
+        return listaDto;		
 	}
 
 }
