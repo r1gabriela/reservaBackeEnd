@@ -1,11 +1,13 @@
 package com.lpi.reserva.service;
 
+import java.util.ArrayList;
+
 import com.lpi.reserva.dto.MesaDto;
 import com.lpi.reserva.entity.Mesa;
 
 public interface MesaService {
 
-	public boolean excluir(Integer idMesa);
+	public boolean excluir(MesaDto mesaDto);
 
 	public MesaDto salvar(MesaDto mesaDto);
 	
@@ -14,5 +16,9 @@ public interface MesaService {
 	public MesaDto preencherMesaDto(Mesa mesa);
 	
 	public MesaDto pesquisarPorId(int idMesa);
+
+	public ArrayList<MesaDto> listarTodos();
+
+	public ArrayList<MesaDto> listarMesaDto(Iterable<Mesa> iterable);
 
 }

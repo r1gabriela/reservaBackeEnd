@@ -1,5 +1,7 @@
 package com.lpi.reserva.service.impl;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +21,10 @@ public class MesaServiceImpl implements MesaService {
 	}
 
 	@Override
-	public boolean excluir(Integer idMesa) {
+	public boolean excluir(MesaDto mesaDto) {
 		try {
-			Mesa mesa = mesaRepository.findById(idMesa).get();
-			mesa.setAtivo(false);
-			mesaRepository.save(mesa);
+			mesaDto.setAtivo(false);
+			mesaRepository.save(preencherMesa(mesaDto));
 			return true;
 		}catch(Exception e){
 			e.printStackTrace();
@@ -66,5 +67,19 @@ public class MesaServiceImpl implements MesaService {
 	public MesaDto pesquisarPorId(int idMesa) {	
 		return preencherMesaDto(mesaRepository.findById(idMesa).get());
 	}
+	
+	@Override
+	public ArrayList<MesaDto> listarTodos() {
+		return listarMesaDto(mesaRepository.findAll());
+	}
+	
+	@Override
+    public ArrayList<MesaDto> listarMesaDto(Iterable<Mesa> iterable) {
+        ArrayList<MesaDto> listaDto = new ArrayList<>();
+        for(Mesa mesa: iterable) 
+            listaDto.add(preencherMesaDto(mesa));
+    
+        return listaDto;
+    }
 	
 }
