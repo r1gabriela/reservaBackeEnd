@@ -2,16 +2,14 @@ package com.lpi.reserva.service.impl;
 
 import java.util.ArrayList;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lpi.reserva.Repository.PrivilegioRepository;
-
-
 import com.lpi.reserva.dto.PrivilegioDto;
-
 import com.lpi.reserva.entity.Privilegio;
-
 import com.lpi.reserva.service.PrivilegioService;
 
 @Service
@@ -28,8 +26,8 @@ public class PrivilegioServiceImpl implements PrivilegioService{
 
 	@Override
 	public ArrayList<PrivilegioDto> salvar(ArrayList<PrivilegioDto> privilegiosDto) {
-		privilegioRepository.saveAll(preencherLista(privilegiosDto));
-		return privilegiosDto;
+		Iterable<Privilegio> privilegios = privilegioRepository.saveAll(preencherLista(privilegiosDto));
+		return new ModelMapper().map(privilegios, new TypeToken<ArrayList<PrivilegioDto>>() {}.getType());
 	}
 	
 	@Override
@@ -39,10 +37,7 @@ public class PrivilegioServiceImpl implements PrivilegioService{
 			privilegio = privilegioRepository.pesquisarDuplicado(privilegioDto.getNome().toLowerCase(), privilegioDto.getUrl());
 			
 			if(privilegio == null || privilegio.getId() == privilegioDto.getId()) {
-				privilegio = new Privilegio();
-				privilegio.setId(privilegioDto.getId());
-				privilegio.setNome(privilegioDto.getNome());
-				privilegio.setUrl(privilegioDto.getUrl());	
+				privilegio	= new ModelMapper().map(privilegioDto, Privilegio.class);
 			}else{
 				throw new Exception("Privilégio " + privilegio.getNome() + " ou URL " + privilegio.getUrl() + " ja cadastrado");
 			}
@@ -58,8 +53,7 @@ public class PrivilegioServiceImpl implements PrivilegioService{
 	public ArrayList<Privilegio> preencherLista(ArrayList<PrivilegioDto> privilegios){
 		ArrayList<Privilegio> listaPrivilegio = new ArrayList<Privilegio>(); 
 		for (PrivilegioDto privilegioDto : privilegios) {
-			Privilegio privilegio = new Privilegio();
-			privilegio = preencherPrivilegio(privilegioDto);
+			Privilegio privilegio = preencherPrivilegio(privilegioDto);
 			if (privilegio != null)
 				listaPrivilegio.add(privilegio);
 		}

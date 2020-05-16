@@ -6,10 +6,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
-public class DependenteDto extends PessoaDto {
-
-	private ClienteDto cliente;
+public class TipoFuncionarioDto extends PessoaDto{
+	
+	private Integer idTipoFuncionario;
+	
+	private String descricao;
 	
 	private Boolean ativo;
-	
+
 }

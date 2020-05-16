@@ -1,6 +1,6 @@
 package com.lpi.reserva.dto;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,6 +14,8 @@ public class RoleDto {
 	
 	private String nome;
 	
-	private ArrayList<PrivilegioDto> privilegios;
+	private List<PrivilegioDto> privilegios;
+	
+	private List<UsuarioDto> usuarios;
 	
 }
