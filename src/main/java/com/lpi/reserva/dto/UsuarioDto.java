@@ -10,14 +10,14 @@ public class UsuarioDto extends ClienteDto{
 	
 	private Integer idUsuario;
 	
-	private Integer idPessoa;
+	private PessoaDto pessoa;
 	
 	private String login;
 	
 	private String senha;
 	
+	private RoleDto role;
+	
 	private Boolean ativo;
 	
-	private String role;
-
 }

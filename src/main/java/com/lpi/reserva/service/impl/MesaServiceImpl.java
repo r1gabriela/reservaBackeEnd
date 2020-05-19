@@ -1,5 +1,9 @@
 package com.lpi.reserva.service.impl;
 
+import java.util.ArrayList;
+
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +23,10 @@ public class MesaServiceImpl implements MesaService {
 	}
 
 	@Override
-	public boolean excluir(Integer idMesa) {
+	public boolean excluir(MesaDto mesaDto) {
 		try {
-			Mesa mesa = mesaRepository.findById(idMesa).get();
-			mesa.setAtivo(false);
-			mesaRepository.save(mesa);
+			mesaDto.setAtivo(false);
+			mesaRepository.save(new ModelMapper().map(mesaDto, Mesa.class));
 			return true;
 		}catch(Exception e){
 			e.printStackTrace();
@@ -34,37 +37,22 @@ public class MesaServiceImpl implements MesaService {
 	@Override
 	public MesaDto salvar(MesaDto mesaDto) {
 		try {
-			mesaRepository.save(preencherMesa(mesaDto));
-			return mesaDto;
+			Mesa mesa = mesaRepository.save(new ModelMapper().map(mesaDto, Mesa.class));
+			return new ModelMapper().map(mesa, MesaDto.class);
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
 		}	
 	}
-
-	@Override
-	public Mesa preencherMesa(MesaDto mesaDto) {
-		Mesa mesa = new Mesa();
-		mesa.setIdMesa(mesaDto.getIdMesa());
-		mesa.setCapacidade(mesaDto.getCapacidade());
-		mesa.setLocalizacao(mesaDto.getLocalizacao());
-		mesa.setAtivo(mesaDto.getAtivo());
-		return mesa;
-	}
-
-	@Override
-	public MesaDto preencherMesaDto(Mesa mesa) {
-		MesaDto mesaDto = new MesaDto();
-		mesaDto.setIdMesa(mesa.getIdMesa());
-		mesaDto.setCapacidade(mesa.getCapacidade());
-		mesaDto.setLocalizacao(mesa.getLocalizacao());
-		mesaDto.setAtivo(mesa.getAtivo());
-		return mesaDto;
-	}
 	
 	@Override
 	public MesaDto pesquisarPorId(int idMesa) {	
-		return preencherMesaDto(mesaRepository.findById(idMesa).get());
+		return new ModelMapper().map(mesaRepository.findById(idMesa).get(), MesaDto.class);
+	}
+	
+	@Override
+	public ArrayList<MesaDto> listarTodos() {
+		return new ModelMapper().map(mesaRepository.findAll(), new TypeToken<ArrayList<MesaDto>>() {}.getType());
 	}
 	
 }

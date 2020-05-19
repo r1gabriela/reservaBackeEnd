@@ -1,5 +1,7 @@
 package com.lpi.reserva.dto;
 
+import java.sql.Timestamp;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,11 +12,11 @@ public class ReservaDto {
 
 	private Integer idReserva;
 	
-	private Integer idMesa;
+	private MesaDto mesa;
 	
-	private Integer idCliente;
+	private ClienteDto cliente;
 
-	private String dataHora;
+	private Timestamp dataHora;
 
 	private Boolean ativo;
 	

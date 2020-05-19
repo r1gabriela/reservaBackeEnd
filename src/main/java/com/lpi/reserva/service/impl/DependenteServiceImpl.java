@@ -2,6 +2,8 @@ package com.lpi.reserva.service.impl;
 
 import java.util.ArrayList;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,32 +32,19 @@ public class DependenteServiceImpl implements DependenteService {
 		this.dependenteRepository = dependenteRepository;
 	}
 		
-	public Dependente preecherDependente(DependenteDto dependenteDto) {
-		Dependente dependente = new Dependente();
-		dependente.setIdPessoa(dependenteDto.getIdPessoa());
-		dependente.setNome(dependenteDto.getNome());
-		dependente.setCpf(dependenteDto.getCpf());
-		Cliente cliente = new Cliente();
-		cliente.setIdPessoa(dependenteDto.getIdCliente());
-		dependente.setCliente(cliente);
-		dependente.setAtivo(dependenteDto.isAtivo());
-		return dependente;
-	}
-	
 	@Override
 	public DependenteDto salvar(DependenteDto dependenteDto) {
 		try {
-			Pessoa pessoa = new Pessoa();
-			
-			pessoa = pessoaService.pesquisarPorCpf(dependenteDto.getCpf());
+			Pessoa pessoa = pessoaService.pesquisarPorCpf(dependenteDto.getCpf());
+			Dependente dependente = new Dependente();
 			
 			if (pessoa == null || pessoa.getIdPessoa() == dependenteDto.getIdPessoa()) {
-				dependenteRepository.save(preecherDependente(dependenteDto));
+				dependente = dependenteRepository.save(new ModelMapper().map(dependenteDto, Dependente.class));
 			} else {
 				throw new IllegalArgumentException("Cpf já cadastrado.");
 			}
 			
-			return dependenteDto;
+			return new ModelMapper().map(dependente, DependenteDto.class);
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
@@ -78,10 +67,9 @@ public class DependenteServiceImpl implements DependenteService {
 	@Override
 	public ArrayList<PessoaDto> listarPessoas(Cliente cliente) {
 		ArrayList<PessoaDto> listaDto = new ArrayList<>();
-		for(Dependente dependente: cliente.getDependente())
-			listaDto.add(pessoaService.preencherPessoaDto(dependente));
 		
-			listaDto.add(pessoaService.preencherPessoaDto(cliente));
+		listaDto = new ModelMapper().map(cliente.getDependente(), new TypeToken<ArrayList<PessoaDto>>() {}.getType());
+		listaDto.add(new ModelMapper().map(cliente, PessoaDto.class));
 		
 		return listaDto;
 	}
@@ -89,20 +77,6 @@ public class DependenteServiceImpl implements DependenteService {
 	@Override
 	public ArrayList<PessoaDto> listarPessoasDeCliente(int idCliente){
 		return listarPessoas(clienteRepository.pesquisarClientePorId(idCliente));
-	}
-
-	@Override
-	public DependenteDto preencherDependenteDto(Dependente dependente) {
-		DependenteDto dependenteDto = new DependenteDto();
-		dependenteDto.setIdPessoa(dependente.getIdPessoa());
-		dependenteDto.setNome(dependente.getNome());
-		dependenteDto.setCpf(dependente.getCpf());
-		Cliente cliente = new Cliente();
-		cliente.setIdPessoa(dependenteDto.getIdCliente());
-		dependente.setCliente(cliente);
-		dependente.setAtivo(dependenteDto.isAtivo());
-		return dependenteDto;
-		
 	}
 	
 } 

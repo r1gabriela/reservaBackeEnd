@@ -2,10 +2,6 @@ package com.lpi.reserva.dto;
 
 import java.util.List;
 
-import com.lpi.reserva.entity.DataComemorativa;
-import com.lpi.reserva.entity.Dependente;
-import com.lpi.reserva.entity.Reserva;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,10 +14,10 @@ public class ClienteDto extends PessoaDto {
 
 	private String email;
 
-	private List<Reserva> reservas;
+	private List<ReservaDto> reservas;
 
-	private List<Dependente> dependente;
+	private List<DependenteDto> dependente;
 
-	private List<DataComemorativa> datasComemorativas;
+	private List<DataComemorativaDto> datasComemorativas;
 	
 }

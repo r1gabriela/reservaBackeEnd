@@ -8,6 +8,6 @@ import lombok.Setter;
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
 public class FuncionarioDto extends PessoaDto {
 
-	private Integer idTipoFuncionario;
+	private TipoFuncionarioDto tipoFuncionario;
 	
 }

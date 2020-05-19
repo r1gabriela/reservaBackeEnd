@@ -1,5 +1,7 @@
 package com.lpi.reserva.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,5 +15,7 @@ public class PrivilegioDto {
 	private String nome;
 	
 	private String url;
+	
+	private List<RoleDto> roles;
 	
 }

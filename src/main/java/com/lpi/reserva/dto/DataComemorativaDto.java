@@ -12,11 +12,11 @@ public class DataComemorativaDto {
 
 	private Integer idDataComemorativa;
 
-	private Integer IdPessoa;
+	private PessoaDto pessoa;
 
-	private Integer idCliente;
+	private ClienteDto cliente;
 	
-	private Integer idTipoComemoracao;
+	private TipoComemoracaoDto tipoComemoracao;
 	
 	private Date dataComemoracao;
 	

@@ -19,9 +19,9 @@ public class TipoComemoracaoController {
 	@Autowired
 	private TipoComemoracaoServiceImpl tipoComemoracaoService;
 
-	@RequestMapping(value = "/excluir", method = RequestMethod.GET)
-	public boolean excluir(@RequestParam(value = "idTipoComemoracao") int idTipoComemoracao) {
-		return tipoComemoracaoService.excluir(idTipoComemoracao);
+	@RequestMapping(value = "/excluir", method = RequestMethod.POST)
+	public boolean excluir(@RequestBody TipoComemoracaoDto tipoComemoracaoDto) {
+		return tipoComemoracaoService.excluir(tipoComemoracaoDto);
 	}
 	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
