@@ -1,5 +1,7 @@
 package com.lpi.reserva.Controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,5 +33,10 @@ public class DataComemorativaController {
     public boolean excluir(@RequestParam(value = "idDataComemorativa") int idDataComemorativa) {
     	return dataComemorativaService.excluir(idDataComemorativa);	
     }
+	
+	@RequestMapping(value = "/listar", method = RequestMethod.GET)
+	public ArrayList<DataComemorativaDto> listar() {
+	return dataComemorativaService.listar();
+	}
 	
 }

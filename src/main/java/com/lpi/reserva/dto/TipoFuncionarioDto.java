@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
-public class TipoFuncionarioDto extends PessoaDto{
+public class TipoFuncionarioDto {
 	
 	private Integer idTipoFuncionario;
 	

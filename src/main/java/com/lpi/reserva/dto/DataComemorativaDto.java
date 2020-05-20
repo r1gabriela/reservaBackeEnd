@@ -18,6 +18,6 @@ public class DataComemorativaDto {
 	
 	private TipoComemoracaoDto tipoComemoracao;
 	
-	private Date dataComemoracao;
+	private Date datacomemoracao;
 	
 }

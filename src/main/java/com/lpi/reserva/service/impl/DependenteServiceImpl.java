@@ -78,5 +78,11 @@ public class DependenteServiceImpl implements DependenteService {
 	public ArrayList<PessoaDto> listarPessoasDeCliente(int idCliente){
 		return listarPessoas(clienteRepository.pesquisarClientePorId(idCliente));
 	}
+
+//	@Override
+//	public ArrayList<DependenteDto> listar() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 	
 } 

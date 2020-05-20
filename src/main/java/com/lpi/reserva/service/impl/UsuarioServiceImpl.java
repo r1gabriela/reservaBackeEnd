@@ -10,7 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.lpi.reserva.Repository.PessoaRepository;
-import com.lpi.reserva.Repository.RoleRepository;
 import com.lpi.reserva.Repository.UsuarioRepository;
 import com.lpi.reserva.dto.UsuarioDto;
 import com.lpi.reserva.entity.Pessoa;
@@ -35,8 +34,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Autowired
 	private SecurityServiceImpl securityServiceImpl;
 	
-	@Autowired
-	private RoleRepository roleRepository;
 		
 	public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
 		this.usuarioRepository = usuarioRepository;

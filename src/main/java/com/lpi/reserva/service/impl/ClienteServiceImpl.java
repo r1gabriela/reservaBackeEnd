@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lpi.reserva.Repository.ClienteRepository;
+import com.lpi.reserva.Repository.PessoaRepository;
 import com.lpi.reserva.dto.ClienteDto;
 import com.lpi.reserva.entity.Cliente;
 import com.lpi.reserva.entity.Pessoa;
@@ -18,9 +19,9 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Autowired
 	private ClienteRepository clienteRepository;
-	
+		
 	@Autowired
-	private PessoaServiceImpl pessoaService;
+	private PessoaRepository pessoaRepository;
 	
 	public ClienteServiceImpl(ClienteRepository clienteRepository) {
 		this.clienteRepository = clienteRepository;
@@ -29,7 +30,7 @@ public class ClienteServiceImpl implements ClienteService {
 	@Override
 	public ClienteDto salvar(ClienteDto clienteDto) {
 		try {
-			Pessoa pessoa = pessoaService.pesquisarPorCpf(clienteDto.getCpf());
+			Pessoa pessoa = pessoaRepository.pesquisarPorCpf(clienteDto.getCpf());
 			Cliente cliente = new Cliente();
 			
 			if (pessoa == null || pessoa.getIdPessoa() == clienteDto.getIdPessoa()) {

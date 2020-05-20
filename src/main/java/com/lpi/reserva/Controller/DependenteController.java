@@ -34,4 +34,5 @@ public class DependenteController {
 	public ArrayList<PessoaDto> listarPessoas(@RequestParam(value = "idCliente") Integer idCliente){
 		return dependenteService.listarPessoasDeCliente(idCliente);
 	}
+	
 }

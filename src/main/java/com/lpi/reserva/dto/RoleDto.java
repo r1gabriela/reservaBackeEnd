@@ -2,6 +2,8 @@ package com.lpi.reserva.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +16,10 @@ public class RoleDto {
 	
 	private String nome;
 	
+	@JsonBackReference(value = "privilegios")
 	private List<PrivilegioDto> privilegios;
 	
+	@JsonBackReference(value = "usuarios")
 	private List<UsuarioDto> usuarios;
 	
 }

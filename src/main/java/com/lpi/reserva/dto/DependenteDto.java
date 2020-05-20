@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
 public class DependenteDto extends PessoaDto {
-
+	
 	private ClienteDto cliente;
 	
 	private Boolean ativo;

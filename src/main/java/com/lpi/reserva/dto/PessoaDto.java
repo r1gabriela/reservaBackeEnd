@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
 public class PessoaDto {
-
+	
 	private Integer idPessoa;
 
 	private String nome;

@@ -14,4 +14,6 @@ public interface DataComemorativaService {
 	
 	public ArrayList<DataComemorativaDto> pesquisarPorIdTipoComemoracao(int idTipoComemoracao);
 	
+	public ArrayList<DataComemorativaDto> listar();
+	
 }

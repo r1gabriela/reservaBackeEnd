@@ -65,4 +65,10 @@ public class DataComemorativaServiceImpl implements  DataComemorativaService {
 		return new ModelMapper().map(dataComemorativaRepository.pesquisarPorIdTipoComemoracao(idTipoComemoracao), new TypeToken<ArrayList<DataComemorativaDto>>() {}.getType());
 	}
 
+
+	@Override
+	public ArrayList<DataComemorativaDto> listar() {
+		return new ModelMapper().map(dataComemorativaRepository.findAll(), new TypeToken<ArrayList<DataComemorativaDto>>() {}.getType());
+	}
+
 }
