@@ -2,6 +2,8 @@ package com.lpi.reserva.Controller;
 
 import java.util.ArrayList;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +22,7 @@ public class PrivilegioController {
 	
 	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public ArrayList<PrivilegioDto> salvar(@RequestBody ArrayList<PrivilegioDto> arrayList){
+	public ArrayList<PrivilegioDto> salvar(@RequestBody @Valid ArrayList<PrivilegioDto> arrayList){
 		return privilegioService.salvar(arrayList);
 	
 	}	

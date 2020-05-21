@@ -1,5 +1,7 @@
 package com.lpi.reserva.Controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +20,7 @@ public class ReservaController {
 	private ReservaServiceImpl reservaServiceImpl;
 
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public ReservaDto salvar(@RequestBody ReservaDto reservaDto) {
+	public ReservaDto salvar(@RequestBody @Valid ReservaDto reservaDto) {
 		return reservaServiceImpl.salvar(reservaDto);
 	}
 	

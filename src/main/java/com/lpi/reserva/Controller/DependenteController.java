@@ -2,6 +2,8 @@ package com.lpi.reserva.Controller;
 
 import java.util.ArrayList;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +23,7 @@ public class DependenteController {
 	private DependenteServiceImpl dependenteService;
 	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public DependenteDto salvar(@RequestBody DependenteDto dependenteDto) {
+	public DependenteDto salvar(@RequestBody @Valid DependenteDto dependenteDto) {
 		return dependenteService.salvar(dependenteDto);
 	}
 	

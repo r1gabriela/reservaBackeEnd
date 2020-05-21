@@ -1,7 +1,11 @@
 package com.lpi.reserva.dto;
 
-import java.io.Serializable;
 import java.util.List;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -11,15 +15,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
-public class ClienteDto extends PessoaDto implements Serializable{
+public class ClienteDto extends PessoaDto {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5693472436025588816L;
-
+	@NotBlank
 	private String telefone;
 
+	@NotBlank
+	@Email
 	private String email;
 
 	@JsonBackReference(value = "reservas")

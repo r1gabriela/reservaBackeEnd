@@ -67,7 +67,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 			if(pessoa == null) {
 				clienteService.salvar(usuarioDto);
 				pessoa = pessoaRepository.pesquisarPorCpf(usuarioDto.getCpf());
-			}
+				}
 			
 			usuarioDto.setIdPessoa(pessoa.getIdPessoa());
 			usuarioDto = salvar(usuarioDto);
