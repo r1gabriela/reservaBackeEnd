@@ -1,5 +1,9 @@
 package com.lpi.reserva.Controller;
 
+import java.util.ArrayList;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +22,7 @@ public class ClienteController {
 	private ClienteServiceImpl clienteServiceImpl;
 
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public ClienteDto salvar(@RequestBody ClienteDto clienteDto) {
+	public ClienteDto salvar(@RequestBody @Valid ClienteDto clienteDto) {
 		return clienteServiceImpl.salvar(clienteDto);
 	}
 	
@@ -26,5 +30,10 @@ public class ClienteController {
     public ClienteDto pesquisarPorId(@RequestParam(value = "idPessoa") int idPessoa) {
     	return clienteServiceImpl.pesquisarPorId(idPessoa);	
     }
+	
+	@RequestMapping(value = "/listarTodos", method = RequestMethod.GET)
+	public ArrayList<ClienteDto> listarTodos(){
+		return clienteServiceImpl.listarTodos();
+	}
 	
 }

@@ -2,6 +2,8 @@ package com.lpi.reserva.Controller;
 
 import java.util.ArrayList;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +24,7 @@ public class UsuarioController {
 	private UsuarioServiceImpl usuarioService;
 
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public UsuarioDto salvar(@RequestBody UsuarioDto usuarioDto) {
+	public UsuarioDto salvar(@RequestBody @Valid UsuarioDto usuarioDto) {
 		return usuarioService.salvar(usuarioDto);
 	}	
 	
@@ -37,7 +39,7 @@ public class UsuarioController {
     }
 	
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.POST)
-	public UsuarioDto cadastrar(@RequestBody UsuarioDto usuarioDto) {
+	public UsuarioDto cadastrar(@RequestBody @Valid UsuarioDto usuarioDto) {
 		return usuarioService.cadastrar(usuarioDto);
 	}
 	

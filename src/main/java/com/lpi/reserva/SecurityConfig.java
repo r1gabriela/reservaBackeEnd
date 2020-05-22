@@ -59,14 +59,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.csrf().disable()
 		.authorizeRequests()
 		.antMatchers("/resources/**", "/webjars/**" , "/materialize/**" , "/style/**", "/privilegio/**").permitAll() //libera recursos js e css
-		.antMatchers("/reserva/salvar").permitAll()
-		.antMatchers("/priviegio/salvar").permitAll()
-		.antMatchers("/role/salvar").permitAll()
-		.antMatchers("/tipoComemoracao/listarTodos").permitAll()
-		.antMatchers("/tipoComemoracao/salvar").permitAll()
-		.antMatchers("/tipoComemoracao/excluir").permitAll()
-		.antMatchers("/usuario/logar").permitAll()
-		.antMatchers("/usuario/salvar").permitAll();
+		.antMatchers("/cliente").permitAll()
+		.antMatchers("/usuario").permitAll()
+		.antMatchers("/dependente").permitAll()
+		.antMatchers("/dataComemorativa").permitAll()
+		.antMatchers("/funcionario").permitAll()
+		.antMatchers("/mesa").permitAll()
+		.antMatchers("/pessoa").permitAll()
+		.antMatchers("/privilegio").permitAll()
+		.antMatchers("/reserva").permitAll()
+		.antMatchers("/role").permitAll()
+		.antMatchers("/tipoComemoracao").permitAll()
+		.antMatchers("/tipoFuncionario").permitAll()
+		.antMatchers("/usuario").permitAll();
+		
 	}
 	
 	@Override

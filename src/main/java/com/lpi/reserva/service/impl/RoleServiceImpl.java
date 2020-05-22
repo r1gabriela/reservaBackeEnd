@@ -2,9 +2,10 @@ package com.lpi.reserva.service.impl;
 
 import java.util.ArrayList;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.lpi.reserva.Repository.PrivilegioRepository;
 import com.lpi.reserva.Repository.RoleRepository;
 import com.lpi.reserva.dto.PrivilegioDto;
@@ -28,8 +29,8 @@ public class RoleServiceImpl implements RoleService {
 	
 	@Override
 	public ArrayList<RoleDto> salvar(ArrayList<RoleDto> rolesDto) {
-		roleRepository.saveAll(preencherListaRole(rolesDto)); 
-		return rolesDto;	
+		Iterable<Role> list = roleRepository.saveAll(preencherListaRole(rolesDto)); 
+		return new ModelMapper().map(list, new TypeToken<ArrayList<RoleDto>>() {}.getType());	
 	}
 
 	@Override
@@ -45,8 +46,8 @@ public class RoleServiceImpl implements RoleService {
 				if (role == null)
 					role = new Role();
 				
-				role.setIdRole(roleDto.getIdRole());
-				role.setNome(roleDto.getNome());
+				role = new ModelMapper().map(roleDto, Role.class);
+				
 				
 				ArrayList<Privilegio> privilegios = new ArrayList<>();
 				if (role.getPrivilegios() != null)

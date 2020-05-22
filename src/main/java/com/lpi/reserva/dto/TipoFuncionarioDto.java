@@ -8,16 +8,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
-public class TipoComemoracaoDto {
+public class TipoFuncionarioDto {
 	
 	@NotNull(message="{id.not.null}")
-	private Integer idTipoComemoracao;
-
+	private Integer idTipoFuncionario;
+	
 	@NotBlank(message="{descricao.not.blank}")
 	private String descricao;
 	
 	private Boolean ativo;
-	
+
 }

@@ -2,15 +2,14 @@ package com.lpi.reserva.service.impl;
 
 import java.util.ArrayList;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lpi.reserva.Repository.DataComemorativaRepository;
 import com.lpi.reserva.dto.DataComemorativaDto;
-import com.lpi.reserva.entity.Cliente;
 import com.lpi.reserva.entity.DataComemorativa;
-import com.lpi.reserva.entity.Pessoa;
-import com.lpi.reserva.entity.TipoComemoracao;
 import com.lpi.reserva.service.DataComemorativaService;
 
 @Service
@@ -29,57 +28,25 @@ public class DataComemorativaServiceImpl implements  DataComemorativaService {
 		try {
 			DataComemorativa dataComemorativa = new DataComemorativa();
 			
-			dataComemorativa = dataComemorativaRepository.pesquisarDataComemorativaRepetidada(dataComemorativaDto.getIdCliente(), dataComemorativaDto.getIdPessoa(), dataComemorativaDto.getIdTipoComemoracao());
+			dataComemorativa = dataComemorativaRepository.pesquisarDataComemorativaRepetidada(dataComemorativaDto.getCliente().getIdPessoa(), dataComemorativaDto.getPessoa().getIdPessoa(), dataComemorativaDto.getTipoComemoracao().getIdTipoComemoracao());
 			
 			if (dataComemorativa == null || dataComemorativa.getIdDataComemorativa() == dataComemorativaDto.getIdDataComemorativa()) {
-				dataComemorativaRepository.save(preencherDataComemorativa(dataComemorativaDto));
+				dataComemorativa = dataComemorativaRepository.save(new ModelMapper().map(dataComemorativaDto, DataComemorativa.class));
 			} else {
 				throw new IllegalArgumentException("Data Comemorativa já cadastrada para pessoa selecionada.");
 			}
 			
-			return dataComemorativaDto;
+			return new ModelMapper().map(dataComemorativa, DataComemorativaDto.class);
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
 		}	
 	}
 
-
-	@Override
-	public DataComemorativa preencherDataComemorativa(DataComemorativaDto dataComemorativaDto) {
-		DataComemorativa dataComemorativa = new DataComemorativa();
-		dataComemorativa.setIdDataComemorativa(dataComemorativaDto.getIdDataComemorativa());
-		Cliente cliente = new Cliente();
-		cliente.setIdPessoa(dataComemorativaDto.getIdCliente());
-		dataComemorativa.setCliente(cliente);
-		Pessoa pessoa = new Pessoa();
-		pessoa.setIdPessoa(dataComemorativaDto.getIdPessoa());
-		dataComemorativa.setPessoa(pessoa);
-		TipoComemoracao tipoComemoracao = new TipoComemoracao();
-		tipoComemoracao.setIdTipoComemoracao(dataComemorativaDto.getIdTipoComemoracao());
-		dataComemorativa.setTipoComemoracao(tipoComemoracao);
-		dataComemorativa.setDatacomemoracao(dataComemorativaDto.getDataComemoracao());
-		return dataComemorativa;
-	}
-
-
 	@Override
 	public DataComemorativaDto pesquisarPorId(int idDataComemorativa) {
-		return preencherDataComemorativaDto(dataComemorativaRepository.findById(idDataComemorativa).get());
+		return new ModelMapper().map(dataComemorativaRepository.findById(idDataComemorativa).get(), DataComemorativaDto.class);
 	}
-
-
-	@Override
-	public DataComemorativaDto preencherDataComemorativaDto(DataComemorativa dataComemorativa) {
-		DataComemorativaDto dataComemorativaDto = new DataComemorativaDto();
-		dataComemorativaDto.setIdDataComemorativa(dataComemorativa.getIdDataComemorativa());
-		dataComemorativaDto.setIdCliente(dataComemorativa.getCliente().getIdPessoa());
-		dataComemorativaDto.setIdPessoa(dataComemorativa.getPessoa().getIdPessoa());
-		dataComemorativaDto.setIdTipoComemoracao(dataComemorativa.getTipoComemoracao().getIdTipoComemoracao());
-		dataComemorativaDto.setDataComemoracao(dataComemorativa.getDatacomemoracao());
-		return dataComemorativaDto;
-	}
-
 
 	@Override
 	public boolean excluir(int idDataComemorativa) {
@@ -95,18 +62,13 @@ public class DataComemorativaServiceImpl implements  DataComemorativaService {
 
 	@Override
 	public ArrayList<DataComemorativaDto> pesquisarPorIdTipoComemoracao(int idTipoComemoracao) {
-		return preencherLista(dataComemorativaRepository.pesquisarPorIdTipoComemoracao(idTipoComemoracao));
+		return new ModelMapper().map(dataComemorativaRepository.pesquisarPorIdTipoComemoracao(idTipoComemoracao), new TypeToken<ArrayList<DataComemorativaDto>>() {}.getType());
 	}
 
 
 	@Override
-	public ArrayList<DataComemorativaDto> preencherLista(Iterable<DataComemorativa> iterable) {
-		ArrayList<DataComemorativaDto> lista = new ArrayList<>();
-		
-		for(DataComemorativa dataComemorativa: iterable)
-			lista.add(preencherDataComemorativaDto(dataComemorativa));
-		
-		return lista;
+	public ArrayList<DataComemorativaDto> listar() {
+		return new ModelMapper().map(dataComemorativaRepository.findAll(), new TypeToken<ArrayList<DataComemorativaDto>>() {}.getType());
 	}
 
 }

@@ -1,5 +1,9 @@
 package com.lpi.reserva.Controller;
 
+import java.util.ArrayList;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +22,7 @@ public class FuncionarioController {
 	private FuncionarioServiceImpl funcionarioServiceImpl;
 
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public FuncionarioDto salvar(@RequestBody FuncionarioDto funcionarioDto) {
+	public FuncionarioDto salvar(@RequestBody @Valid FuncionarioDto funcionarioDto) {
 		return funcionarioServiceImpl.salvar(funcionarioDto);
 	}
 	
@@ -26,5 +30,10 @@ public class FuncionarioController {
     public FuncionarioDto pesquisarPorId(@RequestParam(value = "idPessoa") int idPessoa) {
     	return funcionarioServiceImpl.pesquisarPorId(idPessoa);	
     }
+	
+	@RequestMapping(value = "/listarTodos", method = RequestMethod.GET)
+	public ArrayList<FuncionarioDto> listarTodos(){
+		return funcionarioServiceImpl.listarTodos();
+	}
 	
 }

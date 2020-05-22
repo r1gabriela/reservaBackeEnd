@@ -1,9 +1,14 @@
 package com.lpi.reserva.service.impl;
 
+import java.util.ArrayList;
+
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lpi.reserva.Repository.ClienteRepository;
+import com.lpi.reserva.Repository.PessoaRepository;
 import com.lpi.reserva.dto.ClienteDto;
 import com.lpi.reserva.entity.Cliente;
 import com.lpi.reserva.entity.Pessoa;
@@ -14,9 +19,9 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Autowired
 	private ClienteRepository clienteRepository;
-	
+		
 	@Autowired
-	private PessoaServiceImpl pessoaService;
+	private PessoaRepository pessoaRepository;
 	
 	public ClienteServiceImpl(ClienteRepository clienteRepository) {
 		this.clienteRepository = clienteRepository;
@@ -25,17 +30,16 @@ public class ClienteServiceImpl implements ClienteService {
 	@Override
 	public ClienteDto salvar(ClienteDto clienteDto) {
 		try {
-			Pessoa pessoa = new Pessoa();
-			
-			pessoa = pessoaService.pesquisarPorCpf(clienteDto.getCpf());
+			Pessoa pessoa = pessoaRepository.pesquisarPorCpf(clienteDto.getCpf());
+			Cliente cliente = new Cliente();
 			
 			if (pessoa == null || pessoa.getIdPessoa() == clienteDto.getIdPessoa()) {
-				clienteRepository.save(preencherCliente(clienteDto));
+				cliente = clienteRepository.save(new ModelMapper().map(clienteDto, Cliente.class));
 			} else {
 				throw new IllegalArgumentException("Cpf já cadastrado.");
 			}
 			
-			return clienteDto;
+			return new ModelMapper().map(cliente, ClienteDto.class);
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
@@ -43,30 +47,13 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
-	public Cliente preencherCliente(ClienteDto clienteDto) {
-		Cliente cliente = new Cliente();
-		cliente.setIdPessoa(clienteDto.getIdPessoa());
-		cliente.setNome(clienteDto.getNome());
-		cliente.setCpf(clienteDto.getCpf());
-		cliente.setEmail(clienteDto.getEmail());
-		cliente.setTelefone(clienteDto.getTelefone());
-		return cliente;
-	}
-
-	@Override
 	public ClienteDto pesquisarPorId(int idPessoa) {
-		return preencherClienteDto(clienteRepository.findById(idPessoa).get());
+		return new ModelMapper().map(clienteRepository.findById(idPessoa).get(), ClienteDto.class);
 	}
 	
 	@Override
-	public ClienteDto preencherClienteDto(Cliente cliente) {
-		ClienteDto clienteDto = new ClienteDto();
-		clienteDto.setIdPessoa(cliente.getIdPessoa());
-		clienteDto.setNome(cliente.getNome());
-		clienteDto.setCpf(cliente.getCpf());
-		clienteDto.setEmail(cliente.getEmail());
-		clienteDto.setTelefone(cliente.getTelefone());
-		return clienteDto;
+	public ArrayList<ClienteDto> listarTodos(){
+		return new ModelMapper().map(clienteRepository.findAll(), new TypeToken<ArrayList<ClienteDto>>() {}.getType());
 	}
-	
+		
 }

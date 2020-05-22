@@ -3,16 +3,16 @@ package com.lpi.reserva.service.impl;
 
 import java.util.ArrayList;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.lpi.reserva.Repository.PessoaRepository;
-import com.lpi.reserva.Repository.RoleRepository;
 import com.lpi.reserva.Repository.UsuarioRepository;
 import com.lpi.reserva.dto.UsuarioDto;
 import com.lpi.reserva.entity.Pessoa;
-import com.lpi.reserva.entity.Role;
 import com.lpi.reserva.entity.Usuario;
 import com.lpi.reserva.service.UsuarioService;
 
@@ -34,8 +34,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Autowired
 	private SecurityServiceImpl securityServiceImpl;
 	
-	@Autowired
-	private RoleRepository roleRepository;
 		
 	public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
 		this.usuarioRepository = usuarioRepository;
@@ -47,13 +45,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 			Usuario usuario = new Usuario();
 			
 			usuario = usuarioRepository.pesquisarUsuarioPorLogin(usuarioDto.getLogin());
+			usuarioDto.setSenha(bCryptPasswordEncoder.encode(usuarioDto.getSenha()));
 			
 			if (usuario == null || usuario.getPessoa().getIdPessoa() == usuarioDto.getIdPessoa())
-				usuarioRepository.save(preencherUsuario(usuarioDto));
+				usuarioRepository.save(new ModelMapper().map(usuarioDto, Usuario.class));
 			else 
 				throw new IllegalArgumentException("Login já Cadastrado.");
 			
-			return usuarioDto;
+			return new ModelMapper().map(usuario, UsuarioDto.class);
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
@@ -68,12 +67,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 			if(pessoa == null) {
 				clienteService.salvar(usuarioDto);
 				pessoa = pessoaRepository.pesquisarPorCpf(usuarioDto.getCpf());
-			}
+				}
 			
 			usuarioDto.setIdPessoa(pessoa.getIdPessoa());
-			usuarioDto.setRole("cliente");
+			usuarioDto = salvar(usuarioDto);
 			
-			if(salvar(usuarioDto) == null)
+			if(usuarioDto == null)
 				throw new Exception("Erro ao cadastrar usuário");
 			else 
 				securityServiceImpl.autoLogin(usuarioDto.getLogin(), usuarioDto.getSenha());
@@ -86,21 +85,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 	}
 	
-		
-	@Override
-	public Usuario preencherUsuario(UsuarioDto usuarioDto) {
-		Usuario usuario = new Usuario();
-		usuario.setIdUsuario(usuarioDto.getIdUsuario());
-		Pessoa pessoa = new Pessoa();
-		pessoa.setIdPessoa(usuarioDto.getIdPessoa());
-		usuario.setPessoa(pessoa);
-		usuario.setAtivo(usuarioDto.getAtivo());
-		usuario.setLogin(usuarioDto.getLogin());
-		Role role = roleRepository.pesquisarPorNome(usuarioDto.getRole());
-		usuario.setRole(role);
-		usuario.setSenha(bCryptPasswordEncoder.encode(usuarioDto.getSenha()));
-		return usuario;
-	}
 
 	@Override
 	public boolean excluir(Integer idUsuario) {
@@ -117,33 +101,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public UsuarioDto pesquisarPorId(int idUsuario) {	
-		return preencherUsuarioDto(usuarioRepository.findById(idUsuario).get());
+		return new ModelMapper().map(usuarioRepository.findById(idUsuario).get(), UsuarioDto.class);
 	}
 
-	@Override
-	public UsuarioDto preencherUsuarioDto(Usuario usuario) {
-		UsuarioDto usuarioDto = new UsuarioDto();
-		usuarioDto.setIdUsuario(usuario.getIdUsuario());
-		usuarioDto.setIdPessoa(usuario.getPessoa().getIdPessoa());
-		usuarioDto.setLogin(usuario.getLogin());
-		usuarioDto.setSenha(usuario.getSenha());
-		usuarioDto.setAtivo(usuario.getAtivo());
-		return usuarioDto;		
-	}
 	
 	@Override
 	public ArrayList<UsuarioDto> listarTodos() {
-		return listaDto(usuarioRepository.findAll());
+		return new ModelMapper().map(usuarioRepository.findAll(), new TypeToken<ArrayList<UsuarioDto>>() {}.getType());
 	}
-	
-	@Override
-	public ArrayList<UsuarioDto> listaDto(Iterable<Usuario> usuarios){
-		ArrayList<UsuarioDto> listaDto = new ArrayList<>();
-        for(Usuario usuario: usuarios) 
-            listaDto.add(preencherUsuarioDto(usuario));
-    
-        return listaDto;		
-	}
-
 		
 }

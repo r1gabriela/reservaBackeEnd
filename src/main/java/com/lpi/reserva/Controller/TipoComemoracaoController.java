@@ -2,6 +2,8 @@ package com.lpi.reserva.Controller;
 
 import java.util.ArrayList;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,13 +21,13 @@ public class TipoComemoracaoController {
 	@Autowired
 	private TipoComemoracaoServiceImpl tipoComemoracaoService;
 
-	@RequestMapping(value = "/excluir", method = RequestMethod.GET)
-	public boolean excluir(@RequestParam(value = "idTipoComemoracao") int idTipoComemoracao) {
-		return tipoComemoracaoService.excluir(idTipoComemoracao);
+	@RequestMapping(value = "/excluir", method = RequestMethod.POST)
+	public boolean excluir(@RequestBody TipoComemoracaoDto tipoComemoracaoDto) {
+		return tipoComemoracaoService.excluir(tipoComemoracaoDto);
 	}
 	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public TipoComemoracaoDto salvar(@RequestBody TipoComemoracaoDto tipoComemoracaoDto) {
+	public TipoComemoracaoDto salvar(@RequestBody @Valid TipoComemoracaoDto tipoComemoracaoDto) {
 		return tipoComemoracaoService.salvar(tipoComemoracaoDto);
 	}	
 
