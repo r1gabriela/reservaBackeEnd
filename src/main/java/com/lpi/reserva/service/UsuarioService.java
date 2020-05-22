@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.lpi.reserva.dto.UsuarioDto;
 
-
 public interface UsuarioService{
 	
 	public UsuarioDto salvar(UsuarioDto usuarioDto);
@@ -17,6 +16,4 @@ public interface UsuarioService{
 	
 	public ArrayList<UsuarioDto> listarTodos();
 
-		
-	
 }
