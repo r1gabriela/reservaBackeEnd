@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.lpi.reserva.Repository.PessoaRepository;
 import com.lpi.reserva.Repository.UsuarioRepository;
+import com.lpi.reserva.dto.PessoaDto;
 import com.lpi.reserva.dto.UsuarioDto;
 import com.lpi.reserva.entity.Pessoa;
 import com.lpi.reserva.entity.Usuario;
@@ -24,9 +25,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 		
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	
-	@Autowired
-	private ClienteServiceImpl clienteService;
 	
 	@Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -47,7 +45,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 			usuario = usuarioRepository.pesquisarUsuarioPorLogin(usuarioDto.getLogin());
 			usuarioDto.setSenha(bCryptPasswordEncoder.encode(usuarioDto.getSenha()));
 			
-			if (usuario == null || usuario.getPessoa().getIdPessoa() == usuarioDto.getIdPessoa())
+			if (usuario == null || usuario.getPessoa().getIdPessoa() == usuarioDto.getPessoa().getIdPessoa())
 				usuarioRepository.save(new ModelMapper().map(usuarioDto, Usuario.class));
 			else 
 				throw new IllegalArgumentException("Login já Cadastrado.");
@@ -62,14 +60,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public UsuarioDto cadastrar(UsuarioDto usuarioDto) {
 		try {
-			Pessoa pessoa = pessoaRepository.pesquisarPorCpf(usuarioDto.getCpf());
+			Pessoa pessoa = pessoaRepository.pesquisarPorCpf(usuarioDto.getPessoa().getCpf());
 			
 			if(pessoa == null) {
-				clienteService.salvar(usuarioDto);
-				pessoa = pessoaRepository.pesquisarPorCpf(usuarioDto.getCpf());
-				}
+				pessoa = pessoaRepository.save(new ModelMapper().map(usuarioDto.getPessoa(), Pessoa.class));
+			}
 			
-			usuarioDto.setIdPessoa(pessoa.getIdPessoa());
+			usuarioDto.setPessoa(new ModelMapper().map(pessoa, PessoaDto.class));
 			usuarioDto = salvar(usuarioDto);
 			
 			if(usuarioDto == null)

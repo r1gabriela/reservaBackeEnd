@@ -1,4 +1,4 @@
-package com.lpi.reserva.Errors;
+package com.lpi.reserva.Exception;
 
 import java.util.List;
 import java.util.stream.Collectors;
