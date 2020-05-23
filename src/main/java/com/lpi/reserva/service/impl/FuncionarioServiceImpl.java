@@ -7,7 +7,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lpi.reserva.Errors.ExceptionResponse;
+import com.lpi.reserva.Exception.ExceptionResponse;
 import com.lpi.reserva.Repository.FuncionarioRepository;
 import com.lpi.reserva.dto.FuncionarioDto;
 import com.lpi.reserva.entity.Funcionario;

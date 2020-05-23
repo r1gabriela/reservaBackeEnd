@@ -7,7 +7,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lpi.reserva.Errors.ExceptionResponse;
+import com.lpi.reserva.Exception.ExceptionResponse;
 import com.lpi.reserva.Repository.PrivilegioRepository;
 import com.lpi.reserva.Repository.RoleRepository;
 import com.lpi.reserva.dto.PrivilegioDto;

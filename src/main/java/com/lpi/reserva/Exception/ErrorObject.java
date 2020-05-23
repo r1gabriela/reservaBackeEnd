@@ -1,4 +1,4 @@
-package com.lpi.reserva.Errors;
+package com.lpi.reserva.Exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

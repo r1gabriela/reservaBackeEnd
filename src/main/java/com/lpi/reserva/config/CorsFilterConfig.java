@@ -1,4 +1,4 @@
-package com.lpi.reserva.Security;
+package com.lpi.reserva.config;
 
 import java.io.IOException;
 

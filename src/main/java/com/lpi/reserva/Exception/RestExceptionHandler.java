@@ -1,4 +1,4 @@
-package com.lpi.reserva.Errors;
+package com.lpi.reserva.Exception;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;

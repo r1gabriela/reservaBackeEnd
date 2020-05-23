@@ -17,4 +17,7 @@ public interface PessoaRepository extends CrudRepository<Pessoa, Integer> {
 	@Query(value = "SELECT p FROM Pessoa p WHERE LOWER (p.nome) LIKE %:nome%")
 	public List<Pessoa> pesquisarPorNome(@Param("nome") String nome);
 	
+	@Query(value = "SELECT p.idPessoa FROM Usuario u JOIN u.pessoa p WHERE u.login = :login")
+	public Integer pesquisarIdPessoaPorLogin(@Param("login") String login);
+	
 }

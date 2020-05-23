@@ -1,4 +1,4 @@
-package com.lpi.reserva.Errors;
+package com.lpi.reserva.Exception;
 
 public class ExceptionResponse extends RuntimeException{
 	/**
