@@ -46,11 +46,6 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 			throw new Exception(e.getMessage());
 		}
 	}
-
-	@Override
-	public FuncionarioDto pesquisarPorId(int idPessoa) {
-		return new ModelMapper().map(funcionarioRepository.findById(idPessoa).get(), FuncionarioDto.class);
-	}
 	
 	@Override
 	public ArrayList<FuncionarioDto> listarTodos() {

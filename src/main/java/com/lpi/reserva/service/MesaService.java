@@ -9,8 +9,6 @@ public interface MesaService {
 	public boolean excluir(MesaDto mesaDto);
 
 	public MesaDto salvar(MesaDto mesaDto);
-	
-	public MesaDto pesquisarPorId(int idMesa);
 
 	public ArrayList<MesaDto> listarTodos();
 

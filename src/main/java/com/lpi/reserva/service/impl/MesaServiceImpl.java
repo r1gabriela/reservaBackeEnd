@@ -46,11 +46,6 @@ public class MesaServiceImpl implements MesaService {
 	}
 	
 	@Override
-	public MesaDto pesquisarPorId(int idMesa) {	
-		return new ModelMapper().map(mesaRepository.findById(idMesa).get(), MesaDto.class);
-	}
-	
-	@Override
 	public ArrayList<MesaDto> listarTodos() {
 		return new ModelMapper().map(mesaRepository.findAll(), new TypeToken<ArrayList<MesaDto>>() {}.getType());
 	}

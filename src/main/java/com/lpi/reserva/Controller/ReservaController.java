@@ -24,11 +24,6 @@ public class ReservaController {
 		return reservaServiceImpl.salvar(reservaDto);
 	}
 	
-	@RequestMapping(value = "/pesquisarPorId", method = RequestMethod.GET)
-    public ReservaDto pesquisarPorId(@RequestParam(value = "idReserva") int idReserva) {
-    	return reservaServiceImpl.pesquisarPorId(idReserva);	
-    }
-	
 	@RequestMapping(value = "/excluir", method = RequestMethod.GET)
     public boolean excluir(@RequestParam(value = "idReserva") int idReserva) {
     	return reservaServiceImpl.excluir(idReserva);	

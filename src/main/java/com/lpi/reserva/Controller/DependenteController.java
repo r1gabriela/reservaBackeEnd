@@ -33,8 +33,8 @@ public class DependenteController {
 	}
 	
 	@RequestMapping(value = "/listarPessoasDeCliente", method = RequestMethod.GET)
-	public ArrayList<PessoaDto> listarPessoas(@RequestParam(value = "idCliente") Integer idCliente){
-		return dependenteService.listarPessoasDeCliente(idCliente);
+	public ArrayList<PessoaDto> listarPessoas(){
+		return dependenteService.listarPessoasDeCliente();
 	}
 	
 }

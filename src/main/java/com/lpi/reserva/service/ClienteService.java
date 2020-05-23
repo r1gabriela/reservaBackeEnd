@@ -8,7 +8,7 @@ public interface ClienteService {
 
 	public ClienteDto salvar(ClienteDto clienteDto) throws Exception;
 
-	public ClienteDto pesquisarPorId(int idPessoa);
+	public ClienteDto pesquisar();
 
 	public ArrayList<ClienteDto> listarTodos();
 	
