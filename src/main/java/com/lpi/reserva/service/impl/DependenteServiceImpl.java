@@ -7,6 +7,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lpi.reserva.Errors.ExceptionResponse;
 import com.lpi.reserva.Repository.ClienteRepository;
 import com.lpi.reserva.Repository.DependenteRepository;
 import com.lpi.reserva.dto.DependenteDto;
@@ -33,7 +34,7 @@ public class DependenteServiceImpl implements DependenteService {
 	}
 		
 	@Override
-	public DependenteDto salvar(DependenteDto dependenteDto) {
+	public DependenteDto salvar(DependenteDto dependenteDto) throws Exception, ExceptionResponse {
 		try {
 			Pessoa pessoa = pessoaService.pesquisarPorCpf(dependenteDto.getCpf());
 			Dependente dependente = new Dependente();
@@ -41,14 +42,15 @@ public class DependenteServiceImpl implements DependenteService {
 			if (pessoa == null || pessoa.getIdPessoa() == dependenteDto.getIdPessoa()) {
 				dependente = dependenteRepository.save(new ModelMapper().map(dependenteDto, Dependente.class));
 			} else {
-				throw new IllegalArgumentException("Cpf já cadastrado.");
+				throw new ExceptionResponse("Cpf já cadastrado.");
 			}
 			
 			return new ModelMapper().map(dependente, DependenteDto.class);
-		}catch(Exception e){
-			e.printStackTrace();
-			return null;
-		}	
+		} catch(ExceptionResponse ex) {
+			throw new ExceptionResponse(ex.getMessage());
+		} catch(Exception e) {
+			throw new Exception(e.getMessage());
+		}
 	}
 
 	@Override	

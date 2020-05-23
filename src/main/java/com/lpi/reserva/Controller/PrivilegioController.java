@@ -22,7 +22,7 @@ public class PrivilegioController {
 	
 	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public ArrayList<PrivilegioDto> salvar(@RequestBody @Valid ArrayList<PrivilegioDto> arrayList){
+	public ArrayList<PrivilegioDto> salvar(@RequestBody @Valid ArrayList<PrivilegioDto> arrayList) throws Exception{
 		return privilegioService.salvar(arrayList);
 	
 	}	

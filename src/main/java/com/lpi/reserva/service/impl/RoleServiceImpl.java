@@ -6,6 +6,8 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.lpi.reserva.Errors.ExceptionResponse;
 import com.lpi.reserva.Repository.PrivilegioRepository;
 import com.lpi.reserva.Repository.RoleRepository;
 import com.lpi.reserva.dto.PrivilegioDto;
@@ -28,13 +30,13 @@ public class RoleServiceImpl implements RoleService {
 	}
 	
 	@Override
-	public ArrayList<RoleDto> salvar(ArrayList<RoleDto> rolesDto) {
+	public ArrayList<RoleDto> salvar(ArrayList<RoleDto> rolesDto) throws Exception {
 		Iterable<Role> list = roleRepository.saveAll(preencherListaRole(rolesDto)); 
 		return new ModelMapper().map(list, new TypeToken<ArrayList<RoleDto>>() {}.getType());	
 	}
 
 	@Override
-	public Role preencherRole(RoleDto roleDto) {
+	public Role preencherRole(RoleDto roleDto) throws Exception, ExceptionResponse {
 		Role role;
 		try	{
 			role = roleRepository.pesquisarPorNome(roleDto.getNome().toLowerCase());
@@ -60,18 +62,19 @@ public class RoleServiceImpl implements RoleService {
 				
 				role.setPrivilegios(privilegios);
 			} else {
-				throw new Exception("Role " + roleDto.getNome() + " ja cadastrada");
+				throw new ExceptionResponse("Role " + roleDto.getNome() + " ja cadastrada");
 			} 
 			
 			return role;
+		} catch(ExceptionResponse ex) {
+			throw new ExceptionResponse(ex.getMessage());
 		} catch(Exception e) {
-			e.printStackTrace();
-			return null;
+			throw new Exception(e.getMessage());
 		}
 	}
 
 	@Override
-	public ArrayList<Role> preencherListaRole(ArrayList<RoleDto> rolesDto) {
+	public ArrayList<Role> preencherListaRole(ArrayList<RoleDto> rolesDto) throws Exception {
 		 ArrayList<Role> roles = new ArrayList<>();
 
 		 for (RoleDto roleDto: rolesDto) {

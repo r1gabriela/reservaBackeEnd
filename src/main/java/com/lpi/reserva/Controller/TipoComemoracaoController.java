@@ -27,8 +27,8 @@ public class TipoComemoracaoController {
 	}
 	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public TipoComemoracaoDto salvar(@RequestBody @Valid TipoComemoracaoDto tipoComemoracaoDto) {
-		return tipoComemoracaoService.salvar(tipoComemoracaoDto);
+	public TipoComemoracaoDto salvar(@RequestBody @Valid TipoComemoracaoDto tipoComemoracaoDto) throws Exception {
+			return tipoComemoracaoService.salvar(tipoComemoracaoDto);
 	}	
 
     @RequestMapping(value = "/listarTodos", method = RequestMethod.GET)

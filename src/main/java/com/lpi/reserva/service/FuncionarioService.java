@@ -6,7 +6,7 @@ import com.lpi.reserva.dto.FuncionarioDto;
 
 public interface FuncionarioService {
 
-	public FuncionarioDto salvar(FuncionarioDto funcionarioDto);
+	public FuncionarioDto salvar(FuncionarioDto funcionarioDto) throws Exception;
 	
 	public FuncionarioDto pesquisarPorId(int idPessoa);
 

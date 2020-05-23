@@ -23,7 +23,7 @@ public class DependenteController {
 	private DependenteServiceImpl dependenteService;
 	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public DependenteDto salvar(@RequestBody @Valid DependenteDto dependenteDto) {
+	public DependenteDto salvar(@RequestBody @Valid DependenteDto dependenteDto) throws Exception {
 		return dependenteService.salvar(dependenteDto);
 	}
 	

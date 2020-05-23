@@ -22,7 +22,7 @@ public class ClienteController {
 	private ClienteServiceImpl clienteServiceImpl;
 
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public ClienteDto salvar(@RequestBody @Valid ClienteDto clienteDto) {
+	public ClienteDto salvar(@RequestBody @Valid ClienteDto clienteDto) throws Exception {
 		return clienteServiceImpl.salvar(clienteDto);
 	}
 	

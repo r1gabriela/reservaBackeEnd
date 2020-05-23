@@ -7,6 +7,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lpi.reserva.Errors.ExceptionResponse;
 import com.lpi.reserva.Repository.TipoComemoracaoRepository;
 import com.lpi.reserva.dto.TipoComemoracaoDto;
 import com.lpi.reserva.entity.TipoComemoracao;
@@ -36,20 +37,23 @@ public class TipoComemoracaoServiceImpl implements TipoComemoracaoService {
 	}
 
 	@Override
-	public TipoComemoracaoDto salvar(TipoComemoracaoDto tipoComemoracaoDto) {
+	public TipoComemoracaoDto salvar(TipoComemoracaoDto tipoComemoracaoDto) throws Exception, ExceptionResponse {
 		try	{
 			TipoComemoracao tipocomemoracao = tipoComemoracaoRepository.pesquisarDescricao(tipoComemoracaoDto.getDescricao().toLowerCase());
 			
 			if (tipocomemoracao == null || tipocomemoracao.getIdTipoComemoracao() == tipoComemoracaoDto.getIdTipoComemoracao()){
 				tipocomemoracao = tipoComemoracaoRepository.save(new ModelMapper().map(tipoComemoracaoDto, TipoComemoracao.class));		
 			} else {
-				throw new Exception("Tipo de comemoraçao ja cadastrada");
+				throw new ExceptionResponse("Tipo de comemoração já cadastrado");
+		
 			}
 			return new ModelMapper().map(tipocomemoracao, TipoComemoracaoDto.class);
+		} catch(ExceptionResponse ex) {
+			throw new ExceptionResponse(ex.getMessage());
 		} catch(Exception e) {
-			e.printStackTrace();
-			return null;
-		}	
+			throw new Exception(e.getMessage());
+		}
+		
 	} 
 			
 	@Override

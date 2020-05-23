@@ -8,7 +8,7 @@ import com.lpi.reserva.entity.Cliente;
 
 public interface DependenteService {
 
-	public DependenteDto salvar(DependenteDto dependeteDto);
+	public DependenteDto salvar(DependenteDto dependeteDto) throws Exception;
 
 	boolean excluir(Integer idPessoa);
 
@@ -16,6 +16,5 @@ public interface DependenteService {
 
 	public ArrayList<PessoaDto> listarPessoasDeCliente(int idCliente);
 	
-//	public ArrayList<DependenteDto> listar();
 
 }

@@ -21,7 +21,7 @@ public class RoleController {
 	private RoleServiceImpl roleService;
 	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public ArrayList<RoleDto> salvar(@RequestBody @Valid ArrayList<RoleDto> arrayList){
+	public ArrayList<RoleDto> salvar(@RequestBody @Valid ArrayList<RoleDto> arrayList) throws Exception{
 		return roleService.salvar(arrayList);
 	}	
 	

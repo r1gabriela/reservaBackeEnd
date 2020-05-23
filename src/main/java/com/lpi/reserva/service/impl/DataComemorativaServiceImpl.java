@@ -7,6 +7,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lpi.reserva.Errors.ExceptionResponse;
 import com.lpi.reserva.Repository.DataComemorativaRepository;
 import com.lpi.reserva.dto.DataComemorativaDto;
 import com.lpi.reserva.entity.DataComemorativa;
@@ -24,7 +25,7 @@ public class DataComemorativaServiceImpl implements  DataComemorativaService {
 	
 	
 	@Override
-	public DataComemorativaDto salvar(DataComemorativaDto dataComemorativaDto) {
+	public DataComemorativaDto salvar(DataComemorativaDto dataComemorativaDto) throws Exception, ExceptionResponse {
 		try {
 			DataComemorativa dataComemorativa = new DataComemorativa();
 			
@@ -33,14 +34,15 @@ public class DataComemorativaServiceImpl implements  DataComemorativaService {
 			if (dataComemorativa == null || dataComemorativa.getIdDataComemorativa() == dataComemorativaDto.getIdDataComemorativa()) {
 				dataComemorativa = dataComemorativaRepository.save(new ModelMapper().map(dataComemorativaDto, DataComemorativa.class));
 			} else {
-				throw new IllegalArgumentException("Data Comemorativa já cadastrada para pessoa selecionada.");
+				throw new ExceptionResponse("Data Comemorativa já cadastrada para pessoa selecionada.");
 			}
 			
 			return new ModelMapper().map(dataComemorativa, DataComemorativaDto.class);
-		}catch(Exception e){
-			e.printStackTrace();
-			return null;
-		}	
+		} catch(ExceptionResponse ex) {
+			throw new ExceptionResponse(ex.getMessage());
+		} catch(Exception e) {
+			throw new Exception(e.getMessage());
+		}
 	}
 
 	@Override

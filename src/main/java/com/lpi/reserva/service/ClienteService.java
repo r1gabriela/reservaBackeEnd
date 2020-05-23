@@ -6,7 +6,7 @@ import com.lpi.reserva.dto.ClienteDto;
 
 public interface ClienteService {
 
-	public ClienteDto salvar(ClienteDto clienteDto);
+	public ClienteDto salvar(ClienteDto clienteDto) throws Exception;
 
 	public ClienteDto pesquisarPorId(int idPessoa);
 

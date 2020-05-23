@@ -22,7 +22,7 @@ public class FuncionarioController {
 	private FuncionarioServiceImpl funcionarioServiceImpl;
 
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public FuncionarioDto salvar(@RequestBody @Valid FuncionarioDto funcionarioDto) {
+	public FuncionarioDto salvar(@RequestBody @Valid FuncionarioDto funcionarioDto) throws Exception {
 		return funcionarioServiceImpl.salvar(funcionarioDto);
 	}
 	
