@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.lpi.reserva.Exception.ExceptionResponse;
 import com.lpi.reserva.Repository.PessoaRepository;
 import com.lpi.reserva.Repository.UsuarioRepository;
 import com.lpi.reserva.dto.PessoaDto;
@@ -38,7 +39,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 	
 	@Override
-	public UsuarioDto salvar(UsuarioDto usuarioDto) {
+	public UsuarioDto salvar(UsuarioDto usuarioDto) throws Exception, ExceptionResponse {
 		try	{
 			Usuario usuario = new Usuario();
 			
@@ -48,13 +49,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 			if (usuario == null || usuario.getPessoa().getIdPessoa() == usuarioDto.getPessoa().getIdPessoa())
 				usuarioRepository.save(new ModelMapper().map(usuarioDto, Usuario.class));
 			else 
-				throw new IllegalArgumentException("Login já Cadastrado.");
+				throw new ExceptionResponse("Login já Cadastrado.");
 			
 			return new ModelMapper().map(usuario, UsuarioDto.class);
-		}catch(Exception e){
-			e.printStackTrace();
-			return null;
-		}	
+		} catch(ExceptionResponse ex) {
+			throw new ExceptionResponse(ex.getMessage());
+		} catch(Exception e) {
+			throw new Exception(e.getMessage());
+		}
 	}
 	
 	@Override

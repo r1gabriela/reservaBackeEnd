@@ -23,7 +23,7 @@ public class DependenteController {
 	private DependenteServiceImpl dependenteService;
 	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public DependenteDto salvar(@RequestBody @Valid DependenteDto dependenteDto) {
+	public DependenteDto salvar(@RequestBody @Valid DependenteDto dependenteDto) throws Exception {
 		return dependenteService.salvar(dependenteDto);
 	}
 	
@@ -33,8 +33,13 @@ public class DependenteController {
 	}
 	
 	@RequestMapping(value = "/listarPessoasDeCliente", method = RequestMethod.GET)
-	public ArrayList<PessoaDto> listarPessoas(@RequestParam(value = "idCliente") Integer idCliente){
-		return dependenteService.listarPessoasDeCliente(idCliente);
+	public ArrayList<PessoaDto> listarPessoas(){
+		return dependenteService.listarPessoasDeCliente();
+	}
+	
+	@RequestMapping(value = "/listarDependentes", method = RequestMethod.GET)
+	public ArrayList<DependenteDto> listarDependentes(){
+		return dependenteService.listarDependentes();
 	}
 	
 }

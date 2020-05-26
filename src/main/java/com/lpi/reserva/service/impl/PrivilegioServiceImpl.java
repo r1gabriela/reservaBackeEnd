@@ -7,6 +7,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lpi.reserva.Exception.ExceptionResponse;
 import com.lpi.reserva.Repository.PrivilegioRepository;
 import com.lpi.reserva.dto.PrivilegioDto;
 import com.lpi.reserva.entity.Privilegio;
@@ -25,13 +26,13 @@ public class PrivilegioServiceImpl implements PrivilegioService{
 	}
 
 	@Override
-	public ArrayList<PrivilegioDto> salvar(ArrayList<PrivilegioDto> privilegiosDto) {
+	public ArrayList<PrivilegioDto> salvar(ArrayList<PrivilegioDto> privilegiosDto) throws Exception {
 		Iterable<Privilegio> privilegios = privilegioRepository.saveAll(preencherLista(privilegiosDto));
 		return new ModelMapper().map(privilegios, new TypeToken<ArrayList<PrivilegioDto>>() {}.getType());
 	}
 	
 	@Override
-	public Privilegio preencherPrivilegio(PrivilegioDto privilegioDto) {
+	public Privilegio preencherPrivilegio(PrivilegioDto privilegioDto) throws Exception, ExceptionResponse {
 		Privilegio privilegio;
 		try {
 			privilegio = privilegioRepository.pesquisarDuplicado(privilegioDto.getNome().toLowerCase(), privilegioDto.getUrl());
@@ -39,18 +40,19 @@ public class PrivilegioServiceImpl implements PrivilegioService{
 			if(privilegio == null || privilegio.getId() == privilegioDto.getId()) {
 				privilegio	= new ModelMapper().map(privilegioDto, Privilegio.class);
 			}else{
-				throw new Exception("Privilégio " + privilegio.getNome() + " ou URL " + privilegio.getUrl() + " ja cadastrado");
+				throw new ExceptionResponse("Privilégio " + privilegio.getNome() + " ou URL " + privilegio.getUrl() + " ja cadastrado");
 			}
 			
 			return privilegio;
+		} catch(ExceptionResponse ex) {
+			throw new ExceptionResponse(ex.getMessage());
 		} catch(Exception e) {
-			e.printStackTrace();
-			return null;
-		}	
+			throw new Exception(e.getMessage());
+		}
 	}
 	
 	@Override
-	public ArrayList<Privilegio> preencherLista(ArrayList<PrivilegioDto> privilegios){
+	public ArrayList<Privilegio> preencherLista(ArrayList<PrivilegioDto> privilegios) throws Exception{
 		ArrayList<Privilegio> listaPrivilegio = new ArrayList<Privilegio>(); 
 		for (PrivilegioDto privilegioDto : privilegios) {
 			Privilegio privilegio = preencherPrivilegio(privilegioDto);

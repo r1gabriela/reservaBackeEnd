@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.lpi.reserva.dto.UsuarioDto;
 import com.lpi.reserva.service.impl.SecurityServiceImpl;
 import com.lpi.reserva.service.impl.UsuarioServiceImpl;
@@ -24,7 +25,7 @@ public class UsuarioController {
 	private UsuarioServiceImpl usuarioService;
 
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public UsuarioDto salvar(@RequestBody @Valid UsuarioDto usuarioDto) {
+	public UsuarioDto salvar(@RequestBody @Valid UsuarioDto usuarioDto) throws Exception{
 		return usuarioService.salvar(usuarioDto);
 	}	
 	

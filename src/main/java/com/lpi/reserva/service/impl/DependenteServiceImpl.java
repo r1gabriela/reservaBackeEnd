@@ -7,8 +7,11 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lpi.reserva.Exception.ExceptionResponse;
 import com.lpi.reserva.Repository.ClienteRepository;
 import com.lpi.reserva.Repository.DependenteRepository;
+import com.lpi.reserva.Repository.PessoaRepository;
+import com.lpi.reserva.dto.ClienteDto;
 import com.lpi.reserva.dto.DependenteDto;
 import com.lpi.reserva.dto.PessoaDto;
 import com.lpi.reserva.entity.Cliente;
@@ -28,27 +31,38 @@ public class DependenteServiceImpl implements DependenteService {
 	@Autowired
 	private PessoaServiceImpl pessoaService;
 	
+	@Autowired
+	private PessoaRepository pessoaRepository;
+	
+	@Autowired
+	private SecurityServiceImpl securityServiceImpl;
+	
 	public DependenteServiceImpl(DependenteRepository dependenteRepository) {
 		this.dependenteRepository = dependenteRepository;
 	}
 		
 	@Override
-	public DependenteDto salvar(DependenteDto dependenteDto) {
+	public DependenteDto salvar(DependenteDto dependenteDto) throws Exception, ExceptionResponse {
 		try {
 			Pessoa pessoa = pessoaService.pesquisarPorCpf(dependenteDto.getCpf());
 			Dependente dependente = new Dependente();
 			
+			ClienteDto clienteDto = new ClienteDto();
+			clienteDto.setIdPessoa(pessoaRepository.pesquisarIdPessoaPorLogin(securityServiceImpl.findLoggedInUsername()));
+			dependenteDto.setCliente(clienteDto);
+			
 			if (pessoa == null || pessoa.getIdPessoa() == dependenteDto.getIdPessoa()) {
 				dependente = dependenteRepository.save(new ModelMapper().map(dependenteDto, Dependente.class));
 			} else {
-				throw new IllegalArgumentException("Cpf já cadastrado.");
+				throw new ExceptionResponse("Cpf já cadastrado.");
 			}
 			
 			return new ModelMapper().map(dependente, DependenteDto.class);
-		}catch(Exception e){
-			e.printStackTrace();
-			return null;
-		}	
+		} catch(ExceptionResponse ex) {
+			throw new ExceptionResponse(ex.getMessage());
+		} catch(Exception e) {
+			throw new Exception(e.getMessage());
+		}
 	}
 
 	@Override	
@@ -75,14 +89,20 @@ public class DependenteServiceImpl implements DependenteService {
 	}
 	
 	@Override
-	public ArrayList<PessoaDto> listarPessoasDeCliente(int idCliente){
-		return listarPessoas(clienteRepository.pesquisarClientePorId(idCliente));
+	public ArrayList<PessoaDto> listarPessoasDeCliente(){
+		return listarPessoas(clienteRepository.pesquisarClientePorId(pessoaRepository.pesquisarIdPessoaPorLogin(securityServiceImpl.findLoggedInUsername())));
 	}
 
-//	@Override
-//	public ArrayList<DependenteDto> listar() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	@Override
+	public ArrayList<PessoaDto> listarPessoas(Dependente dependente){
+		ArrayList<PessoaDto> listDto = new ArrayList<>();
+		
+		listDto = new ModelMapper().map(dependente, new TypeToken<ArrayList<PessoaDto>>() {}.getType());
+		return listDto;
+	}
 	
+	@Override
+	public ArrayList<DependenteDto> listarDependentes(){
+		return new ModelMapper().map(dependenteRepository.pesquisarDependentePorCliente(pessoaRepository.pesquisarIdPessoaPorLogin(securityServiceImpl.findLoggedInUsername())), new TypeToken<ArrayList<DependenteDto>>() {}.getType());
+	}
 } 
