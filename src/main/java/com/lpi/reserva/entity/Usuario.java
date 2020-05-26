@@ -42,6 +42,10 @@ public class Usuario implements Serializable {
 	@Column(name="senha", length = 255, nullable = false)
 	private String senha;
 	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="role_idrole", referencedColumnName="idrole")
+	private Role role;
+	
 	@Column(name="ativo", nullable = false)
 	private Boolean ativo;
 	

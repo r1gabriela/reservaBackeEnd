@@ -1,10 +1,18 @@
 
 package com.lpi.reserva.service.impl;
 
+import java.util.ArrayList;
+
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.lpi.reserva.Exception.ExceptionResponse;
+import com.lpi.reserva.Repository.PessoaRepository;
 import com.lpi.reserva.Repository.UsuarioRepository;
+import com.lpi.reserva.dto.PessoaDto;
 import com.lpi.reserva.dto.UsuarioDto;
 import com.lpi.reserva.entity.Pessoa;
 import com.lpi.reserva.entity.Usuario;
@@ -12,46 +20,70 @@ import com.lpi.reserva.service.UsuarioService;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
+	
+	@Autowired
+	private PessoaRepository pessoaRepository;
 		
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@Autowired
+	private SecurityServiceImpl securityServiceImpl;
+	
 		
 	public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
 		this.usuarioRepository = usuarioRepository;
 	}
 	
 	@Override
-	public UsuarioDto salvar(UsuarioDto usuarioDto) {
+	public UsuarioDto salvar(UsuarioDto usuarioDto) throws Exception, ExceptionResponse {
 		try	{
 			Usuario usuario = new Usuario();
 			
-			if (usuarioDto.getIdUsuario() == 0)
-				usuario = usuarioRepository.pesquisarUsuarioPorLogin(usuarioDto.getLogin());
+			usuario = usuarioRepository.pesquisarUsuarioPorLogin(usuarioDto.getLogin());
+			usuarioDto.setSenha(bCryptPasswordEncoder.encode(usuarioDto.getSenha()));
 			
-			if (usuario == null || usuario.getIdUsuario() == null)
-				usuarioRepository.save(preencherUsuario(usuarioDto));
+			if (usuario == null || usuario.getPessoa().getIdPessoa() == usuarioDto.getPessoa().getIdPessoa())
+				usuarioRepository.save(new ModelMapper().map(usuarioDto, Usuario.class));
 			else 
-				throw new IllegalArgumentException("Login já Cadastrado.");
+				throw new ExceptionResponse("Login já Cadastrado.");
 			
-			return usuarioDto;
-		}catch(Exception e){
-			e.printStackTrace();
-			return null;
-		}	
+			return new ModelMapper().map(usuario, UsuarioDto.class);
+		} catch(ExceptionResponse ex) {
+			throw new ExceptionResponse(ex.getMessage());
+		} catch(Exception e) {
+			throw new Exception(e.getMessage());
+		}
 	}
 	
 	@Override
-	public Usuario preencherUsuario(UsuarioDto usuarioDto) {
-		Usuario usuario = new Usuario();
-		usuario.setIdUsuario(usuarioDto.getIdUsuario());
-		Pessoa pessoa = new Pessoa();
-		pessoa.setIdPessoa(usuarioDto.getIdPessoa());
-		usuario.setPessoa(pessoa);
-		usuario.setAtivo(usuarioDto.getAtivo());
-		usuario.setLogin(usuarioDto.getLogin());
-		usuario.setSenha(usuarioDto.getSenha());
-		return usuario;
+	public UsuarioDto cadastrar(UsuarioDto usuarioDto) {
+		try {
+			Pessoa pessoa = pessoaRepository.pesquisarPorCpf(usuarioDto.getPessoa().getCpf());
+			
+			if(pessoa == null) {
+				pessoa = pessoaRepository.save(new ModelMapper().map(usuarioDto.getPessoa(), Pessoa.class));
+			}
+			
+			usuarioDto.setPessoa(new ModelMapper().map(pessoa, PessoaDto.class));
+			usuarioDto = salvar(usuarioDto);
+			
+			if(usuarioDto == null)
+				throw new Exception("Erro ao cadastrar usuário");
+			else 
+				securityServiceImpl.autoLogin(usuarioDto.getLogin(), usuarioDto.getSenha());
+			
+			return usuarioDto;
+				
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
+	
 
 	@Override
 	public boolean excluir(Integer idUsuario) {
@@ -66,4 +98,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}	
 	}
 
+	@Override
+	public UsuarioDto pesquisarPorId(int idUsuario) {	
+		return new ModelMapper().map(usuarioRepository.findById(idUsuario).get(), UsuarioDto.class);
+	}
+
+	
+	@Override
+	public ArrayList<UsuarioDto> listarTodos() {
+		return new ModelMapper().map(usuarioRepository.findAll(), new TypeToken<ArrayList<UsuarioDto>>() {}.getType());
+	}
+		
 }
