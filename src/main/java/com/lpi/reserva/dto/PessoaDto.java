@@ -2,7 +2,8 @@ package com.lpi.reserva.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.br.CPF;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,8 +19,7 @@ public class PessoaDto {
 	@NotBlank(message = "{nome.not.blank}")
 	private String nome;
 
-	@NotBlank
-	@Pattern(regexp =  "d{11}")
+	@CPF
 	private String cpf;
 	
 }

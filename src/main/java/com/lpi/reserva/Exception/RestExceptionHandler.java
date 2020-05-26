@@ -37,8 +37,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler{
 	    
 	   @ExceptionHandler(ExceptionResponse.class)
 	   public ResponseEntity<Object> handleAnyException(ExceptionResponse e, WebRequest request){
-	    	CustomException exceptionResponse = new CustomException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(), ZonedDateTime.now(ZoneId.of("Z")));
-	    	return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+	    	CustomException exceptionResponse = new CustomException(e.getMessage(), HttpStatus.NOT_ACCEPTABLE.value(), ZonedDateTime.now(ZoneId.of("Z")));
+	    	return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_ACCEPTABLE);
 	    }
 	    
 		
