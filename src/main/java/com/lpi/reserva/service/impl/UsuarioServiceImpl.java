@@ -9,9 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.lpi.reserva.Exception.ExceptionResponse;
 import com.lpi.reserva.Repository.PessoaRepository;
-import com.lpi.reserva.Repository.RoleRepository;
 import com.lpi.reserva.Repository.UsuarioRepository;
+import com.lpi.reserva.dto.PessoaDto;
 import com.lpi.reserva.dto.UsuarioDto;
 import com.lpi.reserva.entity.Pessoa;
 import com.lpi.reserva.entity.Usuario;
@@ -27,52 +28,47 @@ public class UsuarioServiceImpl implements UsuarioService {
 	private UsuarioRepository usuarioRepository;
 	
 	@Autowired
-	private ClienteServiceImpl clienteService;
-	
-	@Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Autowired
 	private SecurityServiceImpl securityServiceImpl;
 	
-	@Autowired
-	private RoleRepository roleRepository;
 		
 	public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
 		this.usuarioRepository = usuarioRepository;
 	}
 	
 	@Override
-	public UsuarioDto salvar(UsuarioDto usuarioDto) {
+	public UsuarioDto salvar(UsuarioDto usuarioDto) throws Exception, ExceptionResponse {
 		try	{
 			Usuario usuario = new Usuario();
 			
 			usuario = usuarioRepository.pesquisarUsuarioPorLogin(usuarioDto.getLogin());
 			usuarioDto.setSenha(bCryptPasswordEncoder.encode(usuarioDto.getSenha()));
 			
-			if (usuario == null || usuario.getPessoa().getIdPessoa() == usuarioDto.getIdPessoa())
+			if (usuario == null || usuario.getPessoa().getIdPessoa() == usuarioDto.getPessoa().getIdPessoa())
 				usuarioRepository.save(new ModelMapper().map(usuarioDto, Usuario.class));
 			else 
-				throw new IllegalArgumentException("Login já Cadastrado.");
+				throw new ExceptionResponse("Login já Cadastrado.");
 			
 			return new ModelMapper().map(usuario, UsuarioDto.class);
-		}catch(Exception e){
-			e.printStackTrace();
-			return null;
-		}	
+		} catch(ExceptionResponse ex) {
+			throw new ExceptionResponse(ex.getMessage());
+		} catch(Exception e) {
+			throw new Exception(e.getMessage());
+		}
 	}
 	
 	@Override
 	public UsuarioDto cadastrar(UsuarioDto usuarioDto) {
 		try {
-			Pessoa pessoa = pessoaRepository.pesquisarPorCpf(usuarioDto.getCpf());
+			Pessoa pessoa = pessoaRepository.pesquisarPorCpf(usuarioDto.getPessoa().getCpf());
 			
 			if(pessoa == null) {
-				clienteService.salvar(usuarioDto);
-				pessoa = pessoaRepository.pesquisarPorCpf(usuarioDto.getCpf());
+				pessoa = pessoaRepository.save(new ModelMapper().map(usuarioDto.getPessoa(), Pessoa.class));
 			}
 			
-			usuarioDto.setIdPessoa(pessoa.getIdPessoa());
+			usuarioDto.setPessoa(new ModelMapper().map(pessoa, PessoaDto.class));
 			usuarioDto = salvar(usuarioDto);
 			
 			if(usuarioDto == null)

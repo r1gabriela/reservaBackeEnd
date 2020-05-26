@@ -4,10 +4,9 @@ import java.util.ArrayList;
 
 import com.lpi.reserva.dto.UsuarioDto;
 
-
 public interface UsuarioService{
 	
-	public UsuarioDto salvar(UsuarioDto usuarioDto);
+	public UsuarioDto salvar(UsuarioDto usuarioDto) throws Exception;
 
 	public boolean excluir(Integer idUsuario);
 
@@ -17,6 +16,4 @@ public interface UsuarioService{
 	
 	public ArrayList<UsuarioDto> listarTodos();
 
-		
-	
 }

@@ -1,5 +1,4 @@
-package com.lpi.reserva;
-
+package com.lpi.reserva.config;
 
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;

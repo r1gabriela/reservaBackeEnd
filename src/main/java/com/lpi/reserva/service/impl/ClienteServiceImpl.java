@@ -7,7 +7,9 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lpi.reserva.Exception.ExceptionResponse;
 import com.lpi.reserva.Repository.ClienteRepository;
+import com.lpi.reserva.Repository.PessoaRepository;
 import com.lpi.reserva.dto.ClienteDto;
 import com.lpi.reserva.entity.Cliente;
 import com.lpi.reserva.entity.Pessoa;
@@ -18,36 +20,41 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Autowired
 	private ClienteRepository clienteRepository;
+		
+	@Autowired
+	private PessoaRepository pessoaRepository;
 	
 	@Autowired
-	private PessoaServiceImpl pessoaService;
+	private SecurityServiceImpl SecurityService;
 	
 	public ClienteServiceImpl(ClienteRepository clienteRepository) {
 		this.clienteRepository = clienteRepository;
 	}
 	
 	@Override
-	public ClienteDto salvar(ClienteDto clienteDto) {
+	public ClienteDto salvar(ClienteDto clienteDto) throws Exception, ExceptionResponse {
 		try {
-			Pessoa pessoa = pessoaService.pesquisarPorCpf(clienteDto.getCpf());
+			Pessoa pessoa = pessoaRepository.pesquisarPorCpf(clienteDto.getCpf());
 			Cliente cliente = new Cliente();
 			
 			if (pessoa == null || pessoa.getIdPessoa() == clienteDto.getIdPessoa()) {
 				cliente = clienteRepository.save(new ModelMapper().map(clienteDto, Cliente.class));
 			} else {
-				throw new IllegalArgumentException("Cpf já cadastrado.");
+				throw new ExceptionResponse("Cpf já cadastrado.");
 			}
 			
 			return new ModelMapper().map(cliente, ClienteDto.class);
-		}catch(Exception e){
-			e.printStackTrace();
-			return null;
-		}	
+		} catch(ExceptionResponse ex) {
+			throw new ExceptionResponse(ex.getMessage());
+		} catch(Exception e) {
+			throw new Exception(e.getMessage());
+		}
+		
 	}
 
 	@Override
-	public ClienteDto pesquisarPorId(int idPessoa) {
-		return new ModelMapper().map(clienteRepository.findById(idPessoa).get(), ClienteDto.class);
+	public ClienteDto pesquisar() {
+		return new ModelMapper().map(clienteRepository.findById(pessoaRepository.pesquisarIdPessoaPorLogin(SecurityService.findLoggedInUsername())).get(), ClienteDto.class);
 	}
 	
 	@Override

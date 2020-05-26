@@ -2,13 +2,15 @@ package com.lpi.reserva.Controller;
 
 import java.util.ArrayList;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lpi.reserva.Exception.ExceptionResponse;
 import com.lpi.reserva.dto.FuncionarioDto;
 import com.lpi.reserva.service.impl.FuncionarioServiceImpl;
 
@@ -17,21 +19,16 @@ import com.lpi.reserva.service.impl.FuncionarioServiceImpl;
 public class FuncionarioController {
 
 	@Autowired
-	private FuncionarioServiceImpl funcionarioServiceImpl;
+	private FuncionarioServiceImpl funcionarioService;
 
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public FuncionarioDto salvar(@RequestBody FuncionarioDto funcionarioDto) {
-		return funcionarioServiceImpl.salvar(funcionarioDto);
+	public FuncionarioDto salvar(@RequestBody @Valid FuncionarioDto funcionarioDto) throws Exception , ExceptionResponse { 
+		return funcionarioService.salvar(funcionarioDto);
 	}
-	
-	@RequestMapping(value = "/pesquisarPorId", method = RequestMethod.GET)
-    public FuncionarioDto pesquisarPorId(@RequestParam(value = "idPessoa") int idPessoa) {
-    	return funcionarioServiceImpl.pesquisarPorId(idPessoa);	
-    }
-	
+
 	@RequestMapping(value = "/listarTodos", method = RequestMethod.GET)
 	public ArrayList<FuncionarioDto> listarTodos(){
-		return funcionarioServiceImpl.listarTodos();
+		return funcionarioService.listarTodos();
 	}
 	
 }

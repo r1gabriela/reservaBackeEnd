@@ -1,23 +1,36 @@
 package com.lpi.reserva.service.impl;
 
+import java.util.ArrayList;
+
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lpi.reserva.Repository.ReservaRepository;
+import com.lpi.reserva.Repository.UsuarioRepository;
 import com.lpi.reserva.dto.ReservaDto;
 import com.lpi.reserva.entity.Reserva;
+import com.lpi.reserva.entity.Usuario;
 import com.lpi.reserva.service.ReservaService;
+import com.lpi.reserva.service.SecurityService;
 
 @Service
 public class ReservaServiceImpl implements ReservaService {
 
 	@Autowired
 	private ReservaRepository reservaRepository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private SecurityService securityService;
 
 	public ReservaServiceImpl(ReservaRepository reservaRepository) {
 		this.reservaRepository = reservaRepository;
 	}
+	
 	
 	@Override
 	public ReservaDto salvar(ReservaDto reservaDto) {
@@ -32,11 +45,6 @@ public class ReservaServiceImpl implements ReservaService {
 	}
 
 	@Override
-	public ReservaDto pesquisarPorId(int idReserva) {
-		return new ModelMapper().map(reservaRepository.findById(idReserva).get(), ReservaDto.class);
-	}
-
-	@Override
 	public boolean excluir(int idReserva) {
 		try {
 			Reserva reserva = reservaRepository.findById(idReserva).get();
@@ -48,5 +56,15 @@ public class ReservaServiceImpl implements ReservaService {
 		     return false;
 		}
 	}
+	
+	@Override
+	public ArrayList<ReservaDto> listarReservas() {
+		Usuario usuario = usuarioRepository.pesquisarUsuarioPorLogin(securityService.findLoggedInUsername());
+		if(usuario.getRole().getNome().equals("funcionario"))
+			return new ModelMapper().map(reservaRepository.findAll(), new TypeToken<ArrayList<ReservaDto>>() {}.getType());
+			
+		return new ModelMapper().map(reservaRepository.pesquisarReservaPorCliente(usuario.getPessoa().getIdPessoa()), new TypeToken<ArrayList<ReservaDto>>() {}.getType());
+	}
+	
 
 }

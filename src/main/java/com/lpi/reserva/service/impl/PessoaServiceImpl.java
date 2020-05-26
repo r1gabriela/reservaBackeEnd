@@ -24,7 +24,7 @@ public class PessoaServiceImpl implements PessoaService {
 	
 	@Override
 	public Pessoa pesquisarPorCpf(String cpf) {
-		return new ModelMapper().map(pessoaRepository.pesquisarPorCpf(cpf), Pessoa.class);
+		return new ModelMapper().map(pessoaRepository.pesquisarPorCpf(cpf).getCpf(), Pessoa.class);
 	}
 
 	@Override

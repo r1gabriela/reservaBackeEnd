@@ -7,10 +7,10 @@ import com.lpi.reserva.entity.Role;
 
 public interface RoleService {
 
-	public ArrayList<RoleDto> salvar(ArrayList<RoleDto> rolesDto);
+	public ArrayList<RoleDto> salvar(ArrayList<RoleDto> rolesDto) throws Exception;
 	
-	public ArrayList<Role> preencherListaRole(ArrayList<RoleDto> rolesDto);
+	public ArrayList<Role> preencherListaRole(ArrayList<RoleDto> rolesDto) throws Exception;
 
-	public Role preencherRole(RoleDto roleDto);
+	public Role preencherRole(RoleDto roleDto) throws Exception;
 	
 }
