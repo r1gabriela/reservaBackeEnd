@@ -1,5 +1,7 @@
 package com.lpi.reserva.Controller;
 
+import java.util.ArrayList;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,4 +31,8 @@ public class ReservaController {
     	return reservaServiceImpl.excluir(idReserva);	
     }
 	
+	@RequestMapping(value = "/listar", method = RequestMethod.GET)
+	public ArrayList<ReservaDto> listarReservas(){
+		return reservaServiceImpl.listarReservas();
+	}
 }
