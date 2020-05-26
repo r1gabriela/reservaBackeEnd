@@ -37,4 +37,9 @@ public class DependenteController {
 		return dependenteService.listarPessoasDeCliente();
 	}
 	
+	@RequestMapping(value = "/listarDependentes", method = RequestMethod.GET)
+	public ArrayList<DependenteDto> listarDependentes(){
+		return dependenteService.listarDependentes();
+	}
+	
 }

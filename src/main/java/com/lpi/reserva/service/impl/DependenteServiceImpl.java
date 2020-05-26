@@ -93,4 +93,16 @@ public class DependenteServiceImpl implements DependenteService {
 		return listarPessoas(clienteRepository.pesquisarClientePorId(pessoaRepository.pesquisarIdPessoaPorLogin(securityServiceImpl.findLoggedInUsername())));
 	}
 
+	@Override
+	public ArrayList<PessoaDto> listarPessoas(Dependente dependente){
+		ArrayList<PessoaDto> listDto = new ArrayList<>();
+		
+		listDto = new ModelMapper().map(dependente, new TypeToken<ArrayList<PessoaDto>>() {}.getType());
+		return listDto;
+	}
+	
+	@Override
+	public ArrayList<DependenteDto> listarDependentes(){
+		return new ModelMapper().map(dependenteRepository.pesquisarDependentePorCliente(pessoaRepository.pesquisarIdPessoaPorLogin(securityServiceImpl.findLoggedInUsername())), new TypeToken<ArrayList<DependenteDto>>() {}.getType());
+	}
 } 
