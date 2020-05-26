@@ -14,7 +14,7 @@ public interface DependenteService {
 
 	public ArrayList<PessoaDto> listarPessoas(Cliente cliente);
 
-	public ArrayList<PessoaDto> listarPessoasDeCliente(int idCliente);
+	public ArrayList<PessoaDto> listarPessoasDeCliente();
 	
 
 }

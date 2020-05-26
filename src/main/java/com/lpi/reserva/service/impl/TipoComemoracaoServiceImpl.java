@@ -62,11 +62,6 @@ public class TipoComemoracaoServiceImpl implements TipoComemoracaoService {
 	}
 	
 	@Override
-	public TipoComemoracaoDto pesquisarPorId(int idTipoComemoracao) {	
-		return new ModelMapper().map(tipoComemoracaoRepository.findById(idTipoComemoracao).get(), TipoComemoracaoDto.class);
-	}
-	
-	@Override
 	public ArrayList<TipoComemoracaoDto> listarPorAtivo() {
 		return new ModelMapper().map(tipoComemoracaoRepository.listarPorAtivo(), new TypeToken<ArrayList<TipoComemoracaoDto>>() {}.getType());
 	}

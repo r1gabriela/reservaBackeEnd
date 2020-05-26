@@ -12,8 +12,6 @@ public interface TipoComemoracaoService {
 
 	public ArrayList<TipoComemoracaoDto> listarTodos();
 
-	public TipoComemoracaoDto pesquisarPorId(int idTipoComemoracao);
-
 	public ArrayList<TipoComemoracaoDto> listarPorAtivo();
 	
 }

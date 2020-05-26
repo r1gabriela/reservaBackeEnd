@@ -6,8 +6,6 @@ public interface ReservaService {
 
 	public ReservaDto salvar(ReservaDto reservaDto);
 	
-	public ReservaDto pesquisarPorId(int idReserva);
-	
 	public boolean excluir(int idReserva);
 	
 }

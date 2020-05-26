@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lpi.reserva.dto.FuncionarioDto;
@@ -25,12 +24,7 @@ public class FuncionarioController {
 	public FuncionarioDto salvar(@RequestBody @Valid FuncionarioDto funcionarioDto) throws Exception {
 		return funcionarioServiceImpl.salvar(funcionarioDto);
 	}
-	
-	@RequestMapping(value = "/pesquisarPorId", method = RequestMethod.GET)
-    public FuncionarioDto pesquisarPorId(@RequestParam(value = "idPessoa") int idPessoa) {
-    	return funcionarioServiceImpl.pesquisarPorId(idPessoa);	
-    }
-	
+
 	@RequestMapping(value = "/listarTodos", method = RequestMethod.GET)
 	public ArrayList<FuncionarioDto> listarTodos(){
 		return funcionarioServiceImpl.listarTodos();

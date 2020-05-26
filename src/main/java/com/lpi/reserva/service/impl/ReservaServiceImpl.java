@@ -32,11 +32,6 @@ public class ReservaServiceImpl implements ReservaService {
 	}
 
 	@Override
-	public ReservaDto pesquisarPorId(int idReserva) {
-		return new ModelMapper().map(reservaRepository.findById(idReserva).get(), ReservaDto.class);
-	}
-
-	@Override
 	public boolean excluir(int idReserva) {
 		try {
 			Reserva reserva = reservaRepository.findById(idReserva).get();

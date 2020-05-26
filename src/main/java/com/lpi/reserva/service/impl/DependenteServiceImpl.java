@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.lpi.reserva.Exception.ExceptionResponse;
 import com.lpi.reserva.Repository.ClienteRepository;
 import com.lpi.reserva.Repository.DependenteRepository;
+import com.lpi.reserva.Repository.PessoaRepository;
+import com.lpi.reserva.dto.ClienteDto;
 import com.lpi.reserva.dto.DependenteDto;
 import com.lpi.reserva.dto.PessoaDto;
 import com.lpi.reserva.entity.Cliente;
@@ -29,6 +31,12 @@ public class DependenteServiceImpl implements DependenteService {
 	@Autowired
 	private PessoaServiceImpl pessoaService;
 	
+	@Autowired
+	private PessoaRepository pessoaRepository;
+	
+	@Autowired
+	private SecurityServiceImpl securityServiceImpl;
+	
 	public DependenteServiceImpl(DependenteRepository dependenteRepository) {
 		this.dependenteRepository = dependenteRepository;
 	}
@@ -38,6 +46,10 @@ public class DependenteServiceImpl implements DependenteService {
 		try {
 			Pessoa pessoa = pessoaService.pesquisarPorCpf(dependenteDto.getCpf());
 			Dependente dependente = new Dependente();
+			
+			ClienteDto clienteDto = new ClienteDto();
+			clienteDto.setIdPessoa(pessoaRepository.pesquisarIdPessoaPorLogin(securityServiceImpl.findLoggedInUsername()));
+			dependenteDto.setCliente(clienteDto);
 			
 			if (pessoa == null || pessoa.getIdPessoa() == dependenteDto.getIdPessoa()) {
 				dependente = dependenteRepository.save(new ModelMapper().map(dependenteDto, Dependente.class));
@@ -77,14 +89,8 @@ public class DependenteServiceImpl implements DependenteService {
 	}
 	
 	@Override
-	public ArrayList<PessoaDto> listarPessoasDeCliente(int idCliente){
-		return listarPessoas(clienteRepository.pesquisarClientePorId(idCliente));
+	public ArrayList<PessoaDto> listarPessoasDeCliente(){
+		return listarPessoas(clienteRepository.pesquisarClientePorId(pessoaRepository.pesquisarIdPessoaPorLogin(securityServiceImpl.findLoggedInUsername())));
 	}
 
-//	@Override
-//	public ArrayList<DependenteDto> listar() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-	
 } 

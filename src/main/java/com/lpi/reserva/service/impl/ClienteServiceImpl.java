@@ -24,6 +24,9 @@ public class ClienteServiceImpl implements ClienteService {
 	@Autowired
 	private PessoaRepository pessoaRepository;
 	
+	@Autowired
+	private SecurityServiceImpl SecurityService;
+	
 	public ClienteServiceImpl(ClienteRepository clienteRepository) {
 		this.clienteRepository = clienteRepository;
 	}
@@ -50,8 +53,8 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
-	public ClienteDto pesquisarPorId(int idPessoa) {
-		return new ModelMapper().map(clienteRepository.findById(idPessoa).get(), ClienteDto.class);
+	public ClienteDto pesquisar() {
+		return new ModelMapper().map(clienteRepository.findById(pessoaRepository.pesquisarIdPessoaPorLogin(SecurityService.findLoggedInUsername())).get(), ClienteDto.class);
 	}
 	
 	@Override
