@@ -21,11 +21,9 @@ public class RoleDto {
 	@NotBlank(message="{nome.not.blank}")
 	private String nome;
 	
-	@NotBlank(message="{privilegios.not.blank}")
 	@JsonBackReference(value = "privilegios")
 	private List<PrivilegioDto> privilegios;
 	
-	@NotBlank(message="{usuarios.not.blank}")
 	@JsonBackReference(value = "usuarios")
 	private List<UsuarioDto> usuarios;
 	

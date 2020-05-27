@@ -24,7 +24,6 @@ public class PrivilegioDto {
 	@NotBlank(message="{url.not.blank}")
 	private String url;
 	
-	@NotNull
 	@JsonBackReference(value = "roles")
 	private List<RoleDto> roles;
 	
