@@ -9,11 +9,11 @@ import com.lpi.reserva.entity.Privilegio;
 public interface PrivilegioService {
 	
 	
-	public ArrayList<PrivilegioDto> salvar(ArrayList<PrivilegioDto> privilegioDto);
+	public ArrayList<PrivilegioDto> salvar(ArrayList<PrivilegioDto> privilegioDto) throws Exception;
 
-	public Privilegio preencherPrivilegio(PrivilegioDto privilegioDto);
+	public Privilegio preencherPrivilegio(PrivilegioDto privilegioDto) throws Exception;
 
-	public ArrayList<Privilegio> preencherLista(ArrayList<PrivilegioDto> privilegio);
+	public ArrayList<Privilegio> preencherLista(ArrayList<PrivilegioDto> privilegio) throws Exception;
 	
 }
  

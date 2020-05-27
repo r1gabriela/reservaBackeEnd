@@ -1,5 +1,9 @@
 package com.lpi.reserva.Controller;
 
+import java.util.ArrayList;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,18 +22,17 @@ public class ReservaController {
 	private ReservaServiceImpl reservaServiceImpl;
 
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public ReservaDto salvar(@RequestBody ReservaDto reservaDto) {
+	public ReservaDto salvar(@RequestBody @Valid ReservaDto reservaDto) {
 		return reservaServiceImpl.salvar(reservaDto);
 	}
-	
-	@RequestMapping(value = "/pesquisarPorId", method = RequestMethod.GET)
-    public ReservaDto pesquisarPorId(@RequestParam(value = "idReserva") int idReserva) {
-    	return reservaServiceImpl.pesquisarPorId(idReserva);	
-    }
 	
 	@RequestMapping(value = "/excluir", method = RequestMethod.GET)
     public boolean excluir(@RequestParam(value = "idReserva") int idReserva) {
     	return reservaServiceImpl.excluir(idReserva);	
     }
 	
+	@RequestMapping(value = "/listar", method = RequestMethod.GET)
+	public ArrayList<ReservaDto> listarReservas(){
+		return reservaServiceImpl.listarReservas();
+	}
 }

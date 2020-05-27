@@ -1,5 +1,9 @@
 package com.lpi.reserva.Controller;
 
+import java.util.ArrayList;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lpi.reserva.dto.UsuarioDto;
+import com.lpi.reserva.service.impl.SecurityServiceImpl;
 import com.lpi.reserva.service.impl.UsuarioServiceImpl;
 
 @RestController
@@ -15,10 +20,12 @@ import com.lpi.reserva.service.impl.UsuarioServiceImpl;
 public class UsuarioController {
 	
 	@Autowired
+	private SecurityServiceImpl securityService;
+	@Autowired
 	private UsuarioServiceImpl usuarioService;
 
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public UsuarioDto salvar(@RequestBody UsuarioDto usuarioDto) {
+	public UsuarioDto salvar(@RequestBody @Valid UsuarioDto usuarioDto) throws Exception{
 		return usuarioService.salvar(usuarioDto);
 	}	
 	
@@ -31,5 +38,21 @@ public class UsuarioController {
     public UsuarioDto pesquisarPorId(@RequestParam(value = "idUsuario") int idUsuario) {
     	return usuarioService.pesquisarPorId(idUsuario);	
     }
+	
+	@RequestMapping(value = "/cadastrar", method = RequestMethod.POST)
+	public UsuarioDto cadastrar(@RequestBody @Valid UsuarioDto usuarioDto) {
+		return usuarioService.cadastrar(usuarioDto);
+	}
+	
+	@RequestMapping(value = "/logar", method = RequestMethod.POST)
+	public UsuarioDto logar(@RequestBody UsuarioDto usuarioDto) {
+		securityService.autoLogin(usuarioDto.getLogin(), usuarioDto.getSenha());
+		return usuarioDto;
+	}
+	
+	@RequestMapping(value = "/listarTodos", method = RequestMethod.GET)
+	public ArrayList<UsuarioDto> listarTodos(){
+		return usuarioService.listarTodos();
+	}
 
 }

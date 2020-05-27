@@ -1,18 +1,15 @@
 package com.lpi.reserva.service;
 
+import java.util.ArrayList;
+
 import com.lpi.reserva.dto.ReservaDto;
-import com.lpi.reserva.entity.Reserva;
 
 public interface ReservaService {
 
 	public ReservaDto salvar(ReservaDto reservaDto);
 	
-	public Reserva preencherReserva(ReservaDto reservaDto);
-	
-	public ReservaDto preencherReservaDto(Reserva reserva);
-	
-	public ReservaDto pesquisarPorId(int idReserva);
-	
 	public boolean excluir(int idReserva);
+
+	public ArrayList<ReservaDto> listarReservas();
 	
 }

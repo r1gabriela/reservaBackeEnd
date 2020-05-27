@@ -1,4 +1,4 @@
-package com.lpi.reserva;
+package com.lpi.reserva.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,68 +1,47 @@
 package com.lpi.reserva.service.impl;
 
-import java.sql.Timestamp;
+import java.util.ArrayList;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lpi.reserva.Repository.ReservaRepository;
+import com.lpi.reserva.Repository.UsuarioRepository;
 import com.lpi.reserva.dto.ReservaDto;
-import com.lpi.reserva.entity.Cliente;
-import com.lpi.reserva.entity.Mesa;
 import com.lpi.reserva.entity.Reserva;
+import com.lpi.reserva.entity.Usuario;
 import com.lpi.reserva.service.ReservaService;
+import com.lpi.reserva.service.SecurityService;
 
 @Service
 public class ReservaServiceImpl implements ReservaService {
 
 	@Autowired
 	private ReservaRepository reservaRepository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private SecurityService securityService;
 
 	public ReservaServiceImpl(ReservaRepository reservaRepository) {
 		this.reservaRepository = reservaRepository;
 	}
 	
+	
 	@Override
 	public ReservaDto salvar(ReservaDto reservaDto) {
+			Reserva reserva = new Reserva();
 		try {
-			reservaRepository.save(preencherReserva(reservaDto));
-			return reservaDto;
+			reserva = reservaRepository.save(new ModelMapper().map(reservaDto, Reserva.class));
+			return new ModelMapper().map(reserva, ReservaDto.class);
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
 		}	
-	}
-
-	@Override
-	public Reserva preencherReserva(ReservaDto reservaDto) {
-		Reserva reserva = new Reserva();
-		reserva.setIdReserva(reservaDto.getIdReserva());
-		Cliente cliente = new Cliente();
-		cliente.setIdPessoa(reservaDto.getIdCliente());
-		reserva.setCliente(cliente);
-		Mesa mesa = new Mesa();
-		mesa.setIdMesa(reservaDto.getIdMesa());
-		reserva.setMesa(mesa);
-		Timestamp time = Timestamp.valueOf(reservaDto.getDataHora());
-		reserva.setDataHora(time);
-		reserva.setAtivo(reservaDto.getAtivo());
-		return reserva;
-	}
-
-	@Override
-	public ReservaDto preencherReservaDto(Reserva reserva) {
-		ReservaDto reservaDto = new ReservaDto();
-		reservaDto.setIdReserva(reserva.getIdReserva());
-		reservaDto.setIdCliente(reserva.getCliente().getIdPessoa());
-		reservaDto.setIdMesa(reserva.getMesa().getIdMesa());
-		reservaDto.setDataHora(reserva.getDataHora().toString());
-		reservaDto.setAtivo(reserva.getAtivo());
-		return reservaDto;
-	}
-
-	@Override
-	public ReservaDto pesquisarPorId(int idReserva) {
-		return preencherReservaDto(reservaRepository.findById(idReserva).get());
 	}
 
 	@Override
@@ -77,5 +56,15 @@ public class ReservaServiceImpl implements ReservaService {
 		     return false;
 		}
 	}
+	
+	@Override
+	public ArrayList<ReservaDto> listarReservas() {
+		Usuario usuario = usuarioRepository.pesquisarUsuarioPorLogin(securityService.findLoggedInUsername());
+		if(usuario.getRole().getNome().equals("funcionario"))
+			return new ModelMapper().map(reservaRepository.findAll(), new TypeToken<ArrayList<ReservaDto>>() {}.getType());
+			
+		return new ModelMapper().map(reservaRepository.pesquisarReservaPorCliente(usuario.getPessoa().getIdPessoa()), new TypeToken<ArrayList<ReservaDto>>() {}.getType());
+	}
+	
 
 }

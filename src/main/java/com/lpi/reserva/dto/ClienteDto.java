@@ -2,9 +2,12 @@ package com.lpi.reserva.dto;
 
 import java.util.List;
 
-import com.lpi.reserva.entity.DataComemorativa;
-import com.lpi.reserva.entity.Dependente;
-import com.lpi.reserva.entity.Reserva;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,15 +16,21 @@ import lombok.Setter;
 
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
 public class ClienteDto extends PessoaDto {
-
+	
+	@NotBlank
 	private String telefone;
 
+	@NotBlank
+	@Email
 	private String email;
 
-	private List<Reserva> reservas;
-
-	private List<Dependente> dependente;
-
-	private List<DataComemorativa> datasComemorativas;
+	@JsonBackReference(value = "reservas")
+	private List<ReservaDto> reservas;	
+	
+	@JsonBackReference(value = "dependentes")
+	private List<DependenteDto> dependente;
+	
+	@JsonBackReference(value = "datasComemorativas")
+	private List<DataComemorativaDto> datasComemorativas;
 	
 }

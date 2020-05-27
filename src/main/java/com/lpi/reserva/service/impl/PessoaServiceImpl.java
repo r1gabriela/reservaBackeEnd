@@ -1,9 +1,14 @@
 package com.lpi.reserva.service.impl;
 
+import java.util.ArrayList;
+
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lpi.reserva.Repository.PessoaRepository;
+import com.lpi.reserva.dto.PessoaDto;
 import com.lpi.reserva.entity.Pessoa;
 import com.lpi.reserva.service.PessoaService;
 
@@ -19,7 +24,12 @@ public class PessoaServiceImpl implements PessoaService {
 	
 	@Override
 	public Pessoa pesquisarPorCpf(String cpf) {
-		return pessoaRepository.pesquisarPorCpf(cpf);
+		return new ModelMapper().map(pessoaRepository.pesquisarPorCpf(cpf).getCpf(), Pessoa.class);
+	}
+
+	@Override
+	public ArrayList<PessoaDto> pesquisarPorNome(String nome) {
+		return new ModelMapper().map(pessoaRepository.pesquisarPorNome(nome.toLowerCase()), new TypeToken<ArrayList<PessoaDto>>() {}.getType());
 	}
 	
 }
