@@ -12,5 +12,7 @@ public interface RoleService {
 	public ArrayList<Role> preencherListaRole(ArrayList<RoleDto> rolesDto) throws Exception;
 
 	public Role preencherRole(RoleDto roleDto) throws Exception;
+
+	public ArrayList<RoleDto> listar();
 	
 }

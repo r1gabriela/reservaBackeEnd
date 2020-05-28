@@ -86,4 +86,9 @@ public class RoleServiceImpl implements RoleService {
 		return roles;
 	}
 
+	@Override
+	public ArrayList<RoleDto> listar() {
+		return new ModelMapper().map(roleRepository.listarDiferenteNome(("User").toLowerCase()), new TypeToken<ArrayList<RoleDto>>() {}.getType());
+	}
+
 }
