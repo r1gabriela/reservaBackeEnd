@@ -30,4 +30,8 @@ public class RoleController {
 		return roleService.listar();
 	}
 	
+	@RequestMapping(value="/roleUsuarioLogado", method = RequestMethod.GET)
+	public String roleUsuarioLogado() {
+		return roleService.roleUsuarioLogado();
+	}
 }

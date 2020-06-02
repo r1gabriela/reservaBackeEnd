@@ -15,4 +15,6 @@ public interface RoleService {
 
 	public ArrayList<RoleDto> listar();
 	
+	public String roleUsuarioLogado();
+	
 }

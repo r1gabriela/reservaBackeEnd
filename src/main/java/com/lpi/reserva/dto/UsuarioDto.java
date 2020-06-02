@@ -14,7 +14,7 @@ public class UsuarioDto {
 	@NotNull(message="{id.not.null}")
 	private Integer idUsuario;
 	
-	@NotBlank
+	// @NotBlank
 	private PessoaDto pessoa;
 	
 	@NotBlank(message="{login.not.blank}")
@@ -23,7 +23,7 @@ public class UsuarioDto {
 	@NotBlank(message="{senha.not.blank}")
 	private String senha;
 
-	@NotBlank(message="{role.not.blank}")
+	// @NotBlank(message="{role.not.blank}")
 	private RoleDto role;
 	
 	private Boolean ativo;
