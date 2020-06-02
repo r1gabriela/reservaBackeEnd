@@ -54,5 +54,10 @@ public class UsuarioController {
 	public ArrayList<UsuarioDto> listarTodos(){
 		return usuarioService.listarTodos();
 	}
+	
+	@RequestMapping(value = "/usuarioLogado", method = RequestMethod.GET)
+	public String usuarioLogado() {
+		return securityService.findLoggedInUsername();
+	}
 
 }

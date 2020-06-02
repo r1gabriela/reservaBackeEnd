@@ -40,7 +40,7 @@ public class Role implements Serializable{
 	@Column(name = "nome", length = 255, nullable = false)
 	private String nome;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany
     @JoinTable(
         name = "role_privilegio", 
         joinColumns = @JoinColumn(

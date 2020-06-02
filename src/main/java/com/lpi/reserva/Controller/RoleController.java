@@ -23,6 +23,15 @@ public class RoleController {
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
 	public ArrayList<RoleDto> salvar(@RequestBody @Valid ArrayList<RoleDto> arrayList) throws Exception{
 		return roleService.salvar(arrayList);
-	}	
+	}
 	
+	@RequestMapping(value = "/listar", method = RequestMethod.GET)
+	public ArrayList<RoleDto> listarRole(){
+		return roleService.listar();
+	}
+	
+	@RequestMapping(value="/roleUsuarioLogado", method = RequestMethod.GET)
+	public String roleUsuarioLogado() {
+		return roleService.roleUsuarioLogado();
+	}
 }

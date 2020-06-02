@@ -1,5 +1,7 @@
 package com.lpi.reserva.Repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -10,5 +12,9 @@ public interface RoleRepository extends CrudRepository<Role, Integer> {
 
 	@Query(value = "SELECT r FROM Role r WHERE LOWER(r.nome) = :nome")
 	public Role pesquisarPorNome(@Param("nome") String nome);
+	
+	@Query(value = "SELECT r FROM Role r WHERE LOWER(r.nome) != :nome")
+	public List<Role> listarDiferenteNome(@Param("nome") String nome);
+	
 	
 }
