@@ -44,11 +44,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 			Usuario usuario = new Usuario();
 			
 			usuario = usuarioRepository.pesquisarUsuarioPorLogin(usuarioDto.getLogin());
-			usuarioDto.setSenha(bCryptPasswordEncoder.encode(usuarioDto.getSenha()));
-			
-			if (usuario == null || usuario.getPessoa().getIdPessoa() == usuarioDto.getPessoa().getIdPessoa())
-				usuarioRepository.save(new ModelMapper().map(usuarioDto, Usuario.class));
-			else 
+
+			if (usuario == null || usuario.getPessoa().getIdPessoa() == usuarioDto.getPessoa().getIdPessoa()) {
+				usuario = new ModelMapper().map(usuarioDto, Usuario.class);
+				usuario.setSenha(bCryptPasswordEncoder.encode(usuario.getSenha()));
+				usuario = usuarioRepository.save(usuario);
+			} else 
 				throw new ExceptionResponse("Login já Cadastrado.");
 			
 			return new ModelMapper().map(usuario, UsuarioDto.class);
@@ -59,6 +60,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	@Override
 	public UsuarioDto cadastrar(UsuarioDto usuarioDto) {
 		try {
@@ -69,7 +71,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 			}
 			
 			usuarioDto.setPessoa(new ModelMapper().map(pessoa, PessoaDto.class));
-			usuarioDto = salvar(usuarioDto);
+			salvar(usuarioDto);
 			
 			if(usuarioDto == null)
 				throw new Exception("Erro ao cadastrar usuário");
