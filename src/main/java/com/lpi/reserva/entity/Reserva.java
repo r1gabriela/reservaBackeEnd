@@ -1,7 +1,8 @@
 package com.lpi.reserva.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.sql.Time;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,9 +42,15 @@ public class Reserva implements Serializable {
 	@JoinColumn(name="cliente_pessoa_idpessoa", referencedColumnName="pessoa_idpessoa")
 	private Cliente cliente;
 	
-	@Column(name = "datahora", nullable = false)
-	private Timestamp dataHora;
-	
+	@Column(name="datareserva", nullable = false)
+    private Date dataReserva;
+
+    @Column(name="horaentrada", nullable = false)
+    private Time horaEntrada;
+
+    @Column(name="horasaida", nullable = false)
+    private Time horaSaida;
+    
 	@Column(name="ativo", nullable = false)
 	private Boolean ativo;
 	
