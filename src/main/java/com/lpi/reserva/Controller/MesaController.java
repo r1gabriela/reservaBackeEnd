@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lpi.reserva.dto.MesaDto;
+import com.lpi.reserva.dto.ReservaDto;
 import com.lpi.reserva.service.impl.MesaServiceImpl;
 
 @RestController
@@ -35,4 +36,8 @@ public class MesaController {
 	    return mesaService.listarTodos();
 	}
 	
+	@RequestMapping(value = "/verDisponibilidadeMesa", method = RequestMethod.POST)
+	public ArrayList<MesaDto> verDisponibilidadeMesa(@RequestBody @Valid ReservaDto reservaDto){
+		return mesaService.verDisponibilidadeMesa(reservaDto);
+	}
 }

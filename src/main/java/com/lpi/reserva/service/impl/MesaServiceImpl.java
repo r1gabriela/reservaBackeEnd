@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.lpi.reserva.Repository.MesaRepository;
 import com.lpi.reserva.dto.MesaDto;
+import com.lpi.reserva.dto.ReservaDto;
 import com.lpi.reserva.entity.Mesa;
 import com.lpi.reserva.service.MesaService;
 
@@ -48,6 +49,11 @@ public class MesaServiceImpl implements MesaService {
 	@Override
 	public ArrayList<MesaDto> listarTodos() {
 		return new ModelMapper().map(mesaRepository.findAll(), new TypeToken<ArrayList<MesaDto>>() {}.getType());
+	}
+	
+	@Override
+	public ArrayList<MesaDto> verDisponibilidadeMesa(ReservaDto reservaDto) {
+		return new ModelMapper().map(mesaRepository.verDisponibilidadeMesa(reservaDto.getHoraEntrada(), reservaDto.getHoraSaida(), reservaDto.getCapacidade()), new TypeToken<ArrayList<MesaDto>>() {}.getType());
 	}
 	
 }

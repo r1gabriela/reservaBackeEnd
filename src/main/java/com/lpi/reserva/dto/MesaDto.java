@@ -19,5 +19,5 @@ public class MesaDto {
 	private String localizacao;
 	
 	private Boolean ativo;
-
+	
 }

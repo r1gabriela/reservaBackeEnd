@@ -1,0 +1,2 @@
+ALTER TABLE reserva DROP COLUMN datahora;
+ALTER TABLE reserva ADD COLUMN horaentrada TIME NOT NULL, ADD COLUMN horasaida TIME NOT NULL, ADD COLUMN datareserva DATE NOT NULL;
