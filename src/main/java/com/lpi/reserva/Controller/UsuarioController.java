@@ -21,6 +21,7 @@ public class UsuarioController {
 	
 	@Autowired
 	private SecurityServiceImpl securityService;
+	
 	@Autowired
 	private UsuarioServiceImpl usuarioService;
 

@@ -16,7 +16,6 @@ public class PessoaController {
 	@Autowired
 	PessoaServiceImpl  pessoaService;
 	
-	
 	@RequestMapping(value = "/pesquisarPorNome", method = RequestMethod.GET)
 	public ArrayList<PessoaDto> pesquisarPorNome(@RequestParam(value= "nome") String nome) {
 		return pessoaService.pesquisarPorNome(nome);

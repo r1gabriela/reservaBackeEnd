@@ -3,7 +3,6 @@ package com.lpi.reserva.entity;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,7 +28,6 @@ public class Role implements Serializable{
 	/**
 	 * 
 	 */
-
 	private static final long serialVersionUID = 3981244752147533526L;
 	
 	@Id

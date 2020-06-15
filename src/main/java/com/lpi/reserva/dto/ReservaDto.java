@@ -29,4 +29,5 @@ public class ReservaDto {
 	private Integer capacidade;
 	
 	private Date dataReserva;
+	
 }

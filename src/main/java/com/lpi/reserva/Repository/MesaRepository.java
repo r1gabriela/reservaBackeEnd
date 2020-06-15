@@ -19,4 +19,5 @@ public interface MesaRepository extends CrudRepository<Mesa, Integer> {
 			+ "OR r.horaSaida > :horaEntrada AND r.horaSaida < :horaSaida AND r.dataReserva = :dataReserva)"
 			+ " AND m.capacidade = :capacidade")
 	public List<Mesa> verDisponibilidadeMesa(@Param("horaEntrada") Time horaEntrada, @Param("horaSaida") Time horaSaida, @Param("capacidade") Integer capacidade);
+
 }

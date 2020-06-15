@@ -14,7 +14,6 @@ import com.lpi.reserva.entity.Privilegio;
 import com.lpi.reserva.entity.Role;
 import com.lpi.reserva.service.impl.UserDetailsServiceImpl;
 
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{

@@ -16,7 +16,6 @@ import com.lpi.reserva.dto.RoleDto;
 import com.lpi.reserva.entity.Privilegio;
 import com.lpi.reserva.entity.Role;
 import com.lpi.reserva.service.RoleService;
-import com.lpi.reserva.service.SecurityService;
 
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -57,7 +56,6 @@ public class RoleServiceImpl implements RoleService {
 					role = new Role();
 				
 				role = new ModelMapper().map(roleDto, Role.class);
-				
 				
 				ArrayList<Privilegio> privilegios = new ArrayList<>();
 				if (role.getPrivilegios() != null)

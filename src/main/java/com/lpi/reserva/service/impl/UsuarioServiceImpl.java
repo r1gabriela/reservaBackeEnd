@@ -32,7 +32,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
 	@Autowired
 	private SecurityServiceImpl securityServiceImpl;
-	
 		
 	public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
 		this.usuarioRepository = usuarioRepository;
@@ -86,7 +85,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 	}
 	
-
 	@Override
 	public boolean excluir(Integer idUsuario) {
 		try {
@@ -105,7 +103,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return new ModelMapper().map(usuarioRepository.pesquisarUsuarioPorLogin(login).getLogin(), UsuarioDto.class);
 	}
 
-	
 	@Override
 	public ArrayList<UsuarioDto> listarTodos() {
 		ArrayList<UsuarioDto> usuarios = new ArrayList<>();

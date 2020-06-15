@@ -10,12 +10,12 @@ public interface DependenteService {
 
 	public DependenteDto salvar(DependenteDto dependeteDto) throws Exception;
 
-	boolean excluir(Integer idPessoa);
+	public boolean excluir(Integer idPessoa);
 
 	public ArrayList<PessoaDto> listarPessoas(Cliente cliente);
 
 	public ArrayList<PessoaDto> listarPessoasDeCliente();
 
-	ArrayList<DependenteDto> listarDependentes();
+	public ArrayList<DependenteDto> listarDependentes();
 
 }

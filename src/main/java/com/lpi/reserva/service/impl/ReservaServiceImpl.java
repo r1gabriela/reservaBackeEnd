@@ -31,7 +31,6 @@ public class ReservaServiceImpl implements ReservaService {
 		this.reservaRepository = reservaRepository;
 	}
 	
-	
 	@Override
 	public ReservaDto salvar(ReservaDto reservaDto) {
 		try {
@@ -66,5 +65,4 @@ public class ReservaServiceImpl implements ReservaService {
 		return new ModelMapper().map(reservaRepository.pesquisarReservaPorCliente(usuario.getPessoa().getIdPessoa()), new TypeToken<ArrayList<ReservaDto>>() {}.getType());
 	}
 	
-
 }

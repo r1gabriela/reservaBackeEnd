@@ -31,7 +31,6 @@ public class DataComemorativaServiceImpl implements  DataComemorativaService {
 		this.dataComemorativaRepository = dataComemorativaRepository;
 	}
 	
-	
 	@Override
 	public DataComemorativaDto salvar(DataComemorativaDto dataComemorativaDto) throws Exception, ExceptionResponse {
 		try {

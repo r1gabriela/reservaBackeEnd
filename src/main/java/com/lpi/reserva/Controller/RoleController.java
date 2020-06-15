@@ -34,4 +34,5 @@ public class RoleController {
 	public String roleUsuarioLogado() {
 		return roleService.roleUsuarioLogado();
 	}
+	
 }

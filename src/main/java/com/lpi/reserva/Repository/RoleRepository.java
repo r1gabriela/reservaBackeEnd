@@ -16,5 +16,4 @@ public interface RoleRepository extends CrudRepository<Role, Integer> {
 	@Query(value = "SELECT r FROM Role r WHERE LOWER(r.nome) != :nome")
 	public List<Role> listarDiferenteNome(@Param("nome") String nome);
 	
-	
 }
