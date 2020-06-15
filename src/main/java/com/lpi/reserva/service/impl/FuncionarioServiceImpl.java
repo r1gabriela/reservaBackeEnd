@@ -49,7 +49,13 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	
 	@Override
 	public ArrayList<FuncionarioDto> listarTodos() {
-		return new ModelMapper().map(funcionarioRepository.findAll(), new TypeToken<ArrayList<FuncionarioDto>>() {}.getType());
+		ArrayList<FuncionarioDto> funcionarios = new ArrayList<>();
+		Iterable<Funcionario> iterable = funcionarioRepository.findAll();
+		
+		if (iterable != null)
+			funcionarios = new ModelMapper().map(iterable, new TypeToken<ArrayList<FuncionarioDto>>() {}.getType());
+		
+		return funcionarios;
 	}
 	
 }
