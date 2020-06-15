@@ -101,8 +101,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-	public UsuarioDto pesquisarPorId(int idUsuario) {	
-		return new ModelMapper().map(usuarioRepository.findById(idUsuario).get(), UsuarioDto.class);
+	public UsuarioDto pesquisar(String login) {	
+		return new ModelMapper().map(usuarioRepository.pesquisarUsuarioPorLogin(login).getLogin(), UsuarioDto.class);
 	}
 
 	
