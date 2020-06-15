@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lpi.reserva.dto.DataComemorativaDto;
+import com.lpi.reserva.entity.DataComemorativa;
 import com.lpi.reserva.service.impl.DataComemorativaServiceImpl;
 
 @RestController
@@ -26,9 +26,9 @@ public class DataComemorativaController {
 		return dataComemorativaService.salvar(dataComemorativaDto);
 	}
 	
-	@RequestMapping(value = "/excluir", method = RequestMethod.GET)
-    public boolean excluir(@RequestParam(value = "idDataComemorativa") int idDataComemorativa) {
-    	return dataComemorativaService.excluir(idDataComemorativa);	
+	@RequestMapping(value = "/excluir", method = RequestMethod.POST)
+    public boolean excluir(@RequestBody DataComemorativa dataComemorativa) {
+    	return dataComemorativaService.excluir(dataComemorativa);	
     }
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)

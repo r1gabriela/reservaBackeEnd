@@ -58,9 +58,9 @@ public class DataComemorativaServiceImpl implements  DataComemorativaService {
 	}
 
 	@Override
-	public boolean excluir(int idDataComemorativa) {
+	public boolean excluir(DataComemorativa datacomemorativa) {
 		try {
-			dataComemorativaRepository.deleteById(idDataComemorativa);;
+			dataComemorativaRepository.delete(datacomemorativa);
 			return true;
 		}catch(Exception e){
 			e.printStackTrace();
