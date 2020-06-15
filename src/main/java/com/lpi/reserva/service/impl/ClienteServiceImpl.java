@@ -59,7 +59,13 @@ public class ClienteServiceImpl implements ClienteService {
 	
 	@Override
 	public ArrayList<ClienteDto> listarTodos(){
-		return new ModelMapper().map(clienteRepository.findAll(), new TypeToken<ArrayList<ClienteDto>>() {}.getType());
+		ArrayList<ClienteDto> clientes = new ArrayList<>();
+		Iterable<Cliente> iterable = clienteRepository.findAll();
+		
+		if (iterable != null)
+			clientes = new ModelMapper().map(iterable, new TypeToken<ArrayList<ClienteDto>>() {}.getType());
+		
+		return clientes;
 	}
 		
 }

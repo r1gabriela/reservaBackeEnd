@@ -34,9 +34,8 @@ public class ReservaServiceImpl implements ReservaService {
 	
 	@Override
 	public ReservaDto salvar(ReservaDto reservaDto) {
-			Reserva reserva = new Reserva();
 		try {
-			reserva = reservaRepository.save(new ModelMapper().map(reservaDto, Reserva.class));
+			Reserva reserva = reservaRepository.save(new ModelMapper().map(reservaDto, Reserva.class));
 			return new ModelMapper().map(reserva, ReservaDto.class);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -60,6 +59,7 @@ public class ReservaServiceImpl implements ReservaService {
 	@Override
 	public ArrayList<ReservaDto> listarReservas() {
 		Usuario usuario = usuarioRepository.pesquisarUsuarioPorLogin(securityService.findLoggedInUsername());
+		
 		if(usuario.getRole().getNome().equals("funcionario"))
 			return new ModelMapper().map(reservaRepository.findAll(), new TypeToken<ArrayList<ReservaDto>>() {}.getType());
 			

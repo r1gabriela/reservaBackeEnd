@@ -68,16 +68,15 @@ public class DataComemorativaServiceImpl implements  DataComemorativaService {
 		}
 	}
 
-
-	@Override
-	public ArrayList<DataComemorativaDto> pesquisarPorIdTipoComemoracao(int idTipoComemoracao) {
-		return new ModelMapper().map(dataComemorativaRepository.pesquisarPorIdTipoComemoracao(idTipoComemoracao), new TypeToken<ArrayList<DataComemorativaDto>>() {}.getType());
-	}
-
-
 	@Override
 	public ArrayList<DataComemorativaDto> listar() {
-		return new ModelMapper().map(dataComemorativaRepository.findAllCliente(pessoaRepository.pesquisarIdPessoaPorLogin(securityServiceImpl.findLoggedInUsername())), new TypeToken<ArrayList<DataComemorativaDto>>() {}.getType());
+		ArrayList<DataComemorativaDto> datas = new ArrayList<>();
+		Iterable<DataComemorativa> iterable = dataComemorativaRepository.findAllCliente(pessoaRepository.pesquisarIdPessoaPorLogin(securityServiceImpl.findLoggedInUsername()));
+		
+		if (iterable != null)
+			datas = new ModelMapper().map(iterable, new TypeToken<ArrayList<DataComemorativaDto>>() {}.getType());
+		
+		return datas;
 	}
 
 }

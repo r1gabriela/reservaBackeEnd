@@ -108,7 +108,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
 	@Override
 	public ArrayList<UsuarioDto> listarTodos() {
-		return new ModelMapper().map(usuarioRepository.findAll(), new TypeToken<ArrayList<UsuarioDto>>() {}.getType());
+		ArrayList<UsuarioDto> usuarios = new ArrayList<>();
+		Iterable<Usuario> iterable = usuarioRepository.findAll();
+		
+		if (iterable != null)
+			usuarios = new ModelMapper().map(iterable, new TypeToken<ArrayList<UsuarioDto>>() {}.getType());
+		
+		return usuarios;
 	}
 		
 }

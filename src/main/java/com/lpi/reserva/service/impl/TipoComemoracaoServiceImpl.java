@@ -42,6 +42,7 @@ public class TipoComemoracaoServiceImpl implements TipoComemoracaoService {
 			TipoComemoracao tipocomemoracao = tipoComemoracaoRepository.pesquisarDescricao(tipoComemoracaoDto.getDescricao().toLowerCase());
 			
 			if (tipocomemoracao == null || tipocomemoracao.getIdTipoComemoracao() == tipoComemoracaoDto.getIdTipoComemoracao()){
+				tipoComemoracaoDto.setAtivo(true);
 				tipocomemoracao = tipoComemoracaoRepository.save(new ModelMapper().map(tipoComemoracaoDto, TipoComemoracao.class));		
 			} else {
 				throw new ExceptionResponse("Tipo de comemoração já cadastrado");
@@ -58,12 +59,24 @@ public class TipoComemoracaoServiceImpl implements TipoComemoracaoService {
 			
 	@Override
     public ArrayList<TipoComemoracaoDto> listarTodos() {
-	    return new ModelMapper().map(tipoComemoracaoRepository.findAll(), new TypeToken<ArrayList<TipoComemoracaoDto>>() {}.getType());
+		ArrayList<TipoComemoracaoDto> tipos = new ArrayList<>();
+		Iterable<TipoComemoracao> iterable = tipoComemoracaoRepository.findAll();
+		
+		if (iterable != null)
+			tipos = new ModelMapper().map(iterable, new TypeToken<ArrayList<TipoComemoracaoDto>>() {}.getType());
+		
+	    return tipos;
 	}
 	
 	@Override
 	public ArrayList<TipoComemoracaoDto> listarPorAtivo() {
-		return new ModelMapper().map(tipoComemoracaoRepository.listarPorAtivo(), new TypeToken<ArrayList<TipoComemoracaoDto>>() {}.getType());
+		ArrayList<TipoComemoracaoDto> tipos = new ArrayList<>();
+		Iterable<TipoComemoracao> iterable = tipoComemoracaoRepository.listarPorAtivo();
+		
+		if (iterable != null)
+			tipos = new ModelMapper().map(iterable, new TypeToken<ArrayList<TipoComemoracaoDto>>() {}.getType());
+		
+	    return tipos;
 	}
 
 }

@@ -82,7 +82,9 @@ public class DependenteServiceImpl implements DependenteService {
 	public ArrayList<PessoaDto> listarPessoas(Cliente cliente) {
 		ArrayList<PessoaDto> listaDto = new ArrayList<>();
 		
-		listaDto = new ModelMapper().map(cliente.getDependente(), new TypeToken<ArrayList<PessoaDto>>() {}.getType());
+		if (cliente.getDependente() != null)
+			listaDto = new ModelMapper().map(cliente.getDependente(), new TypeToken<ArrayList<PessoaDto>>() {}.getType());
+		
 		listaDto.add(new ModelMapper().map(cliente, PessoaDto.class));
 		
 		return listaDto;
@@ -92,17 +94,15 @@ public class DependenteServiceImpl implements DependenteService {
 	public ArrayList<PessoaDto> listarPessoasDeCliente(){
 		return listarPessoas(clienteRepository.pesquisarClientePorId(pessoaRepository.pesquisarIdPessoaPorLogin(securityServiceImpl.findLoggedInUsername())));
 	}
-
-	@Override
-	public ArrayList<PessoaDto> listarPessoas(Dependente dependente){
-		ArrayList<PessoaDto> listDto = new ArrayList<>();
-		
-		listDto = new ModelMapper().map(dependente, new TypeToken<ArrayList<PessoaDto>>() {}.getType());
-		return listDto;
-	}
 	
 	@Override
 	public ArrayList<DependenteDto> listarDependentes(){
-		return new ModelMapper().map(dependenteRepository.pesquisarDependentePorCliente(pessoaRepository.pesquisarIdPessoaPorLogin(securityServiceImpl.findLoggedInUsername())), new TypeToken<ArrayList<DependenteDto>>() {}.getType());
+		ArrayList<DependenteDto> dependentes = new ArrayList<>();
+		Iterable<Dependente> iterable = dependenteRepository.pesquisarDependentePorCliente(pessoaRepository.pesquisarIdPessoaPorLogin(securityServiceImpl.findLoggedInUsername()));
+		
+		if (iterable != null)
+			dependentes = new ModelMapper().map(iterable, new TypeToken<ArrayList<DependenteDto>>() {}.getType());
+				
+		return dependentes;
 	}
 } 

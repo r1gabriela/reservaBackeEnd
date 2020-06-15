@@ -10,8 +10,6 @@ public interface DataComemorativaService {
 	
 	public boolean excluir(int idDataComemorativa);
 	
-	public ArrayList<DataComemorativaDto> pesquisarPorIdTipoComemoracao(int idTipoComemoracao);
-	
 	public ArrayList<DataComemorativaDto> listar();
 	
 }

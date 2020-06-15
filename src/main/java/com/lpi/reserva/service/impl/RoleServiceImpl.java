@@ -102,6 +102,7 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public String roleUsuarioLogado() {
 		String login = securityServiceImpl.findLoggedInUsername();
+		
 		if(login == null) 
 			return null;
 		
