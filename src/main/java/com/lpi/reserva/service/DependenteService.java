@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import com.lpi.reserva.dto.DependenteDto;
 import com.lpi.reserva.dto.PessoaDto;
 import com.lpi.reserva.entity.Cliente;
+import com.lpi.reserva.entity.Dependente;
 
 public interface DependenteService {
 
 	public DependenteDto salvar(DependenteDto dependeteDto) throws Exception;
 
-	public boolean excluir(Integer idPessoa);
+	public boolean excluir(DependenteDto dependenteDto);
 
 	public ArrayList<PessoaDto> listarPessoas(Cliente cliente);
 
