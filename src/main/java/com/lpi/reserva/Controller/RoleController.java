@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lpi.reserva.dto.RoleDto;
+import com.lpi.reserva.entity.Role;
 import com.lpi.reserva.service.impl.RoleServiceImpl;
 
 @RestController
@@ -31,7 +32,7 @@ public class RoleController {
 	}
 	
 	@RequestMapping(value="/roleUsuarioLogado", method = RequestMethod.GET)
-	public String roleUsuarioLogado() {
+	public RoleDto roleUsuarioLogado() {
 		return roleService.roleUsuarioLogado();
 	}
 	

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.lpi.reserva.Exception.ExceptionResponse;
 import com.lpi.reserva.Repository.PrivilegioRepository;
 import com.lpi.reserva.Repository.RoleRepository;
-import com.lpi.reserva.Repository.UsuarioRepository;
 import com.lpi.reserva.dto.PrivilegioDto;
 import com.lpi.reserva.dto.RoleDto;
 import com.lpi.reserva.entity.Privilegio;
@@ -19,9 +18,6 @@ import com.lpi.reserva.service.RoleService;
 
 @Service
 public class RoleServiceImpl implements RoleService {
-	
-	@Autowired
-	private UsuarioRepository usuarioRepository;
 	
 	@Autowired
 	private SecurityServiceImpl securityServiceImpl;
@@ -98,13 +94,13 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public String roleUsuarioLogado() {
+	public RoleDto roleUsuarioLogado() {
 		String login = securityServiceImpl.findLoggedInUsername();
 		
 		if(login == null) 
 			return null;
 		
-		return usuarioRepository.roleUsuarioLogado(login);
+		return new ModelMapper().map(roleRepository.roleUsuarioLogado(login), RoleDto.class);
 	}
 
 }

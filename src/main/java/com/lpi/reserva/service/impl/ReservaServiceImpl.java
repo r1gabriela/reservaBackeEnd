@@ -7,8 +7,10 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lpi.reserva.Repository.PessoaRepository;
 import com.lpi.reserva.Repository.ReservaRepository;
 import com.lpi.reserva.Repository.UsuarioRepository;
+import com.lpi.reserva.dto.ClienteDto;
 import com.lpi.reserva.dto.ReservaDto;
 import com.lpi.reserva.entity.Reserva;
 import com.lpi.reserva.entity.Usuario;
@@ -25,7 +27,13 @@ public class ReservaServiceImpl implements ReservaService {
 	private UsuarioRepository usuarioRepository;
 	
 	@Autowired
+	private PessoaRepository pessoaRepository;
+	
+	@Autowired
 	private SecurityService securityService;
+	
+	@Autowired
+	private SecurityServiceImpl securityServiceImpl;
 
 	public ReservaServiceImpl(ReservaRepository reservaRepository) {
 		this.reservaRepository = reservaRepository;
@@ -34,7 +42,15 @@ public class ReservaServiceImpl implements ReservaService {
 	@Override
 	public ReservaDto salvar(ReservaDto reservaDto) {
 		try {
-			Reserva reserva = reservaRepository.save(new ModelMapper().map(reservaDto, Reserva.class));
+			ClienteDto clienteDto = new ClienteDto();
+			Reserva reserva = new ModelMapper().map(reservaDto, Reserva.class);
+			
+			reserva.setAtivo(true);
+			
+			clienteDto.setIdPessoa(pessoaRepository.pesquisarIdPessoaPorLogin(securityServiceImpl.findLoggedInUsername()));
+			reservaDto.setCliente(clienteDto);
+			
+			reserva = reservaRepository.save(new ModelMapper().map(reservaDto, Reserva.class));
 			return new ModelMapper().map(reserva, ReservaDto.class);
 		}catch(Exception e){
 			e.printStackTrace();
