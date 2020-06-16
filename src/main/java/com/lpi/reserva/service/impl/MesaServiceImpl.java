@@ -38,6 +38,7 @@ public class MesaServiceImpl implements MesaService {
 	@Override
 	public MesaDto salvar(MesaDto mesaDto) {
 		try {
+			mesaDto.setAtivo(true);
 			Mesa mesa = mesaRepository.save(new ModelMapper().map(mesaDto, Mesa.class));
 			return new ModelMapper().map(mesa, MesaDto.class);
 		}catch(Exception e){
