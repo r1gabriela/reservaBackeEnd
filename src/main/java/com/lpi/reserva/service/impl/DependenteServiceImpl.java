@@ -67,11 +67,10 @@ public class DependenteServiceImpl implements DependenteService {
 	}
 
 	@Override	
-	public boolean excluir(Integer idPessoa) {
+	public boolean excluir(DependenteDto dependenteDto) {
 		try {
-			Dependente dependente = dependenteRepository.findById(idPessoa).get();
-			dependente.setAtivo(false);
-			dependenteRepository.save(dependente);
+			dependenteDto.setAtivo(false);
+			dependenteRepository.save(new ModelMapper().map(dependenteDto, Dependente.class));
 			return true;
 		}catch(Exception e){
 		     e.printStackTrace(); 
