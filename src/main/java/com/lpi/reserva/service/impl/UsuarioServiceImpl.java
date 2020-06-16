@@ -10,16 +10,21 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.lpi.reserva.Exception.ExceptionResponse;
+import com.lpi.reserva.Repository.ClienteRepository;
 import com.lpi.reserva.Repository.PessoaRepository;
 import com.lpi.reserva.Repository.UsuarioRepository;
 import com.lpi.reserva.dto.PessoaDto;
 import com.lpi.reserva.dto.UsuarioDto;
+import com.lpi.reserva.entity.Cliente;
 import com.lpi.reserva.entity.Pessoa;
 import com.lpi.reserva.entity.Usuario;
 import com.lpi.reserva.service.UsuarioService;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
 	
 	@Autowired
 	private PessoaRepository pessoaRepository;
@@ -66,7 +71,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 			Pessoa pessoa = pessoaRepository.pesquisarPorCpf(usuarioDto.getPessoa().getCpf());
 			
 			if(pessoa == null) {
-				pessoa = pessoaRepository.save(new ModelMapper().map(usuarioDto.getPessoa(), Pessoa.class));
+				Cliente cliente = new ModelMapper().map(usuarioDto.getPessoa(), Cliente.class);
+				pessoa = clienteRepository.save(cliente);	
 			}
 			
 			usuarioDto.setPessoa(new ModelMapper().map(pessoa, PessoaDto.class));

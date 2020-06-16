@@ -50,6 +50,7 @@ public class DependenteServiceImpl implements DependenteService {
 			ClienteDto clienteDto = new ClienteDto();
 			clienteDto.setIdPessoa(pessoaRepository.pesquisarIdPessoaPorLogin(securityServiceImpl.findLoggedInUsername()));
 			dependenteDto.setCliente(clienteDto);
+			dependenteDto.setAtivo(true);
 			
 			if (pessoa == null || pessoa.getIdPessoa() == dependenteDto.getIdPessoa()) {
 				dependente = dependenteRepository.save(new ModelMapper().map(dependenteDto, Dependente.class));
@@ -66,11 +67,10 @@ public class DependenteServiceImpl implements DependenteService {
 	}
 
 	@Override	
-	public boolean excluir(Integer idPessoa) {
+	public boolean excluir(DependenteDto dependenteDto) {
 		try {
-			Dependente dependente = dependenteRepository.findById(idPessoa).get();
-			dependente.setAtivo(false);
-			dependenteRepository.save(dependente);
+			dependenteDto.setAtivo(false);
+			dependenteRepository.save(new ModelMapper().map(dependenteDto, Dependente.class));
 			return true;
 		}catch(Exception e){
 		     e.printStackTrace(); 
