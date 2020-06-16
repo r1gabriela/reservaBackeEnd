@@ -50,6 +50,7 @@ public class DependenteServiceImpl implements DependenteService {
 			ClienteDto clienteDto = new ClienteDto();
 			clienteDto.setIdPessoa(pessoaRepository.pesquisarIdPessoaPorLogin(securityServiceImpl.findLoggedInUsername()));
 			dependenteDto.setCliente(clienteDto);
+			dependenteDto.setAtivo(true);
 			
 			if (pessoa == null || pessoa.getIdPessoa() == dependenteDto.getIdPessoa()) {
 				dependente = dependenteRepository.save(new ModelMapper().map(dependenteDto, Dependente.class));
