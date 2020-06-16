@@ -92,7 +92,7 @@ public class DependenteServiceImpl implements DependenteService {
 	
 	@Override
 	public ArrayList<PessoaDto> listarPessoasDeCliente(){
-		return listarPessoas(clienteRepository.pesquisarClientePorId(pessoaRepository.pesquisarIdPessoaPorLogin(securityServiceImpl.findLoggedInUsername())));
+		return listarPessoas(clienteRepository.findById(pessoaRepository.pesquisarIdPessoaPorLogin(securityServiceImpl.findLoggedInUsername())).get());
 	}
 	
 	@Override
