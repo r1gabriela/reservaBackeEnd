@@ -57,9 +57,9 @@ public class DataComemorativaServiceImpl implements  DataComemorativaService {
 	}
 
 	@Override
-	public boolean excluir(DataComemorativa datacomemorativa) {
+	public boolean excluir(DataComemorativaDto datacomemorativaDto) {
 		try {
-			dataComemorativaRepository.delete(datacomemorativa);
+			dataComemorativaRepository.delete(new ModelMapper().map(datacomemorativaDto, DataComemorativa.class));
 			return true;
 		}catch(Exception e){
 			e.printStackTrace();

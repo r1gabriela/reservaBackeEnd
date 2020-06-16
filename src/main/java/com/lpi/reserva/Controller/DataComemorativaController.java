@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lpi.reserva.dto.DataComemorativaDto;
-import com.lpi.reserva.entity.DataComemorativa;
 import com.lpi.reserva.service.impl.DataComemorativaServiceImpl;
 
 @RestController
@@ -27,8 +26,8 @@ public class DataComemorativaController {
 	}
 	
 	@RequestMapping(value = "/excluir", method = RequestMethod.POST)
-    public boolean excluir(@RequestBody DataComemorativa dataComemorativa) {
-    	return dataComemorativaService.excluir(dataComemorativa);	
+    public boolean excluir(@RequestBody DataComemorativaDto dataComemorativaDto) {
+    	return dataComemorativaService.excluir(dataComemorativaDto);	
     }
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
