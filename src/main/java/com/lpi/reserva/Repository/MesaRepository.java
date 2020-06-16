@@ -1,6 +1,7 @@
 package com.lpi.reserva.Repository;
 
 import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -18,6 +19,6 @@ public interface MesaRepository extends CrudRepository<Mesa, Integer> {
 			+ "WHERE r.horaEntrada > :horaEntrada AND r.horaEntrada < :horaSaida "
 			+ "OR r.horaSaida > :horaEntrada AND r.horaSaida < :horaSaida AND r.dataReserva = :dataReserva)"
 			+ " AND m.capacidade = :capacidade")
-	public List<Mesa> verDisponibilidadeMesa(@Param("horaEntrada") Time horaEntrada, @Param("horaSaida") Time horaSaida, @Param("capacidade") Integer capacidade);
+	public List<Mesa> verDisponibilidadeMesa(@Param("horaEntrada") Time horaEntrada, @Param("horaSaida") Time horaSaida, @Param("capacidade") Integer capacidade, @Param("dataReserva") Date dataReserva);
 
 }

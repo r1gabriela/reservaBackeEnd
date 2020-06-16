@@ -60,7 +60,7 @@ public class MesaServiceImpl implements MesaService {
 	@Override
 	public ArrayList<MesaDto> verDisponibilidadeMesa(ReservaDto reservaDto) {
 		ArrayList<MesaDto> mesas = new ArrayList<>();
-		Iterable<Mesa> iterable = mesaRepository.verDisponibilidadeMesa(reservaDto.getHoraEntrada(), reservaDto.getHoraSaida(), reservaDto.getCapacidade());
+		Iterable<Mesa> iterable = mesaRepository.verDisponibilidadeMesa(reservaDto.getHoraEntrada(), reservaDto.getHoraSaida(), reservaDto.getCapacidade(), reservaDto.getDataReserva());
 		
 		if (iterable != null)
 			mesas = new ModelMapper().map(iterable, new TypeToken<ArrayList<MesaDto>>() {}.getType());

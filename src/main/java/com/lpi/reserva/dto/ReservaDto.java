@@ -30,4 +30,7 @@ public class ReservaDto {
 	
 	private Date dataReserva;
 	
+	private String he;
+	
+	private String hs;
 }
