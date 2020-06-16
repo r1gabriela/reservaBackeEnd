@@ -43,9 +43,11 @@ public class ReservaServiceImpl implements ReservaService {
 	public ReservaDto salvar(ReservaDto reservaDto) {
 		try {
 			ClienteDto clienteDto = new ClienteDto();
-	
-			clienteDto.setIdPessoa(pessoaRepository.pesquisarIdPessoaPorLogin(securityServiceImpl.findLoggedInUsername()));
-			reservaDto.setCliente(clienteDto);
+			
+			if(reservaDto.getCliente() == null) {
+				clienteDto.setIdPessoa(pessoaRepository.pesquisarIdPessoaPorLogin(securityServiceImpl.findLoggedInUsername()));
+				reservaDto.setCliente(clienteDto);
+			}
 			
 			Reserva reserva = reservaRepository.save(new ModelMapper().map(reservaDto, Reserva.class));
 			return new ModelMapper().map(reserva, ReservaDto.class);

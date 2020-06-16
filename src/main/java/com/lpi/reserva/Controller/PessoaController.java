@@ -21,4 +21,9 @@ public class PessoaController {
 		return pessoaService.pesquisarPorNome(nome);
 	}
 	
+	@RequestMapping(value ="/listarNaoCadastradoPorCpf", method = RequestMethod.GET)
+	public ArrayList<PessoaDto> pesquisarUsuarioNaoCadastradoPorCpf(@RequestParam(value= "cpf")String cpf){
+		return pessoaService.pesquisarUsuarioNaoCadastradoPorCpf(cpf);
+	}
+	
 }
