@@ -12,7 +12,7 @@ import com.lpi.reserva.entity.Cliente;
 @Repository
 public interface ClienteRepository extends CrudRepository<Cliente, Integer> {
 	
-	@Query(value = "SELECT c FROM Cliente c WHERE c.cpf LIKE %:cpf%")
+	@Query(value = "SELECT c FROM Cliente c WHERE c.cpf LIKE :cpf%")
 	public List<Cliente> pesquisarClientePorCpf(@Param("cpf") String cpf);
 	
 	@Query(value = "SELECT c FROM Cliente c JOIN c.dependente d WHERE c.idPessoa = :idPessoa")

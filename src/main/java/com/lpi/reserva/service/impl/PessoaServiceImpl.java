@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lpi.reserva.Repository.PessoaRepository;
+import com.lpi.reserva.dto.ClienteDto;
 import com.lpi.reserva.dto.PessoaDto;
 import com.lpi.reserva.entity.Pessoa;
 import com.lpi.reserva.service.PessoaService;
@@ -29,7 +30,13 @@ public class PessoaServiceImpl implements PessoaService {
 
 	@Override
 	public ArrayList<PessoaDto> pesquisarPorNome(String nome) {
-		return new ModelMapper().map(pessoaRepository.pesquisarPorNome(nome.toLowerCase()), new TypeToken<ArrayList<PessoaDto>>() {}.getType());
+		return new ModelMapper().map(pessoaRepository.pesquisarPorCpf(nome.toLowerCase()), new TypeToken<ArrayList<PessoaDto>>() {}.getType());
 	}
 	
+	@Override
+	public ArrayList<PessoaDto> pesquisarUsuarioNaoCadastradoPorCpf(String cpf){
+ 		return new ModelMapper().map(pessoaRepository.pesquisarUsuarioNaoCadastradoPorCpf(cpf), new TypeToken<ArrayList<PessoaDto>>() {}.getType());
+		
+	}
+	 
 }

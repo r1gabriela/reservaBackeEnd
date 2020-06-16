@@ -76,5 +76,10 @@ public class ClienteServiceImpl implements ClienteService {
 		
 		return clientes;
 	}
-		
+	
+	@Override
+	public ArrayList<ClienteDto> listarPorCpf(String cpf) {
+		return new ModelMapper().map(clienteRepository.pesquisarClientePorCpf(cpf), new TypeToken<ArrayList<ClienteDto>>() {}.getType());
+	}
+	
 }
