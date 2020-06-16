@@ -43,20 +43,18 @@ public class ReservaServiceImpl implements ReservaService {
 	public ReservaDto salvar(ReservaDto reservaDto) {
 		try {
 			ClienteDto clienteDto = new ClienteDto();
-			Reserva reserva = new ModelMapper().map(reservaDto, Reserva.class);
-			
-			reserva.setAtivo(true);
-			
+	
 			clienteDto.setIdPessoa(pessoaRepository.pesquisarIdPessoaPorLogin(securityServiceImpl.findLoggedInUsername()));
 			reservaDto.setCliente(clienteDto);
 			
-			reserva = reservaRepository.save(new ModelMapper().map(reservaDto, Reserva.class));
+			Reserva reserva = reservaRepository.save(new ModelMapper().map(reservaDto, Reserva.class));
 			return new ModelMapper().map(reserva, ReservaDto.class);
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
 		}	
 	}
+	
 
 	@Override
 	public boolean excluir(int idReserva) {
