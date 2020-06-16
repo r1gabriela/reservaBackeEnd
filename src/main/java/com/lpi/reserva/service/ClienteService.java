@@ -11,5 +11,7 @@ public interface ClienteService {
 	public ClienteDto pesquisar();
 
 	public ArrayList<ClienteDto> listarTodos();
+
+	public ArrayList<ClienteDto> listarPorCpf(String cpf);
 	
 }

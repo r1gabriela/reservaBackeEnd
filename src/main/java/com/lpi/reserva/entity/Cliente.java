@@ -26,10 +26,10 @@ public class Cliente extends Pessoa implements Serializable {
 	 */
 	private static final long serialVersionUID = 7566674233417885499L;
 
-	@Column(name = "telefone", length = 11, nullable = false)
+	@Column(name = "telefone", length = 11)
 	private String telefone;
 	
-	@Column(name = "email", length = 255, nullable = false)
+	@Column(name = "email", length = 255)
 	private String email;
 	
 	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)

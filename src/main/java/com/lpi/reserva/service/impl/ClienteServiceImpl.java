@@ -1,6 +1,7 @@
 package com.lpi.reserva.service.impl;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -54,12 +55,31 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public ClienteDto pesquisar() {
-		return new ModelMapper().map(clienteRepository.findById(pessoaRepository.pesquisarIdPessoaPorLogin(SecurityService.findLoggedInUsername())).get(), ClienteDto.class);
+		Integer id = pessoaRepository.pesquisarIdPessoaPorLogin(SecurityService.findLoggedInUsername());
+		
+		Optional<Cliente> cliente = clienteRepository.findById(id);
+		
+		if(cliente.isPresent()) 
+			return new ModelMapper().map(cliente.get(), ClienteDto.class);
+		else
+			return new ModelMapper().map(pessoaRepository.findById(id).get(), ClienteDto.class);
+			
 	}
 	
 	@Override
 	public ArrayList<ClienteDto> listarTodos(){
-		return new ModelMapper().map(clienteRepository.findAll(), new TypeToken<ArrayList<ClienteDto>>() {}.getType());
-	}
+		ArrayList<ClienteDto> clientes = new ArrayList<>();
+		Iterable<Cliente> iterable = clienteRepository.findAll();
 		
+		if (iterable != null)
+			clientes = new ModelMapper().map(iterable, new TypeToken<ArrayList<ClienteDto>>() {}.getType());
+		
+		return clientes;
+	}
+	
+	@Override
+	public ArrayList<ClienteDto> listarPorCpf(String cpf) {
+		return new ModelMapper().map(clienteRepository.pesquisarClientePorCpf(cpf), new TypeToken<ArrayList<ClienteDto>>() {}.getType());
+	}
+	
 }

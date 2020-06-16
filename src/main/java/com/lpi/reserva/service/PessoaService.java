@@ -11,4 +11,6 @@ public interface PessoaService {
 	
 	public ArrayList<PessoaDto> pesquisarPorNome(String nome);
 
+	public ArrayList<PessoaDto> pesquisarUsuarioNaoCadastradoPorCpf(String cpf);
+
 }

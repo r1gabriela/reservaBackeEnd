@@ -31,7 +31,8 @@ public class RoleController {
 	}
 	
 	@RequestMapping(value="/roleUsuarioLogado", method = RequestMethod.GET)
-	public String roleUsuarioLogado() {
+	public RoleDto roleUsuarioLogado() {
 		return roleService.roleUsuarioLogado();
 	}
+	
 }

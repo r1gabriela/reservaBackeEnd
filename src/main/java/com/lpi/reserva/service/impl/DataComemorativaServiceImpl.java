@@ -31,7 +31,6 @@ public class DataComemorativaServiceImpl implements  DataComemorativaService {
 		this.dataComemorativaRepository = dataComemorativaRepository;
 	}
 	
-	
 	@Override
 	public DataComemorativaDto salvar(DataComemorativaDto dataComemorativaDto) throws Exception, ExceptionResponse {
 		try {
@@ -58,9 +57,9 @@ public class DataComemorativaServiceImpl implements  DataComemorativaService {
 	}
 
 	@Override
-	public boolean excluir(int idDataComemorativa) {
+	public boolean excluir(DataComemorativaDto datacomemorativaDto) {
 		try {
-			dataComemorativaRepository.deleteById(idDataComemorativa);;
+			dataComemorativaRepository.delete(new ModelMapper().map(datacomemorativaDto, DataComemorativa.class));
 			return true;
 		}catch(Exception e){
 			e.printStackTrace();
@@ -68,16 +67,15 @@ public class DataComemorativaServiceImpl implements  DataComemorativaService {
 		}
 	}
 
-
-	@Override
-	public ArrayList<DataComemorativaDto> pesquisarPorIdTipoComemoracao(int idTipoComemoracao) {
-		return new ModelMapper().map(dataComemorativaRepository.pesquisarPorIdTipoComemoracao(idTipoComemoracao), new TypeToken<ArrayList<DataComemorativaDto>>() {}.getType());
-	}
-
-
 	@Override
 	public ArrayList<DataComemorativaDto> listar() {
-		return new ModelMapper().map(dataComemorativaRepository.findAllCliente(pessoaRepository.pesquisarIdPessoaPorLogin(securityServiceImpl.findLoggedInUsername())), new TypeToken<ArrayList<DataComemorativaDto>>() {}.getType());
+		ArrayList<DataComemorativaDto> datas = new ArrayList<>();
+		Iterable<DataComemorativa> iterable = dataComemorativaRepository.findAllCliente(pessoaRepository.pesquisarIdPessoaPorLogin(securityServiceImpl.findLoggedInUsername()));
+		
+		if (iterable != null)
+			datas = new ModelMapper().map(iterable, new TypeToken<ArrayList<DataComemorativaDto>>() {}.getType());
+		
+		return datas;
 	}
 
 }

@@ -10,7 +10,7 @@ public interface UsuarioService{
 
 	public boolean excluir(Integer idUsuario);
 
-	public UsuarioDto pesquisarPorId(int idUsuario);
+	public UsuarioDto pesquisar(String login);
 
 	public UsuarioDto cadastrar(UsuarioDto usuarioDto);
 	

@@ -14,7 +14,6 @@ import com.lpi.reserva.entity.Privilegio;
 import com.lpi.reserva.entity.Role;
 import com.lpi.reserva.service.impl.UserDetailsServiceImpl;
 
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
@@ -70,8 +69,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers("/role").permitAll()
 		.antMatchers("/tipoComemoracao").permitAll()
 		.antMatchers("/tipoFuncionario").permitAll()
-		.antMatchers("/usuario").permitAll();
-		
+		.antMatchers("/usuario").permitAll()
+		.and().logout().permitAll();
 	}
 	
 	@Override

@@ -1,6 +1,7 @@
 package com.lpi.reserva.Exception;
 
-public class ExceptionResponse extends RuntimeException{
+public class ExceptionResponse extends RuntimeException {
+	
 	/**
 	 * 
 	 */

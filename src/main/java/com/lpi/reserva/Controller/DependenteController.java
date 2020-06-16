@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lpi.reserva.dto.DependenteDto;
@@ -28,8 +27,8 @@ public class DependenteController {
 	}
 	
 	@RequestMapping(value = "/excluir", method = RequestMethod.GET)
-	public boolean excluir(@RequestParam(value = "idPessoa") Integer idPessoa) {
-		return dependenteService.excluir(idPessoa);
+	public boolean excluir(@RequestBody DependenteDto dependenteDto) {
+		return dependenteService.excluir(dependenteDto);
 	}
 	
 	@RequestMapping(value = "/listarPessoasDeCliente", method = RequestMethod.GET)

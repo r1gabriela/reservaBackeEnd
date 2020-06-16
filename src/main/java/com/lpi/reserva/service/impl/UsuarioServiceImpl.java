@@ -10,16 +10,21 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.lpi.reserva.Exception.ExceptionResponse;
+import com.lpi.reserva.Repository.ClienteRepository;
 import com.lpi.reserva.Repository.PessoaRepository;
 import com.lpi.reserva.Repository.UsuarioRepository;
 import com.lpi.reserva.dto.PessoaDto;
 import com.lpi.reserva.dto.UsuarioDto;
+import com.lpi.reserva.entity.Cliente;
 import com.lpi.reserva.entity.Pessoa;
 import com.lpi.reserva.entity.Usuario;
 import com.lpi.reserva.service.UsuarioService;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
 	
 	@Autowired
 	private PessoaRepository pessoaRepository;
@@ -32,7 +37,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
 	@Autowired
 	private SecurityServiceImpl securityServiceImpl;
-	
 		
 	public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
 		this.usuarioRepository = usuarioRepository;
@@ -44,11 +48,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 			Usuario usuario = new Usuario();
 			
 			usuario = usuarioRepository.pesquisarUsuarioPorLogin(usuarioDto.getLogin());
-			usuarioDto.setSenha(bCryptPasswordEncoder.encode(usuarioDto.getSenha()));
-			
-			if (usuario == null || usuario.getPessoa().getIdPessoa() == usuarioDto.getPessoa().getIdPessoa())
-				usuarioRepository.save(new ModelMapper().map(usuarioDto, Usuario.class));
-			else 
+
+			if (usuario == null || usuario.getPessoa().getIdPessoa() == usuarioDto.getPessoa().getIdPessoa()) {
+				usuario = new ModelMapper().map(usuarioDto, Usuario.class);
+				usuario.setSenha(bCryptPasswordEncoder.encode(usuario.getSenha()));
+				usuario = usuarioRepository.save(usuario);
+			} else 
 				throw new ExceptionResponse("Login já Cadastrado.");
 			
 			return new ModelMapper().map(usuario, UsuarioDto.class);
@@ -59,17 +64,19 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	@Override
 	public UsuarioDto cadastrar(UsuarioDto usuarioDto) {
 		try {
 			Pessoa pessoa = pessoaRepository.pesquisarPorCpf(usuarioDto.getPessoa().getCpf());
 			
 			if(pessoa == null) {
-				pessoa = pessoaRepository.save(new ModelMapper().map(usuarioDto.getPessoa(), Pessoa.class));
+				Cliente cliente = new ModelMapper().map(usuarioDto.getPessoa(), Cliente.class);
+				pessoa = clienteRepository.save(cliente);	
 			}
 			
 			usuarioDto.setPessoa(new ModelMapper().map(pessoa, PessoaDto.class));
-			usuarioDto = salvar(usuarioDto);
+			salvar(usuarioDto);
 			
 			if(usuarioDto == null)
 				throw new Exception("Erro ao cadastrar usuário");
@@ -84,7 +91,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 	}
 	
-
 	@Override
 	public boolean excluir(Integer idUsuario) {
 		try {
@@ -99,14 +105,21 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-	public UsuarioDto pesquisarPorId(int idUsuario) {	
-		return new ModelMapper().map(usuarioRepository.findById(idUsuario).get(), UsuarioDto.class);
+	public UsuarioDto pesquisar(String login) {	
+		return new ModelMapper().map(usuarioRepository.pesquisarUsuarioPorLogin(login).getLogin(), UsuarioDto.class);
 	}
 
-	
 	@Override
 	public ArrayList<UsuarioDto> listarTodos() {
-		return new ModelMapper().map(usuarioRepository.findAll(), new TypeToken<ArrayList<UsuarioDto>>() {}.getType());
+		ArrayList<UsuarioDto> usuarios = new ArrayList<>();
+		Iterable<Usuario> iterable = usuarioRepository.findAll();
+		
+		if (iterable != null)
+			usuarios = new ModelMapper().map(iterable, new TypeToken<ArrayList<UsuarioDto>>() {}.getType());
+		
+		return usuarios;
 	}
+	
+
 		
 }

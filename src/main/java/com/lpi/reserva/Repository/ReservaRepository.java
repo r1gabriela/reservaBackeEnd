@@ -14,4 +14,5 @@ public interface ReservaRepository extends CrudRepository<Reserva, Integer> {
 
 	@Query(value = "SELECT r FROM Reserva r JOIN r.cliente c WHERE c.idPessoa = :idPessoa")
 	public List<Reserva> pesquisarReservaPorCliente(@Param("idPessoa") Integer idPessoa);
+	
 }

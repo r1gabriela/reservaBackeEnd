@@ -16,11 +16,9 @@ import com.lpi.reserva.service.PrivilegioService;
 @Service
 public class PrivilegioServiceImpl implements PrivilegioService{
 	
-	
 	@Autowired
 	private PrivilegioRepository privilegioRepository;
 
-	
 	public PrivilegioServiceImpl(PrivilegioRepository privilegioRepository) {
 		this.privilegioRepository = privilegioRepository;
 	}

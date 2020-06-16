@@ -21,6 +21,7 @@ public class UsuarioController {
 	
 	@Autowired
 	private SecurityServiceImpl securityService;
+	
 	@Autowired
 	private UsuarioServiceImpl usuarioService;
 
@@ -34,9 +35,9 @@ public class UsuarioController {
 		return usuarioService.excluir(idUsuario);
 	}
 	
-	@RequestMapping(value = "/pesquisarPorId", method = RequestMethod.GET)
-    public UsuarioDto pesquisarPorId(@RequestParam(value = "idUsuario") int idUsuario) {
-    	return usuarioService.pesquisarPorId(idUsuario);	
+	@RequestMapping(value = "/pesquisar", method = RequestMethod.GET)
+    public UsuarioDto pesquisar(@RequestParam(value = "login") String login) {
+    	return usuarioService.pesquisar(login);	
     }
 	
 	@RequestMapping(value = "/cadastrar", method = RequestMethod.POST)

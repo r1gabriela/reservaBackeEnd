@@ -8,9 +8,7 @@ public interface DataComemorativaService {
 
 	public DataComemorativaDto salvar(DataComemorativaDto dataComemorativaDto) throws Exception;
 	
-	public boolean excluir(int idDataComemorativa);
-	
-	public ArrayList<DataComemorativaDto> pesquisarPorIdTipoComemoracao(int idTipoComemoracao);
+	public boolean excluir(DataComemorativaDto dataComemorativaDto);
 	
 	public ArrayList<DataComemorativaDto> listar();
 	
